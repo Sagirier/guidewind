@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 字段管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>字段管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            <a>字段管理</a>
+                        </li>
+                        <li>
+                            <strong>添加字段</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated">
+                <div class="row">
+                	<div class="col-lg-6 full-width">
+						<div class="ibox-title">
+	                    	<h5>新增<font color="red"><?php if(!$nid){ echo $cname['cname']; }else{ echo $cnav['nname'];} ?></font>字段</h5>
+	                    	<div class="ibox-tools">
+                                <a href="?action=fields&c=<?php echo $c; ?>" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回字段列表</a>
+                            </div>
+	                	</div>
+	                    <div class="tab-content">
+                            <div class="ibox-content">
+		                        <form action="?action=fields&c=<?php echo $cname['cmark']; ?>&o=add&go=1" method="post" onsubmit="return false;" id="fieldaddform">
+	                                <div class="panel blank-panel">
+	                                    <div class="panel-heading">
+			                                <div class="panel-options">
+	                                            <ul class="nav nav-tabs">
+	                                                <li class="active"><a data-toggle="tab" href="#base">字段详细设置</a></li>
+	                                                <?php if($c!='member'){ ?><li class=""><a data-toggle="tab" href="#expand">栏目选择</a></li><?php } ?>
+	                                            </ul>
+			                                </div>
+			                            </div>
+	                            		<div class="panel-body">
+	                                		<div class="tab-content">
+	                                    		<div id="base" class="tab-pane active">
+	                                        		<table class="table table-bordered">
+	                                            		<thead>
+	                                                    	<tr>
+	                                                        	<td style="background: #efefef;width: 200px;">设置项目</td>
+	                                                        	<td style="background: #efefef;width:400px;">设置详情/选项</td>
+	                                                        	<td style="background: #efefef;">备注/说明</td>
+	                                                    	</tr>
+	                                            		</thead>
+	                                            		<tbody>
+	                                                		<tr>
+	                                                        	<td><label>字段名称</label></td>
+	                                                        	<td>
+	                                                        		<label style="width: 60%;">
+	                                                        			<input type="text" class="form-control" id="addfield_fname" name="field_fname" />
+	                                                        		</label>
+	                                                        		<label style=" margin:0 5px 0 20px ;">顺序：</label>
+	                                                        		<label  style="width: 40px;">
+	                                                        			<input type="text" class="form-control" style="padding: 6px 0;text-align: center;" name="field_order" />
+	                                                        		</label>
+	                                                        	</td>
+	                                                        	<td><label class="normal-text">字段名称，建议不要超过10个汉字；栏目顺序，数字越大越靠前。</label></td>
+	                                                		</tr>
+	                                                		<tr>
+	                                                        	<td><label>字段标识</label></td>
+	                                                        	<td>
+	                                                        		<label style="width: 60%;">
+	                                                        			<input type="text" id="addfield_fmark " class="form-control" name="field_fmark" />
+	                                                        		</label>
+	                                                        	</td>
+	                                                        	<td><label class="normal-text"><i class="fa fa-exclamation channel-hint"></i> 字段标识，必须为英文和数字，且只能以英文开头，长度不要超过20个字符。</label></td>
+	                                                		</tr>
+	                                                		<tr>
+	                                                        	<td><label>投稿是否可填</label></td>
+	                                                        	<td>
+	                                                        		<label>
+						                                                <input class="i-checks" type="radio" checked="checked" value="1" name="field_issubmit"> 是				                                            </label>
+						                                            <label style="margin-left: 20px;">
+						                                                <input class="i-checks" type="radio" value="0" name="field_issubmit"> 否
+						                                            </label>
+	                                                        	</td>
+	                                                        	<td><label class="normal-text">选择是，前台会员投稿时可以显示该字段。</label></td>
+	                                                		</tr>
+	                                                		<tr>
+	                                                        	<td><label>前台列表调用</label></td>
+	                                                        	<td>
+	                                                        		<label>
+						                                                <input class="i-checks" type="radio" checked="checked" value="1" name="field_lists"> 开启				                                            </label>
+						                                            <label style="margin-left: 20px;">
+						                                                <input class="i-checks" type="radio" value="0" name="field_lists"> 关闭
+						                                            </label>
+	                                                        	</td>
+	                                                        	<td><label class="normal-text">开启后，前台列表可直接读取本字段，否则只在内容页读取，列表读取字段过多会影响查询效率。</label></td>
+	                                                		</tr>
+	                                                		<tr>
+	                                                        	<td><label>字段类型设置</label></td>
+	                                                        	<td>
+	                                                        		<ul class="stat-list" style="font-weight: 700;">
+						                                                <li><input class="i-checks" type="radio" checked="checked" value="varchar" name="field_ftype"> 中小型文本varchar  <span style="float: right; margin-right:20px ;font-weight:normal;display:inline-block;">最大长度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="varchar_flength" value="255" /></span></li>
+							                                            <li><input class="i-checks" type="radio" value="text" name="field_ftype"> 大型文本  <span style="float: right;display: inline-block;font-weight:normal;">显示宽度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="text_imgw" /> px  显示高度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="text_imgh"  /> px</span></li>
+							                                            <li><input class="i-checks" type="radio" value="int" name="field_ftype"> 整数</li>
+							                                            <li><input class="i-checks" type="radio" value="money" name="field_ftype"> 货币</li>
+							                                            <li><input class="i-checks" type="radio" value="date" name="field_ftype"> 日期格式</li>
+							                                            <li><input class="i-checks" type="radio" value="file" name="field_ftype"> 单个附件<span style="float: right;display: inline-block;font-weight:normal;">自动缩略图    宽度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="file_imgw" /> px 高度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="file_imgh" /> px</span></li>
+							                                            <li><input class="i-checks" type="radio" value="multifile" name="field_ftype"> 多个附件<span style="float: right;display: inline-block;font-weight:normal;">自动缩略图    宽度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="multifile_imgw" /> px 高度：<input type="text" style="display: inline;padding: 6px 0;text-align: center;" class="form-control W-20" name="multifile_imgh" /> px</span></li>
+							                                            <li><input class="i-checks" type="radio" value="radio" name="field_ftype"> 单选菜单<span style="display: inline-block; width: 30px;"></span><input class="i-checks" style="padding: 6px 0;text-align: center;" type="radio" value="select" name="field_ftype"> 多选菜单</li>
+							                                            <li style="margin-top: 0;font-weight:normal;">选项设置：    <textarea class="form-control" name="field_selects" cols="30" rows="2"></textarea></li>
+						                                            </ul>
+	                                                        	</td>
+	                                                        	<td>
+	                                                        		<ul class="stat-list">
+						                                                <li>长度建议不要超过255；若设置为0，默认为最大值：255；</li>
+							                                            <li>输入框带编辑器的大型文本编辑框；若显示宽高设为"0"，表示"100%"；</li>
+							                                            <li>正负整数类型字段，不含小数部分，如123456；如果要使用非货币小数，请使用小型文本；</li>
+							                                            <li>价格类型字段，如1.01；</li>
+							                                            <li>日期格式字段，可选择插入日期；</li>
+							                                            <li>只上传单个附件，如图片，文档等；自动缩略图仅对图片有效，设置为0继承系统默认设置；</li>
+							                                            <li>可以上传多个附件；</li>
+							                                            <li><br/><br/>格式：“选项=值”，“选项”显示于下拉框中，“值”用于前台数据调用<br/>两个选项值对之间，用英文逗号“,”分割。</li>
+	                                                		</tr>
+	                                                		<tr>
+	                                                        	<td><label>字段状态</label></td>
+	                                                        	<td>
+	                                                        		<label>
+						                                                <input  class="i-checks" type="radio" checked="checked" value="1" name="field_statu"> 启用				                                            </label>
+						                                            <label style="margin-left: 20px;">
+						                                                <input class="i-checks" type="radio" value="0" name="field_statu"> 禁用
+						                                            </label>
+	                                                        	</td>
+	                                                        	<td><label class="normal-text">选择是否启用该字段。</label></td>
+	                                                		</tr>
+	                                                    </tbody>
+	                                                </table>
+	                                    		</div>
+	                                    		<?php if($c!='member'){ ?>
+	                                            <div id="expand" class="tab-pane">
+	                                            	<div class="all-select">
+		                                            	<input type="button" id="alltype" class="btn btn-primary" onclick="alls('types[]','alltype');" value="全选" />
+	                                            	</div>
+													<?php foreach($navtree as $n){ ?>
+											        <div class="field_mainnav"<?php if($n['channels']!=syClass('syController')->syArgs('c',1)){echo ' style="display:none"';} ?>><input type="checkbox" class="i-checks navs" name="types[]" value="<?php echo $n['nid']; ?>"<?php if($n['channels']!=syClass('syController')->syArgs('c',1)){echo ' disabled="disabled"';} ?>><span style="padding-left: 10px;"></span><?php echo str_repeat('|—',$n['n']).$n['name']; ?></div>
+											        <?php } ?>
+	                                            </div>
+	                                            <?php } ?>
+	                                		</div>
+	                            		</div>
+	                                </div>
+	                                <div class="all-submit clear mar-20">
+	                                	<button class="btn btn-primary" type="submit" onclick="LayerconfirmAdd(this);"><i class="fa fa-check"></i> 提交</button>
+	                                </div>
+	                        	</form> 
+	                        </div>
+	                    </div>
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<script type="text/javascript">
+		function alls(divc,inputs){
+			if($("#"+inputs).attr('value') == '全选'){
+				$('.navs').iCheck('check');
+				$("#"+inputs).attr('value','取消全选');
+				$("input[name='"+divc+"']").attr('checked',true);
+			}else{
+				$('.navs').iCheck('uncheck');
+				$("#"+inputs).attr('value','全选');
+				$("input[name='"+divc+"']").removeAttr('checked',true);
+			}
+		}
+	</script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+	<!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+    	//i-checks
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmAdd(){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要提交该操作？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	
+                        document.getElementById("fieldaddform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    	function Layerconfirm(id){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要提交修改？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                        var mark=document.getElementById("field_mark").value;
+                    	if(!from_null(mark)){
+                    		layer.alert("请填写字段名称/标识");return false;
+                    	}
+                    	if(!from_chinese(mark)){
+                    		layer.alert("字段标识不能包含中文");return false;
+                    	}
+                        document.getElementById("fieldeditform"+id.value).submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    	function LayerconfirmDel(id){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要删除该字段？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                        window.location.href="?a=fields&c=<?php echo $cname[0]['cmark']; ?>&o=del&fid="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$GLOBALS['SITE']['keywords']}" />
+<meta name="description" content="{$GLOBALS['SITE']['description']}" />
+<title>{$channels_message['cname']}管理-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+<link href="{$GLOBALS['styles']}css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/font-awesome.css?v=4.3.0" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/plugins/iCheck/custom.css" rel="stylesheet">
+<style type="text/css">
+	#maillabel{width: 45%; position: relative;}
+	#mailBox{background:#fff;border:1px solid #ddd;padding:3px 5px 5px;position:absolute;z-index:9999;display:none;-webkit-box-shadow:0px 2px 7px rgba(0, 0, 0, 0.35);-moz-box-shadow:0px 2px 7px rgba(0, 0, 0, 0.35);width: 94%;}
+	#mailBox p{width:100%;margin:0;padding:0;height:20px;line-height:20px;clear:both;font-size:12px;color:#ccc;cursor:default;}
+	#mailBox ul{padding:0;margin:0; float: left; width: 100%;}
+	#mailBox li{font-size:12px;height:22px;line-height:22px;color:#939393;font-family:'Tahoma';list-style:none;cursor:pointer;overflow:hidden; width: 100%;}
+	#mailBox .cmail{color:#000;background:#e8f4fc;}
+</style>
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+<script src="{$GLOBALS['WWW']}system/js/wpfrom.js" type="text/javascript"></script>
+<!-- layer弹出层 -->
+<script src="{$GLOBALS['styles']}js/plugins/layer/layer.min.js"></script>
+<script type="text/javascript">
+	function Layerformpost(){
+		var nickname=$("#nickname").val();
+		if(!from_max(nickname,20)){
+			layer.msg("用户昵称不要超过20个字符");return false;
+		}
+		var mobile=$("#mobile").val();
+		if(mobile!='' && !from_mobile(mobile)){
+			layer.msg("请输入正确格式的手机号码");return false;
+		}
+		var telephone=$("#telephone").val();
+		if(telephone!='' && !from_phone(telephone)){
+			layer.msg("请输入正确格式的电话号码，如010-88888888");return false;
+		}
+		var email=$("#email").val();
+		if(email!='' && !from_email(email)){
+			layer.msg("请输入正确格式的邮箱");return false;
+		}
+		var zipcode=$("#zipcode").val();
+		if(zipcode!='' && !from_zipCode(zipcode)){
+			layer.msg("请输入正确格式的邮政编码");return false;
+		}
+	}
+</script>
+<script type="text/javascript" src="{$GLOBALS['styles']}js/autoMail.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#email').autoMail({
+			emails:['qq.com','163.com','126.com','sina.com','sohu.com','yahoo.cn','gmail.com','hotmail.com','live.cn']
+		});
+	});
+</script>
+</head>
+
+<body>
+<!-- Header Starts Here -->
+<div class="banner member-banner" >
+	{include="header.html"}
+</div>
+<div class="clearfix"> </div>
+<!-- Header Ends Here -->	
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="content border-gray m-xs">
+			{include="member/header.html"}
+			<div class="account-main clearfix">	
+				<div class="col-xs-2">
+				    {include="member/menu.html"}
+				</div>
+			    <div class="col-xs-10">
+			        <div class="user-box-1">
+			            <div class="user-box-title-1 ">
+			                <h2>我的{$channels_message['cname']}</h2>
+			            </div>
+			            <table class="table table-bordered message-table" border="0" width="100%" cellpadding="0" cellspacing="0">
+			            	<thead>
+			            		<tr>
+			            			<td>标题</td>
+			            			<td>内容</td>
+			            			<td>所属栏目</td>
+			            			<td>来自招聘？</td>
+			            			<td>发布时间</td>
+			            			<td>是否审核</td>
+			            			<td>是否回复</td>
+			            			<td>操作</td>
+			            		</tr>
+			            	</thead>
+			            	{foreach $lists as $v}
+			                <tr>
+			                    <td>{fun newstr($v['title'],10)}</td>
+			                    <td>{fun newstr($v['detail'],10)}</td>
+			                    <td>{fun navname($v['nid'])}</td>
+			                    <td>{fun contentinfo($v['cmark'],$v['rid'],'title',true,10)}</td>
+			                    <td>{fun date("Y-m-d H:i:s",$v['addtime'])}</td>
+			                    <td>{if($v['statu']==1)}<font color="green">是</font>{else}<font color="red">否</font>{/if}</td>
+			                    <td>{if($v['restatu']==1)}<font color="green">是</font>{else}<font color="red">否</font>{/if}</td>
+			                    <td><button class="btn btn-primary btn-xs" style="margin-right: 5px;"><i class="fa fa-search"></i> 查看</button><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i> 删除</button></td>
+			                </tr>
+			              {/foreach}
+			            </table>
+			        </div>
+			    </div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include="footer.html"}
+<script src="{$GLOBALS['styles']}js/plugins/iCheck/icheck.min.js"></script>
+<script type="text/javascript">
+	//i-checks
+	$('.i-checks').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_square-green',
+    });
+</script>
+<script type="text/javascript">
+	//获取省下级市
+	$("#province").change(function(){
+		$.ajax({
+			type:"post",
+			url:site_dir+'index.php?action=district&o=get_city',
+			async:true,
+			data:"upid="+$("#province").val(),
+			success: function(html){
+				$("#cityinfo").show();
+				$("#city").append(html);
+			}
+		});
+	});
+	//获取市下级区
+	$("#city").change(function(){
+		$.ajax({
+			type:"post",
+			url:site_dir+'index.php?action=district&o=get_dist',
+			async:true,
+			data:"upid="+$("#city").val(),
+			success: function(html){
+				$("#distinfo").show();
+				$("#dist").append(html);
+			}
+		});
+	});
+	//显示详细地址输入框
+	$("#distinfo").change(function(){
+		$("#addinfo").show();
+	});
+</script>
+<script type="text/javascript" src="{$GLOBALS['styles']}js/date-select.js"></script>
+<script type="text/javascript"> 
+	var selYear = document.getElementById("selYear"); 
+	var selMonth = document.getElementById("selMonth"); 
+	var selDay = document.getElementById("selDay"); 
+	// 新建一个DateSelector类的实例，将三个select对象传进去 
+	new DateSelector(selYear, selMonth, selDay, {if($member['birthyear'])}{$member['birthyear']}{else}{fun date("Y")}{/if},{if($member['birthmonth'])}{$member['birthmonth']}{else}{fun date("m")}{/if},{if($member['birthday'])}{$member['birthday']}{else}{fun date("d")}{/if}); 
+</script> 
+</body>
+</html>

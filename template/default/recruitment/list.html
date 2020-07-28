@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$type['keywords']}" />
+<meta name="description" content="{$type['description']}" />
+<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public2.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+<script type="text/javascript" src="{$GLOBALS['styles']}js/other.js"></script>
+</head>
+
+<body>
+{include="header.html"}
+<div class="parbase clearfix keyvisual">
+	<div class="visual_top" id="visualSubMain">
+		<figure class="visual_image" id="visTop01">
+			{getdata data_table="ads" data_taid="6" data_type="2" data_limit="1"}
+			<img src="{$v['adfile']}" alt="">
+			{/getdata}
+			<figcaption style="height: 360px; margin-top: -360px;">
+				<div class="tit">诚聘英才，虚位以待</div>           
+				<p style="">我们竭尽全力吸引和培育认同我们核心价值观<br/>
+	(开拓进取、无私奉献和诚实公正)的人才。<br/>
+	在相互信任、彼此忠诚的环境下，我们全力支持各位人才的发展，<br/>
+	努力将其培育成世界一流的领导者，共创更加美好的未来。</p>            
+			</figcaption>
+		</figure>
+	</div>
+</div>      
+<div class="page-subnav">
+  <ul class="container">
+  	{getdata data_table="navigators" data_nid="33" data_statu="1"}
+    <li class="page-tab {if($type['nid']==$v['nid'])}current{/if}"><a href="{$v['url']}">全部</a></li>
+    {/getdata}
+    {getdata data_table="navigators" data_ngid="33" data_statu="1"}
+    <li class="page-tab {if($type['nid']==$v['nid'])}current{/if}"><a href="{$v['url']}">{$v['nname']}</a></li>
+    {/getdata}
+  </ul>
+</div>
+<div class="archive-container container">
+<div class="jobs-wrapper">
+    <div class="jobs-content col-sm-8">
+      <div class="jobs-list">
+      	{foreach $lists as $v}
+      	<article class="post-job">
+      		<div class="post-wrapper">
+                <div class="post-box">
+                	<h2 class="entry-title"><a href="{$v['url']}" rel="bookmark" target="_blank">{$v['title']}</a></h2>                    
+                </div>
+           </div>
+      	</article>
+      	{/foreach}
+      </div>
+    </div>
+    <div class="sidebar col-sm-4" style="margin-top: 0px !important;">
+    	<div class="sidebar-wrapper">
+    		<div class="sidebar-section">
+    			<h3>推荐工作</h3>
+    		</div>
+    		{getdata data_table="recruitment" data_nid="33" data_lipic="1" data_order="hints|desc,addtime|desc" data_limit="5"}
+    		<div class="sidebar-section sidebar-ad">
+		      <div class="ad-wrapper">
+		        <a href="{$v['url']}" target="_blank"><img src="{$v['lipic']}" class="img-responsive"></a>
+		        <a href="{$v['url']}" target="_blank" class="ad-text">{$v['title']}</a>
+		      </div>
+		    </div>
+			{/getdata}
+    	</div>
+    </div>
+</div>
+</div>
+{include="footer.html"}
+</body>
+</html>

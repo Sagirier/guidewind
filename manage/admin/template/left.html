@@ -1,0 +1,128 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+<div class="sidebar-collapse">
+    <ul class="nav" id="side-menu">
+        <li class="nav-header">
+
+            <div class="dropdown profile-element"> 
+            	<span>
+	            	<?php if($user['avator']!=''){ ?>
+			        <img class="img-circle" alt="<?php echo $user['user']; ?>" src="<?php echo $user['avator']; ?>">
+			        <?php }else{ ?>
+			        <img class="img-circle" alt="该管理员未设置头像" src="manage/admin/template/img/adminnopic.png">
+			        <?php } ?>
+                </span>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="?">
+                    <span class="clear"> 
+                    	<span class="block m-t-xs"> <strong class="font-bold"><?php echo $user['user']; ?></strong></span> 
+                    	<span class="text-muted text-xs block"><?php if($user['level']==9){ echo "超级管理员";}else{ $admingroup=syDB('admin_group')->findALL();foreach($admingroup as $g){ if($user['gid']==$g['gid']){ echo $g['name'];}}} ?> <b class="caret"></b></span> 
+                    </span>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                    <li><a href="?action=adminuser&o=info&auid=<?php echo $user['auid']; ?>">修改头像</a></li>
+                    <li><a href="?action=adminuser&o=info&auid=<?php echo $user['auid']; ?>">个人资料</a></li>
+                    <li><a href="http://www.nwpit.com/html/c/7/" target="_blank">联系我们</a></li>
+                    <li><a href="?action=adminuser&o=info&auid=<?php echo $user['auid']; ?>">信箱</a></li>
+                    <li class="divider"></li>
+                    <li><a href="?action=login&o=out">安全退出</a></li>
+                </ul>
+            </div>
+            <div class="logo-element">
+            </div>
+        </li>
+        <li<?php if($a == ''){echo ' class="active"';} ?>>
+            <a class="cont" href="?"><i class="fa fa-th-large"></i><span class="nav-label">主页</span></a>
+        </li>
+        <li<?php if($a == 'website'){echo ' class="active"';} ?>>
+            <a class="cont" href="?a=website"><i class="fa fa fa-globe"></i> <span class="nav-label">网站相关设置</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li><a href="?action=website&o=basic">网站基本设置</a></li>
+                <li><a href="?action=website&o=template">模板设置</a></li>
+                <li><a href="?action=ads">广告设置</a></li>
+                <li><a href="?action=links">友情链接设置</a></li>
+            </ul>
+        </li>
+        <li<?php if($a == 'navigators'){echo ' class="active"';} ?>>
+            <a class="cont"><i class="fa fa-sitemap"></i> <span class="nav-label">导航栏设置 </span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+            	<li><a href="?action=navigators">导航栏管理</a></li>
+            	<!--<?php if($mainnav){foreach($mainnav as $v){ ?>
+                <li>
+                    <a class="list-arrow">&nbsp;<?php foreach($secnav as $t){if($t['ngid']==$v['nid']){ ?><span class="fa arrow"></span><?php }} ?></a><button class="nav_del navigators" type="button" onclick="window.location.href='?action=navigators&o=edit&nid=<?php echo $v['nid']; ?>'"><i class="fa fa-flag-checkered white-color"></i><label><?php echo $v['name']; ?></label></button>
+                    <ul class="nav nav-third-level">
+                    	<?php foreach($secnav as $t){ if($t['ngid']==$v['nid']){ ?>
+                        <li><a class="list-arrow">&nbsp;<?php foreach($trdnav as $s){if($s['ngid']==$t['nid']){ ?><span class="fa arrow"></span><?php }} ?></a><button class="nav_del navigators" type="button" onclick="window.location.href='?action=navigators&o=edit&nid=<?php echo $t['nid']; ?>'"><i class="fa fa-flag white-color"></i><label><?php echo $t['name']; ?></label></button>
+		                    <ul class="nav nav-forth-level">
+		                    	<?php foreach($trdnav as $s){ if($s['ngid']==$t['nid']){ ?>
+		                        <li><a class="list-arrow">&nbsp;</a><button class="nav_del navigators" type="button" onclick="window.location='?action=navigators&o=edit&nid=<?php echo $s['nid']; ?>'"><i class="fa fa-flag-o white-color"></i><label><?php echo $s['name']; ?></label></button></li>
+		                        <?php }} ?>
+		                    </ul>
+                        </li>
+                        <?php }} ?>
+                    </ul>
+                </li>
+                <?php }} ?>-->
+            </ul>
+        </li>
+        <li<?php if($a == 'contents'){echo ' class="active"';} ?>>
+            <a class="cont"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">网站内容管理</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <?php foreach($cmark as $v){if($v['cmark']!='message'){ ?>
+                <li class="list-top"><a href="?action=<?php echo $v['cmark']; ?>&o=add"><i class="fa fa-plus"></i> 添加<?php echo $v['cname']; ?></a></li>
+                <?php } ?>
+                <li<?php if($v['cmark']=='message'){ echo ' class="list-all"';}else{ echo ' class="list-btn"';} ?>><a href="?action=<?php echo $v['cmark']; ?>"><i class="fa fa-laptop"></i><?php echo $v['cname']; ?>管理</a></li>
+                <?php } ?>
+                <li class="list-all"><a href="?action=comment"><i class="fa fa-laptop"></i>评论管理<?php if(count(getComment(array('statu'=>0)))>0){echo '<img src="system/new.gif" class="new" />';} ?></a></li>
+                <li class="list-all"><a href="?action=backlog"><i class="fa fa-laptop"></i>待办事项<?php if(syClass('sybacklog')->get_backlog_num()>0){ echo '<img src="system/new.gif" class="new" />';} ?></a></li>
+            </ul>
+        </li>
+        <li<?php if($a == 'channels'){echo ' class="active"';} ?>>
+            <a class="cont"><i class="fa fa-edit"></i> <span class="nav-label">频道管理</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li><a href="?action=channels">频道列表</a></li>
+                <li><a href="?action=channels&o=add">添加频道</a></li>
+            </ul>
+        </li>
+        <li<?php if($a == 'functions'){echo ' class="active"';} ?>>
+            <a class="cont"><i class="fa fa-desktop"></i> <span class="nav-label">插件管理</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+            	<li><a href="?action=functions&o=member_sys">会员系统</a></li>
+                <li><a href="?action=functions&o=transaction">购物系统</a></li>
+                <li><a href="?action=functions&o=payment">支付系统</a></li>
+                <li><a href="?action=functions&o=ads_sys">广告投放</a></li>
+                <li><a href="?action=functions&o=links_sys">友情链接</a></li>
+                <li><a href="?action=functions&o=comment_sys">评论系统</a></li>
+                <li><a href="?action=functions&o=add">安装新插件   <i class="fa fa-plus"></i></a></li>
+            </ul>
+        </li>
+        <li<?php if($a == 'member'){echo ' class="active"';} ?>>
+            <a class="cont"><i class="fa fa-group"></i> <span class="nav-label">会员管理</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li><a href="?action=member">会员列表</a></li>
+                <li><a href="?action=member&o=group">会员分组管理</a></li>
+                <li><a href="?action=fields&c=member">会员字段管理</a></li>
+                <li><a href="?action=member&o=add">添加会员   <i class="fa fa-plus"></i></a></li>
+                <li><a href="?action=adminuser">管理员列表</a></li>
+                <li><a href="?action=adminuser&o=group">管理员分组</a></li>
+            </ul>
+        </li>
+        <li<?php if($a == 'system'){echo ' class="active"';} ?>>
+            <a class="cont"><i class="fa fa-cogs"></i> <span class="nav-label">系统设置</span><span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+                <li><a href="?action=system&o=uploads">文件上传设置</a></li>
+                <li><a href="?action=system&o=statichtml">静态html设置</a></li>
+                <li><a href="?action=system&o=rewrite">伪静态设置</a></li>
+                <li><a href="?action=system&o=other">其他设置</a></li>
+                <li><a href="?action=system&o=email">邮件收发设置</a></li>
+                <li><a href="?action=label">模板调用生成器</a></li>
+                <li><a href="?action=statichtml">更新静态html</a></li>
+                <li><a href="?action=system&o=sys_ecache">更新缓存</a></li>
+                <li><a href="?action=databackup">数据备份</a></li>
+                <!--<li><a href="?action=system&o=files">清理附件</a></li>-->
+                <!--<li><a href="?action=system&o=update">系统升级</a></li>-->
+                <!--<li><a href="?action=system&o=helps">在线帮助</a></li>-->
+            </ul>
+        </li>
+    </ul>
+
+</div>
+</nav>

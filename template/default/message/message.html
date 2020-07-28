@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="{$type['seo_keywords']}" />
+	<meta name="description" content="{$type['description']}" />
+	<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+	<link rel="stylesheet" href="{$GLOBALS['styles']}js/vendor/layui/css/layui.css">
+	{include="public/css.html"}
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">您的浏览器 <strong>版本太低</strong> ，请 <a href="http://browsehappy.com/" rel="nofollow">升级</a> 后再访问本站！</p>
+<![endif]-->
+{include="public/header.html"}
+<div class="wrapper body-wrapper blue-bg">
+	<div class="wrapper-content">
+		<div class="slider-area slider-2">
+			<div id="single-slider" class="nivoSlider">
+				{getdata data_table="ads" data_taid="11" data_type="2" data_limit="5"}
+				<img style ="display:none" src="{$v['adfile']}"  data-thumb="{$v['adfile']}"  alt="{$v['name']}" title="#htmlcaption{$v['n']}">
+				{/getdata}
+			</div>
+		</div>
+		<div class="panel-body gray-bg ptb-60">
+			<div class="container">
+				<div class="section-title text-center">
+					<h1>01<span>采购需求填写</span></h1>
+					<div class="clearfix"></div>
+					<p>填写您的采购需求，提交后客服会在第一时间联系您</p>
+				</div>
+				<div class="col-md-8 center-block mt-40" style="float: none;">
+					<div class="help-contact-area white-bg shadow ptb-40">
+						<form class="layui-form form-group">
+							<div class="form-single">
+								<input id="name" name="name" lay-verify="req" autocomplete="off" placeholder="* 姓名" class="form-control" type="text">
+							</div>
+							<div class="form-single">
+								<input id="phone" name="phone" lay-verify="req|phone" placeholder="* 联系方式" class="form-control" value="" type="tel">
+							</div>
+							<div class="form-single">
+								<input id="company" name="company" lay-verify="req" class="form-control" placeholder="* 单位名称" value="" type="text">
+							</div>
+							<div class="form-single">
+								<input id="address" name="address" lay-verify="req" class="form-control" placeholder="* 联系地址" value="" type="text">
+							</div>
+							<div class="layui-form-item">
+								<input type="hidden" name="device_type" value="0" />
+								<select name="device_type_name" id="device-type" lay-verify="req" lay-filter="deviceType">
+									<option disabled selected value="">* 需求产品</option>
+									{getdata data_table="navigators" data_ngid="1"}
+									<option value="{$v['nname']}">{$v['nname']}</option>
+									{/getdata}
+								</select>
+							</div>
+							<div class="form-single">
+								<input name="device_number" id="number" lay-verify="req|number" placeholder="* 需求数量" class="form-control" value="" type="tel">
+							</div>
+							<div class="form-textarea">
+								<textarea name="remark" id="remark" placeholder="备注（选填）" class="form-control" style="min-height: 51px;"></textarea>
+							</div>
+							<div class="contact-button">
+								<button class="contact-submit sub-btn" type="button" lay-submit="" lay-filter="submitForm"><i class="fa fa-send"></i> 立即提交</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+	<div class="wrapper-content">
+		<div class="panel-body gray-bg ptb-60">
+			<div class="container">
+				<div class="section-title text-center">
+					<h1>02<span>联系电话</span></h1>
+					<div class="clearfix"></div>
+					<p>直接拨打我们的客服电话，优先了解产品价格</p>
+				</div>
+				<div class="text-center ptb-60">
+					<h1><i class="zmdi zmdi-phone"></i> 采购：<a href="tel:13605745691" class="text-red" rel="nofollow">13605745691（杨总）</a></h1>
+					<h1><i class="zmdi zmdi-phone"></i> 售后服务热线：<a href="tel:400-718-5885" class="text-red" rel="nofollow">400-718-5885</a></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{include="public/footer.html"}
+{include="public/js.html"}
+<script type="text/javascript" src="{$GLOBALS['styles']}js/vendor/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var layer = layui.layer, form = layui.form;
+        //自定义验证规则
+        form.verify({
+            req: function(value, item){
+                if(value==='') return "请填写"+$(item).attr('placeholder').replace('* ','');
+            }
+        });
+        //监听提交
+        form.on('submit(submitForm)', function(data){
+            layer.confirm('您确定要提交采购需求，提交成功后客服会在第一时间联系您，请保持电话畅通？',function () {
+                jQuery.ajax({
+                    type: "POST",
+                    url: "{$GLOBALS['WWW']}?action=message&o=preparation",
+                    data: data.field,
+                    dataType: "json",
+                    async: false,
+                    cache: false,
+                    success: function (e) {
+                        layer.msg(e.msg);
+                    },
+                    error:function () {
+                        layer.msg('系统繁忙');
+                    }
+                });
+            })
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

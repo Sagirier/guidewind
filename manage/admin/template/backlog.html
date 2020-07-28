@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 内容管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>网站内容管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            <a>网站内容管理</a>
+                        </li>
+                        <li>
+                            <strong>
+                            	<font color="#1AB394">待办事项</font> 
+                            </strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated">
+                <div class="row">
+                    <div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>待办事项列表</h5>
+                            </div>
+                            <div class="ibox-content">
+                            	<form action="" method="get" id="articlesearch">
+                            	<input type="hidden" name="action" value="backlog" />
+                            	<div class="sch">
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="nid" name="backlog-cmark">
+										<option hassubinfo="true" value=""<?php if(!$conditions['nid']){echo ' selected="selected"';} ?>>所属频道</option>
+										<?php foreach($cmark as $c){ ?>
+								        <option value="<?php echo $c['cmark']; ?>"<?php if($conditions['cmark']==$c['cmark']){echo ' selected="selected"';} ?>><?php echo $c['cname']; ?></option>
+								        <?php } ?>
+									</select>
+                            		</div>
+                            		<div class="sch-form width-auto">
+                            			<input type="search" id="schid" name="title" class="form-control" placeholder="请输入标题" />
+                            			<button type="submit" id="sbtnid" class="btn btn-info">搜索</button>
+                            		</div>
+                            	</div>
+                            	</form>
+                            	<form action="?action=backlog&o=alledit" id="formall" method="post" onsubmit="return false;">
+                            	<input name="formnum" id="formnum" type="hidden" value="" />
+                            	<div class="btn-group full-width">
+                            	<table class="full-width m-b table-bordered article-table">
+                            		<thead>
+                            			<tr>
+                            				<td>id</td>
+                            				<td>选择</td>
+                            				<td>标题</td>
+                            				<td>状态</td>
+                            				<td>所属频道</td>
+                            				<td>所属栏目</td>
+                            				<td>更新时间</td>
+                            				<td>操作</td>
+                            			</tr>
+                            		</thead>
+                            		<input type="hidden" id="current_page" />
+									<input type="hidden" id="show_per_page" />
+                            		<tbody id="content">
+                            			<?php foreach($lists as $v){ ?>
+                            			<tr id="target_<?php echo $v['id']; ?>">
+                            				<td><?php echo $v['id']; ?></td>
+                            				<td><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $v['id']."|".$v['nid']; ?>" /></td>
+                            				<td style="text-align: left;"><a href="?action=<?php echo channelsinfo(navinfo($v['nid'],'cmark'),'cmark'); ?>&o=edit&c=backlog&id=<?php echo $v['id']; ?>" onclick="AjaxView(this);" id="<?php echo $v['id']; ?>" data-id="<?php echo $v['nid']; ?>"><?php if(!viewStatu($v['id'],$v['nid'])){echo '<img src="system/newp.gif" />';} ?> <?php echo $v['title']; if($v['lipic']!=''){ echo ' <a title="缩略图"><i class="fa fa-picture-o" style="color:#1AB394"></i></a>';} if($v['password']!=''){ echo ' <a title="加密"><i class="fa fa-lock" style="color:#EC4758"></i></a>';} ?></a></td>
+                            				<td><?php if($v['statu']==1){ echo ' <font color="#1AB394">已审核</font>';}else{ echo ' <font color="#ED5565">未审核</font>';} ?></td>
+                            				<td><?php echo channelsinfo(navinfo($v['nid'],'cmark'),'cname'); ?></td>
+                            				<td><?php echo navname($v['nid']); ?></td>
+                            				<td><?php echo date("Y-m-d H:i:s",$v['addtime']); ?></td>
+                            				<td>
+						                        <button class="btn btn-info" onclick="Ajaxaudit(this);" value="<?php echo $v['id']; ?>" name="<?php echo $v['nid']; ?>"><i class="fa fa-clock-o"></i> 审核</button>
+                            			</tr>
+                            			<?php } ?>
+                            		</tbody>
+                            	</table>
+                            	</div>
+                            	<div class="btn-group full-width">
+									<div class="alledit-form">
+										<input type="button" id="alltype" class="btn btn-primary" onclick="alls('.showii .i-checks','alltype');" value="全选" />
+										<input type="button" class="btn btn-info" onclick="LayerconfirmAll(1);" value="批量设为已读" />
+										<input type="button" class="btn btn-success" onclick="LayerconfirmAll(2);" value="批量审核" />
+									</div>
+                            	</div>
+                            	</form>
+                            	<div class="btn-group pages" id="page_navigation"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<!--分页-->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var show_per_page = 10; 
+			var number_of_items = $('#content').children().size();
+			var number_of_pages = Math.ceil(number_of_items/show_per_page);
+			$('#current_page').val(0);
+			$('#show_per_page').val(show_per_page);
+			if(number_of_pages>1){
+				var navigation_html = '<a class="btn btn-white previous_link" href="javascript:previous();"><i class="fa fa-chevron-left"></i></a>';
+				var current_link = 0;
+				while(number_of_pages > current_link){
+					navigation_html += '<a class="btn btn-white page_link" href="javascript:go_to_page(' + current_link +')" longdesc="' + current_link +'">'+ (current_link + 1) +'</a>';
+					current_link++;
+				}
+				navigation_html += '<a class="btn btn-white next_link" href="javascript:next();"><i class="fa fa-chevron-right"></i></a>';
+				$('#page_navigation').html(navigation_html);
+				$('#page_navigation .page_link:first').addClass('active_page');
+				$('#content').children().attr("class","hidden");
+				$('#content').children().slice(0, show_per_page).attr("class","showii");
+			}else{
+				$('#content').children().attr("class","showii");
+			}
+		});
+		function previous(){
+			new_page = parseInt($('#current_page').val()) - 1;
+			if($('.active_page').prev('.page_link').length==true){
+				go_to_page(new_page);
+				$("#alltype").attr('value','全选');
+			}
+		}
+		function next(){
+			new_page = parseInt($('#current_page').val()) + 1;
+			//if there is an item after the current active link run the function
+			if($('.active_page').next('.page_link').length==true){
+				go_to_page(new_page);
+				$("#alltype").attr('value','全选');
+			}
+		}
+		function go_to_page(page_num){
+			var show_per_page = parseInt($('#show_per_page').val());
+			start_from = page_num * show_per_page;
+			end_on = start_from + show_per_page;
+			$('#content').children().attr("class","hidden").slice(start_from, end_on).attr("class","showii");
+			$('.page_link[longdesc=' + page_num +']').addClass('active_page').siblings('.active_page').removeClass('active_page');
+			$('#current_page').val(page_num);
+		}
+	</script>
+	<script type="text/javascript" language="javascript">
+		function AjaxView(id){
+		 	var ids=id.id;
+		 	var tag=document.getElementById(ids);
+		 	var tnid=tag.getAttribute("data-id");
+		 	$.ajax({
+		 		type:"post",
+		 		url:"?action=backlog&o=view",
+		 		async:true,
+		 		data:"id="+ids+"&nid="+tnid
+		 	});
+		}
+		function Ajaxaudit(id){
+			var idt=id.value;
+		 	var tnidt=id.name;
+		 	var target=document.getElementById("target_"+idt)
+		 	$.ajax({
+		 		type:"post",
+		 		url:"?action=backlog&o=audit",
+		 		async:true,
+		 		data:"id="+idt+"&nid="+tnidt,
+		 		success:function(msg){
+		 			var alertii=$.layer({
+		                area: ['180px','130px'],
+		                title: '系统提示',
+		                closeBtn: false,
+		                dialog: {
+		                    msg: msg,
+		                    btns: 1,                    
+		                    type: 1,
+		                    btn: ['确定'],
+		                    yes: function(){
+		                    	target.remove();
+		                    	layer.close(alertii);
+		                    }, no: function(){
+		                        return false;
+		                    }
+		                }
+		            });
+		 		}
+		 	});
+		}
+	</script>
+	<script type="text/javascript">
+		function alls(divc,inputs){
+			if($("#"+inputs).attr('value') == '全选'){
+				$('.showii .i-checks').iCheck('check');
+				$("#"+inputs).attr('value','取消全选');
+				$(divc).attr('checked',true);
+			}else{
+				$('.showii .i-checks').iCheck('uncheck');
+				$("#"+inputs).attr('value','全选');
+				$(divc).removeAttr('checked',true);
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$("#nid option[class='hidden']").remove();
+			$(".searchauto").change(function(){$("#articlesearch").submit();});
+		});
+	</script>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmAll(num){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要执行批量操作吗？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	document.getElementById("formnum").value=num;
+                    	document.getElementById("formall").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function LayerconfirmDel(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要删除<?php echo $cname['cname']; ?> [<font color="#337AB7">'+name+'</font>]？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	window.location.href="?action=<?php echo $cname['cmark']; ?>&o=del&id="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+
+</body>
+</html>

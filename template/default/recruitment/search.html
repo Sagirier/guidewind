@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$type['keywords']}" />
+<meta name="description" content="{$type['description']}" />
+<title>{$type['title']}-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+
+<link href="{$GLOBALS['styles']}css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/font-awesome.css?v=4.3.0" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/plugins/chosen/chosen.css" rel="stylesheet">
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+</head>
+
+<body>
+<div class="banner inner-banner" >
+{include="header.html"}
+<div id="breadcrumb_wrapper">
+	<div class="container">		
+		<h3>{$type['nname']}</h3>
+		<h6>{$type['description']}</h6>
+		<div class="clearfix"></div>
+	</div>
+</div>
+</div>
+<div class="clearfix"> </div>
+<div class="no-padding no-margin bgefe">
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="pannel">
+				<div class="list-top">
+					<h5>当前位置：{$positions}</h5>
+				</div>
+				<ul class="lists">
+					{if($lists)}
+					{foreach $lists as $v}
+					<li>
+						<div class="one_one">
+							<div class="pricing_left prices">
+								<h6>{fun date("d",$v['addtime'])}</h6>
+								<span class="month">{fun date("M",$v['addtime'])}</span>
+								<span class="year">{fun date("Y",$v['addtime'])}</span>
+							</div>
+							<div class="pricing_middle prices">
+								<p class="title">
+									<label><a href="{$v['url']}">{$v['title']}</a></label>
+									{if($v['lipic']!='')}<label><a title="该内容有缩略图"><i class="fa fa-picture-o" style="color:#1AB394;margin-left: 6px;font-size: 20px;"></i></a></label>{/if}
+									{if($v['traits']!='')}<label  class="traits">{fun get_traits_image($v['traits'])}</label>{/if}
+								</p>
+								<p><span>发布人：{$v['user']}</span><span>点击量：{$v['hints']}</span></p>
+							</div>
+							<div class="pricing_right prices">
+								<a href="{$v['url']}"><i class="fa fa-search"></i> <span class="view">点击查看详情</span></a>
+							</div>
+						</div>
+					</li>
+					{/foreach}
+					{else}
+					未找到任何内容。
+					{/if}
+				</ul>
+				{if($pages)}<ul class="pages">{$pages}</ul>{/if}
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{include="footer.html"}
+</body>
+</html>

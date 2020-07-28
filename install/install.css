@@ -1,0 +1,135 @@
+@charset "utf-8";
+* {word-wrap: break-word;}
+body {font-size:12px;font-family: "微软雅黑",Arial; color:#555;}
+body, ul, ol, li, dl, dd, p, h1, h2, h3, h4, h5, h6, form, fieldset, hr {margin: 0; padding: 0; border:0;}
+.light-gray-bg {
+    background-color: #EFEFEF;
+}
+.templatemo-login-widget {
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px;
+}
+.templatemo-content-widget {
+	border-radius: 10px;
+	padding: 30px;	
+	position: relative;
+	margin: 10px;
+ 	box-shadow: 0px 0px 1px 1px rgba(161, 159, 159, 0.1);
+}
+.white-bg {
+    background-color: #FFF;
+}
+.templatemo-login-widget header {
+    margin-bottom: 40px;
+}
+.text-center {
+    text-align: center;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+.templatemo-login-widget .square {
+    width: 18px;
+    height: 18px;
+}
+.square {
+    width: 25px;
+    height: 25px;
+    border: 3px solid #13895F;
+    display: inline-block;
+    vertical-align: middle;
+}
+.templatemo-login-widget h1 {
+    display: inline-block;
+    font-size: 1.8em;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.input-group p{
+	color: #39ADB4;
+}
+.input-group-addon:first-child {
+    border-right: 0px none;
+}
+.input-group .form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group > .btn, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn-group:not(:last-child) > .btn, .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.input-group-addon {
+    background: transparent none repeat scroll 0% 0%;
+}
+.input-group-addon {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #EEE;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+}
+.input-group-addon, .input-group-btn {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.input-group .form-control, .input-group-addon, .input-group-btn {
+    display: table-cell;
+}
+.input-group-hint{
+	border:1px solid #d5d5d5;
+	float: left;
+	text-indent: 13px;
+	color: #999;
+	width: 100%;
+	border-top: none;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+.templatemo-blue-button {
+    background-color: #39ADB4;
+    border: medium none;
+    color: #FFF;
+}
+.templatemo-blue-button, .templatemo-white-button {
+    border-radius: 2px;
+    padding: 10px 30px;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+}
+.width-100 {
+    width: 100%;
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+input {
+    line-height: normal;
+}
+button, input, optgroup, select, textarea {
+    margin: 0px;
+    font: inherit;
+    color: inherit;
+}
+
+.templatemo-login-widget {
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 50px 50px 15px;
+}

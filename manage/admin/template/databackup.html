@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - <?php echo $title; ?></title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2><?php echo $title; ?></h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            系统设置
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394"><?php echo $title; ?></font></strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated">
+				<div class="row">
+				    <div class="col-lg-6 full-width">
+				    	<div class="ibox-title">
+				            <h5><?php echo $title; ?></h5>
+				        </div>
+				        <div class="ibox-content">
+				                <div class="panel blank-panel">
+				                    <div class="panel-heading">
+				                        <div class="panel-options">
+				                            <ul class="nav nav-tabs">
+				                                <li class="active"><a data-toggle="tab" href="#backup">数据备份</a></li>
+				                                <li class=""><a data-toggle="tab" href="#recovery">数据恢复</a></li>
+				                                <li class=""><a data-toggle="tab" href="#optimize">优化数据库</a></li>
+				                            </ul>
+				                        </div>
+				                    </div>
+				            		<div class="panel-body">
+				                		<div class="tab-content">
+				                    		<div id="backup" class="tab-pane active">
+				                    			<form name="form1" id="backupform" onsubmit="return false;">
+				                        			<dl><dt>分卷大小：</dt><dd><label style="width: 90%;"><input name="filesize" type="text" value="1024" class="form-control"></label><label style="width: 10%;line-height: 34px;vertical-align: top;">&nbsp;K</label></dd></dl>
+				                        			<dl><dt>&nbsp;</dt><dd><input type="submit" value="立即备份" class="btn btn-primary" onclick="layerCheckgo();" /></dd></dl>
+				                        			<dl><dt>选择数据表：</dt>
+				                        				<dd id="wp"><input type="button" value="取消全选" id="allwp" onclick="cwp(this);" class="btn btn-info auth_btn" /><strong>系统表</strong><br />
+													        <?php foreach($dbwp as $v){ ?>
+													        <input name="tables[]" type="checkbox" value="<?php echo $v; ?>" checked="checked" class="i-checks allwp" /><?php echo $v; ?><br />
+															<?php } ?>
+													    </dd>
+													    <dd id="other">
+													    	<input type="button" value="全选" id="allother" onclick="cwp(this);" class="btn btn-info auth_btn" /><strong>其他表</strong><br />
+													        <?php foreach($dbother as $v){ ?>
+													        <input name="tables[]" type="checkbox" class="i-checks allother" value="<?php echo $v; ?>" /><?php echo $v; ?><br />
+															<?php } ?>
+														</dd>
+				                        			</dl>
+				                                </form>
+				                    		</div>
+				                            <div id="recovery" class="tab-pane">
+				                                <form name="form2" id="recoveryform" onsubmit="return false;">
+				                        			<dl>
+				                        				<dt>选择备份文件：</dt>
+				                        				<dd><label style="width: 260px;">
+				                        					<select name="serverfile" class="chosen-select">
+				                        					<option value="">请选择</option>
+													        <?php
+													        while(false!==($file=readdir($handle))) { 
+																if(preg_match("/^[0-9]{4,4}([0-9a-z-]+)(\.php)$/",$file)){echo "<option value='$file'>".str_replace('.php','',$file)."</option>";}
+													        }
+															closedir($handle);
+															?>
+													        </select>
+				                        			</label></dd>
+				                        			</dl>
+				                        			<dl><dt>&nbsp;</dt><dd><input id="recoverybtn" type="button" value="立即恢复" class="btn btn-primary" /></dd></dl>
+				                                </form>
+				                            </div>
+				                            <div id="optimize" class="tab-pane">
+				                                <form name="form3" id="optimizeform" onsubmit="return false;">
+				                        			<dl><dt>&nbsp;</dt><dd><input id="optimizebtn" type="button" value="立即优化" class="btn btn-primary" /></dd></dl>
+				                        			<dl><dt>选择数据表：</dt>
+				                        				<dd id="wp"><input type="button" value="取消全选" id="allwpa" onclick="cwp(this);" class="btn btn-info auth_btn" /><strong>系统表</strong><br />
+													        <?php foreach($dbwp as $v){ ?>
+													        <input name="tables[]" type="checkbox" value="<?php echo $v; ?>" checked="checked" class="i-checks allwpa" /><?php echo $v; ?><br />
+															<?php } ?>
+													    </dd>
+													    <dd id="other">
+													    	<input type="button" value="全选" id="allothera" onclick="cwp(this);" class="btn btn-info auth_btn" /><strong>其他表</strong><br />
+													        <?php foreach($dbother as $v){ ?>
+													        <input name="tables[]" type="checkbox" class="i-checks allothera" value="<?php echo $v; ?>" /><?php echo $v; ?><br />
+															<?php } ?>
+														</dd>
+				                        			</dl>
+				                                </form>
+				                            </div>
+				                		</div>
+				            		</div>
+				                </div>
+				        </div>
+				    </div>
+				</div>
+			</div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+		function layerCheckgo(){
+			$.ajax({ //数据备份
+				type:"post",
+				url:"?action=databackup&o=backup",
+				async:false,
+				cache:false,
+				data:$("#backupform").serialize(),
+				dataType:"json",
+				success:function(html){
+					if(html.errno==100 || html.errno==101 || html.errno==103){
+						layer.msg(html.res,1,0);
+						return false;
+					}
+					layer.msg('<strong>正在进行数据库操作，请稍后...</strong>',html.time,11,function(){
+						layer.alert(html.res,1);
+					});
+				}
+			});
+		}
+    </script>
+	<script type="text/javascript">
+		$(function(){
+			$("#recoverybtn").click(function(){  //数据恢复
+				layer.confirm('<font color="red">恢复数据将覆盖现有数据！</font><br/>确定恢复数据吗？',function(){
+					$.ajax({ //数据备份
+						type:"post",
+						url:"?action=databackup&o=recovery",
+						async:false,
+						cache:false,
+						data:$("#recoveryform").serialize(),
+						dataType:"json",
+						success:function(html){
+							if(html.errno==100 || html.errno==101){
+								layer.msg(html.res,1,0);
+								return false;
+							}
+							layer.msg('<strong>正在进行数据库操作，请稍后...</strong>',html.time,11,function(){
+								if(html.errno==102){
+									layer.alert(html.res,1);
+								}
+							});
+						}
+					});
+				},function(){
+					layer.close();
+					return false;
+				})
+			});
+			$("#optimizebtn").click(function(){  //数据优化
+				$.ajax({ //数据备份
+					type:"post",
+					url:"?action=databackup&o=optimize",
+					async:false,
+					cache:false,
+					data:$("#optimizeform").serialize(),
+					dataType:"json",
+					success:function(html){
+						if(html.errno==100){
+							layer.msg(html.res,1,0);
+							return false;
+						}
+						layer.alert(html.res,1);
+						$("#optimize").empty();
+						$("#optimize").append(html.resa);
+					}
+				});
+			});
+		});
+		function cwp(obj){
+			if(obj.value == "取消全选"){
+				$('#'+obj.id).attr('value','全选');
+				$('.'+obj.id).iCheck('uncheck');
+				$('.'+obj.id).attr('checked',false);
+			}else{
+				$('#'+obj.id).attr('value','取消全选');
+				$('.'+obj.id).iCheck('check');
+				$('.'+obj.id).attr('checked',true);
+			}
+		}
+	</script>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+</body>
+</html>

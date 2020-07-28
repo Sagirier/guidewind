@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 导航栏设置</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>导航栏设置</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            <a href="?a=navigators">导航栏设置</a>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394">导航栏管理</font></strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated">
+                <div class="row">                    
+                    <div class="col-md-4">
+                        <div id="nestable-menu">
+                            <button type="button" data-action="expand-all" class="btn btn-white btn-sm">展开所有</button>
+                            <button type="button" data-action="collapse-all" class="btn btn-white btn-sm">收起所有</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>导航栏管理</h5>
+                                <div class="ibox-tools">
+                                    <a href="?action=navigators&o=add" class="btn btn-primary btn-xs">添加导航栏</a>
+                                </div>
+                            </div>
+                            <label style="padding: 8px 20px 5px;color: #999;font-weight: normal;"><i class="fa fa-exclamation channel-hint"></i> 提示：进行批量操作时，全选默认为选择<font color="red">全部栏目</font>，若要操作部分栏目，请<font color="#1C84C6">展开所有</font>后将不修改的栏目取消勾选后再提交！</label>
+                            <div class="ibox-content">
+                            	<form action="?action=navigators&o=alledit" id="formall" method="post" onsubmit="return false;">
+                            	<input name="formnum" id="formnum" type="hidden" value="" />
+                            	<div class="btn-group full-width over-x">
+                            	<div class="dd table-1600" id="nestable2">
+	                                <ol class="dd-list" id="mylistmain">
+	                                <li class="dd-item">
+	                                	<div class="dd-handle">
+	                                		<div style="float: left;">
+	                                		<span style="width: 40px;">id</span>
+	                                		<span style="width: 50px;">选择</span>
+	                                		<span style="width: 50px;">顺序</span>
+	                                		<span style="width: 22px;">&nbsp;</span>
+	                                		<span style="width: 152px; text-align: left;">栏目名称</span>
+	                                		<span style="width: 95px;">所属频道</span>
+	                                		<span style="width: 95px;">是否显示</span>
+	                                		</div>
+	                                		<div style="float: right;">
+	                                		<span style="text-align: center; width: 362px;">栏目操作</span>
+	                                		</div>
+	                                	</div>
+	                                </li>
+	                                <?php if($main_nav){ foreach($main_nav as $v){ ?>
+	                                    <li class="dd-item ItemToAddmain" id="ItemToAddmain<?php echo $v['nid']; ?>">
+	                                        <div class="dd-handle">
+	                                        	<div style="float: left;">
+	                                        	<span style="width: 40px;"><label class="label label-info"><?php echo $v['nid']; ?></label></span>
+	                                        	<span style="width: 50px;"><label><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $v['nid']; ?>" /></label></span>
+	                                        	<span style="width: 50px;"><label class="label laber-order"><input type="text" value="<?php echo $v['order']; ?>" name="orders[<?php echo $v['nid']; ?>]" class="form-control no-clip W-20" /></label></span>
+	                                        	<span style="width: 22px;">&nbsp;</span>
+	                                            <span style="width: 152px; text-align: left;"><label class="label label-info"><i class="fa fa-leaf"></i></label> <a href="?action=navigators&o=edit&nid=<?php echo $v['nid']; ?>"><?php echo $v['nname']; ?></a></span>
+	                                            <span style="width: 95px;"><label><?php echo channelsinfo($v['cmark'],'cname'); ?></label></span>
+	                                            <span style="width: 95px;"><label><?php if($v['statu']==1){echo '<i class="fa fa-check" style="font-size:22px;color:#18A689"></i>';}else{echo '<i class="fa fa-times" style="font-size:22px;color:#F00"></i>';}  ?></label></span>
+	                                            </div>
+	                                            <div style="float: right;">
+	                                            <span style="width: 362px; margin-right: 8px;">
+	                                            	<div class="tooltip-demo">
+	                                            		<a class="btn btn-success" href="?action=navigators&o=add&ngid=<?php echo $v['nid']; ?>" title="添加下级栏目" data-toggle="tooltip" data-placement="top"><i class="fa fa-plus"></i> 栏目</a>
+	                                            	<a class="btn btn-info" href="index.php?action=<?php echo $v['cmark']; ?>&o=type&nid=<?php echo $v['nid']; ?>" target="_blank"><i class="fa fa-eye"></i> 预览</a>
+	                                            	<a class="btn btn-primary" href="?action=fields&c=<?php echo $v['cmark']; ?>&nid=<?php echo $v['nid']; ?>"><i class="fa fa-database"></i> 字段</a>
+	                                            	<a class="btn btn-success" href="?action=navigators&o=edit&nid=<?php echo $v['nid']; ?>"><i class="fa fa-pencil"></i> 编辑</a>
+	                                            	<button type="button" value="<?php echo $v['nid']; ?>" name="<?php echo $v['nname']; ?>" class="btn btn-danger" onclick="LayerconfirmDel(this);"><i class="fa fa-times"></i> 删除</button>
+	                                            	</div>
+	                                            </span>
+	                                            </div>
+	                                        </div>
+	                                        <?php if($sec_nav=$Class->findAll(array('ngid'=>$v['nid']),' `order` DESC,`nid` ')){ ?>
+	                                        	<ol class="dd-list" style="display: none;" id="mylistsec<?php echo $v['nid']; ?>">
+		                                        	<?php foreach($sec_nav as $t){ ?>
+		                                            <li class="dd-item" id="ItemToAddsec">
+		                                                <div class="dd-handle">
+		                                                	<div style="float: left;">
+		                                                	
+		                                                    <span style="width: 40px;"><label class="label"><?php echo $t['nid']; ?></label></span>
+		                                                    <span style="width: 50px;"><label><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $t['nid']; ?>" /></label></span>
+				                                        	<span style="width: 50px;"><label class="label laber-order"><input type="text" value="<?php echo $t['order']; ?>" name="orders[<?php echo $t['nid']; ?>]" class="form-control no-clip W-20" /></label></span>
+				                                        	<span style="width:22px;">&nbsp;</span>
+				                                            <span style="width: 152px; text-align: left;padding-left: 10px; "><label class="label"><i class="fa fa-fire"></i></label> <a href="?action=navigators&o=edit&nid=<?php echo $t['nid']; ?>">|- <?php echo $t['nname']; ?></a></span>
+				                                            <span style="width: 95px"><label><?php echo channelsinfo($t['cmark'],'cname'); ?></label></span>
+	                                            			<span style="width: 95px;"><label><?php if($t['statu']==1){echo '<i class="fa fa-check" style="font-size:22px;color:#18A689"></i>';}else{echo '<i class="fa fa-times" style="font-size:22px;color:#F00"></i>';}  ?></label></span>
+		                                            		</div>
+		                                            		<div style="float: right;">
+				                                            <span style="width: 362px; margin-right: 8px;">
+				                                            	<div class="tooltip-demo">
+				                                            		<a class="btn btn-success" href="?action=navigators&o=add&ngid=<?php echo $t['nid']; ?>" title="添加下级栏目" data-toggle="tooltip" data-placement="top"><i class="fa fa-plus"></i> 栏目</a>
+				                                            	<a class="btn btn-info" href="" target="_blank"><i class="fa fa-eye"></i> 预览</a>
+				                                            	<a class="btn btn-primary" href="?action=fields&c=<?php echo $t['cmark']; ?>&nid=<?php echo $t['nid']; ?>"><i class="fa fa-database"></i> 字段</a>
+				                                            	<a class="btn btn-success" href="?action=navigators&o=edit&nid=<?php echo $t['nid']; ?>"><i class="fa fa-pencil"></i> 编辑</a>
+				                                            	<button type="button" value="<?php echo $t['nid']; ?>" name="<?php echo $t['nname']; ?>" class="btn btn-danger" onclick="LayerconfirmDel(this);"><i class="fa fa-times"></i> 删除</button>
+				                                            	</div>
+				                                            </span>
+				                                            </div>
+		                                                </div>
+		                                                <?php if($trd_nav=$Class->findAll(array('ngid'=>$t['nid']),' `order` DESC,`nid` ')){ ?>
+		                                                <ol class="dd-list" style="display: none;" id="mylisttrd<?php echo $t['nid']; ?>">
+				                                        	<?php foreach($trd_nav as $s){ ?>
+				                                            <li class="dd-item" id="ItemToAddtrd">
+				                                                <div class="dd-handle">
+				                                                	<div style="float: left;">
+				                                                	
+				                                                    <span style="width: 40px;"><label class="label label-none"><?php echo $s['nid']; ?></label></span>
+				                                                    <span style="width: 50px;"><label><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $s['nid']; ?>" /></label></span>
+				                                        			<span style="width: 50px;"><label class="label laber-order"><input type="text" value="<?php echo $s['order']; ?>" name="orders[<?php echo $s['nid']; ?>]" class="form-control no-clip W-20" /></label></span>
+						                                        	<span style="width:22px;">&nbsp;</span>
+						                                            <span style="width: 152px; text-align: left;padding-left: 20px; "><label class="label label-none"><i class="fa fa-fire"></i></label> <a href="?action=navigators&o=edit&nid=<?php echo $s['nid']; ?>">|-- <?php echo $s['nname']; ?></a></span>
+						                                            <span style="width: 95px"><label><?php echo channelsinfo($s['cmark'],'cname'); ?></label></span>
+	                                            					<span style="width: 95px;"><label><?php if($s['statu']==1){echo '<i class="fa fa-check" style="font-size:22px;color:#18A689"></i>';}else{echo '<i class="fa fa-times" style="font-size:22px;color:#F00"></i>';}  ?></label></span>
+				                                            		</div>
+				                                            		<div style="float: right;">
+						                                            <span style="width: 362px; margin-right: 8px;">
+						                                            	<div class="tooltip-demo">
+						                                            		<a class="btn btn-success" title="该栏目为最终栏目" data-toggle="tooltip" data-placement="top" disabled=""><i class="fa fa-plus"></i> 栏目</a>
+						                                            	<a class="btn btn-info" href="" target="_blank"><i class="fa fa-eye"></i> 预览</a>
+						                                            	<a class="btn btn-primary" href="?action=fields&c=<?php echo $s['cmark']; ?>&nid=<?php echo $s['nid']; ?>"><i class="fa fa-database"></i> 字段</a>
+						                                            	<a class="btn btn-success" href="?action=navigators&o=edit&nid=<?php echo $s['nid']; ?>"><i class="fa fa-pencil"></i> 编辑</a>
+						                                            	<button type="button" value="<?php echo $s['nid']; ?>" name="<?php echo $s['nname']; ?>" class="btn btn-danger" onclick="LayerconfirmDel(this);"><i class="fa fa-times"></i> 删除</button>
+						                                            	</div>
+						                                            </span>
+						                                            </div>
+				                                                </div>
+				                                            </li>
+				                                            <?php } ?>
+				                                        </ol>
+	                                        			<?php } ?> 
+		                                            </li>
+		                                            <?php } ?>
+	                                       		</ol>
+	                                        <?php } ?> 
+	                                    </li>
+	                                    <?php }} ?>   
+	                                </ol>
+	                                
+                                </div>
+                                </div>
+                                <div class="btn-group full-width">
+									<div class="alledit-form">
+										<input type="button" id="alltype" class="btn btn-primary" onclick="alls('types[]','alltype');" value="全选" />
+										<input type="button" class="btn btn-info" onclick="LayerconfirmAll(1);" value="批量显示" />
+										<input type="button" class="btn btn-warning" onclick="LayerconfirmAll(2);" value="批量隐藏" />
+										<input type="button" class="btn btn-success" onclick="LayerconfirmAll(3);" value="提交排序" />
+										<input type="button" class="btn btn-danger" onclick="LayerconfirmAll(4);" value="批量删除" />
+										<label style="margin-left: 30px; width: 150px;">
+											<select class="chosen-select" style="width: 100%;" name="ncid">
+												<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;">更改所属频道为</option>
+												<?php foreach($cmark as $c){ ?>
+										        <option value="<?php echo $c['cmark']; ?>" hassubinfo="true"><?php echo $c['cname']; ?></option>
+										        <?php } ?>
+											</select>
+										</label>
+										<label style="width: 150px;">
+											<select class="chosen-select" style="width: 100%;" name="nnid">
+												<option disabled="disabled" selected="selected" style="display: none;">更改所属栏目为</option>
+												<option hassubinfo="true" value="topnav">作为顶级栏目</option>
+												<?php foreach($navtree as $n){ if($n['n']!=2){ ?>
+										        <option value="<?php echo $n['nid']; ?>" hassubinfo="true"><?php echo str_repeat('|—',$n['n']).$n['name']; ?></option>
+										        <?php }} ?>
+											</select>
+										</label>
+										<input type="button" class="btn btn-success" onclick="LayerconfirmAll(5);" value="更改" />
+									</div>
+                            		</div>
+	                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	
+    <!-- nestable -->
+    <script src="manage/admin/template/js/plugins/nestable/jquery.nestable.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        	 //nestable
+            var updateOutput = function (e) {
+                var list = e.length ? e : $(e.target),
+                    output = list.data('output');
+                if (window.JSON) {
+                    output.val(window.JSON.stringify(list.nestable('serialize'))); //, null, 2));
+                } else {
+                    output.val('浏览器不支持');
+                }
+            };
+            $('#nestable2').nestable({
+                group: 0
+            }).on('change', updateOutput);
+            
+            //updateOutput($('#nestable2').data('output', $('#nestable2-output')));
+
+            $('#nestable-menu').on('click', function (e) {
+                var target = $(e.target),
+                    action = target.data('action');
+                if (action === 'collapse-all') {
+                    $('.dd').nestable('collapseAll');
+                }
+                if (action === 'expand-all') {
+                    $('.dd').nestable('expandAll');
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+		function alls(divc,inputs){
+			if($("#"+inputs).attr('value') == '全选'){
+				$('.i-checks').iCheck('check');
+				$("#"+inputs).attr('value','取消全选');
+				$("input[name='"+divc+"']").attr('checked',true);
+			}else{
+				$('.i-checks').iCheck('uncheck');
+				$("#"+inputs).attr('value','全选');
+				$("input[name='"+divc+"']").removeAttr('checked',true);
+			}
+		}
+	</script>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmAll(num){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要执行批量操作吗？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	document.getElementById("formnum").value=num;
+                    	document.getElementById("formall").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function LayerconfirmDel(id){
+    		var name=id.name;
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要删除栏目[<font color="#337AB7">'+name+'</font>]？<br/><font color="#F00"><i class="fa fa-exclamation channel-hint"></i></font> 警告：本操作将删除该栏目及其所有下级子栏目，同时删除栏目下已经发布的所有内容！<br/><i class="fa fa-exclamation channel-hint"></i> 本操作不可逆，建议操作前备份数据库。',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                        window.location.href="?action=navigators&o=del&nid="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+</body>
+</html>

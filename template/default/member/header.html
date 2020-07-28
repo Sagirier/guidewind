@@ -1,0 +1,28 @@
+<div class="memberarea">
+    <div class="member_user">
+        <p class="member_user_pic"><img src="{$member['portrait']}" /></p>
+        <p class="member_user_til">您好：{if($member['nickname'])}<span>{$member['nickname']}</span>{else}<span>未设置昵称</span> <span class="rr"><a href="?action=member&o=myinfo">去设置>></a></span>{/if}</p>
+      	<p class="member_user_zi">
+      		<span class="regtime">注册时间：<b>{fun date('Y/m/d H:i:s',$member['regtime'])}</b></span>
+      		<span class="lastlogtime">上次登录时间：<b>{if($_SESSION['member']['lastlogtime']!=0)}{fun date('Y/m/d H:i:s',$_SESSION['member']['lastlogtime'])}{else}首次登录{/if}</b></span>
+      	</p>
+       
+    </div>
+    <div class="member_top">
+        <div style="height: 60px; overflow: hidden">
+            <ul class="account-info">
+                <li class="cny"><i class="fa fa-cny"></i> <strong>账户余额</strong> <b>{$member['money']}</b> </li>
+                <li class="earn"><i class="fa fa-star-half-empty"></i> <strong>累计积分</strong> <b>{$member['credit']}</b></li>
+                <li class="award"><i class="fa fa-truck"></i> <strong>购物优惠</strong> <b>{$member['group']['discount']}</b></li>
+            </ul>
+        </div>
+        <div style="height: 50px; margin-top: 10px; overflow: hidden">
+            <ul class="btns-box">
+            	<li><a href="" class="btn btn-danger" disabled="">在线充值</a> </li>
+                <li><a href=""   class="btn btn-danger"disabled="">余额提现</a> </li>
+                <li class="btns-box-zi">会员余额可以用于购物，积分用于兑换物品，优惠购物应有尽有！</li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

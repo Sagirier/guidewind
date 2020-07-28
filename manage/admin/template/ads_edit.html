@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 广告设置</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/layer/laydate.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-4">
+                    <h2>广告设置</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            网站相关设置
+                        </li>
+                        <li>
+                            <a href="?action=ads">广告设置</a>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394"><?php if($ads['id']){ echo '广告详情';}else{ echo '添加广告';} ?></font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated">
+				<div class="row">
+				    <div class="col-lg-6 full-width">
+				    	<div class="ibox-title">
+				            <h5><?php if($o=='edit'){ echo '广告：<font color="#1AB394">'.$ads['name'].'</font>详情'; }else{ echo '添加广告'; } ?></h5>
+				            <div class="ibox-tools">
+                                <a href="?action=ads" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回广告管理</a>
+                            </div>
+				        </div>
+				        <div class="ibox-content">
+                            <form action="?action=ads&o=<?php if($o=='edit'){ echo 'edit'; }else{ echo 'add'; }?>&id=<?php echo $ads['id']; ?>&go=1" method="post" id="adseditform" onsubmit="return false">
+                            	<table class="table table-bordered">
+                            		<thead>
+                            			<tr>
+                            				<td width="220" style="background: #EFEFEF;">设置项目</td>
+                            				<td style="background: #EFEFEF; width: 398px; text-align: left;">设置详情/选项<span style="float: right;color: #999;">带“<font color="red">*</font>”的为必填项</span></td>
+                            				<td style="background: #EFEFEF; text-align: left;">备注/说明</td>
+                            			</tr>
+                            		</thead>
+                                    <tbody>
+                            			<tr>
+                            				<td>名称&顺序</td>
+                            				<td style="position: relative;">
+                                        		<i class="fa fa-asterisk" style="position: absolute; color: #F00;left: 3px; top: 17px;"></i>
+                                        		<label style="width: 220px;">
+                                        			<input type="text" class="form-control" name="ads_name" id="ads_name" value="<?php echo $ads['name']; ?>" />
+                                        		</label>
+                                        		<label style=" margin:0 5px 0 20px ;">顺序：</label>
+                                        		<label  style="width: 40px;">
+                                        			<input type="text" class="form-control no-clip" name="ads_order" value="<?php if($ads['order']){ echo $ads['order'];}else{ echo 0;} ?>" />
+                                        		</label>
+                                        	</td>
+                                        	<td>广告名称必填；广告顺序，越大越靠前。</td>
+                            			</tr>
+                            			<tr>
+                            				<td>尺寸</td>
+                            				<td>
+                            					<label>
+                            					<div class="ads-size"><span>宽度：<input class="form-control no-clip W-20" type="text" name="ads_adsw" value="<?php echo $ads['adsw']; ?>" /> px</span></div>
+                            					<div class="ads-size" style="padding-left: 57px;"><span>高度：<input class="form-control no-clip W-20" type="text" name="ads_adsh" value="<?php echo $ads['adsh']; ?>" /> px</span></div>
+                            					</label>
+                            				</td>
+                            				<td>设置广告显示宽高，留空则以所属广告位为准。</td>
+                            			</tr>
+                            			<tr>
+                            				<td>状态</td>
+                            				<td>
+                            					<label style="width: 220px;">
+	                            					<select class="chosen-select" name="ads_statu"">
+	                            						<?php if($o=='edit'){ ?>
+												        <option value="1"<?php if($ads['statu']==1){echo ' selected="selected"';} ?>>显示</option>
+												        <option value="0"<?php if($ads['statu']==0){echo ' selected="selected"';} ?>>隐藏</option>
+												        <?php }else{ ?>
+												        <option value="1" selected="selected">显示</option>
+												        <option value="0">隐藏</option>
+												        <?php } ?>
+													</select>
+												</label>
+                            				</td>
+                            				<td>如果设置状态为隐藏，前台网页将不会显示该广告。</td>
+                            			</tr>
+                            			<tr>
+                            				<td>类型</td>
+                            				<td>
+                            					<label style="width: 220px;">
+	                            					<select class="chosen-select" name="ads_type" id="type" onchange="typeinfo();">
+												        <option value="1"<?php if($ads['type']==1){echo ' selected="selected"';} ?>>文字广告</option>
+												        <option value="2"<?php if($ads['type']==2){echo ' selected="selected"';} ?>>图片广告</option>
+												        <option value="3"<?php if($ads['type']==3){echo ' selected="selected"';} ?>>Flash</option>
+												        <option value="4"<?php if($ads['type']==4){echo ' selected="selected"';} ?>>视频</option>
+												        <option value="5"<?php if($ads['type']==5){echo ' selected="selected"';} ?>>自定义广告</option>
+													</select>
+												</label>
+                            				</td>
+                            				<td>广告类型，请选择。</td>
+                            			</tr>
+                            			<tr>
+                            				<td>所属广告位</td>
+                            				<td>
+                            					<label style="width: 220px;">
+                            					<select class="chosen-select" name="ads_taid" tabindex="2">
+                            					<?php foreach($adstype as $t){ ?>
+                            					<option hassubinfo="true" value="<?php echo $t['taid']; ?>"<?php if($t['taid']==$ads['taid']){echo ' selected="selected"'; }?>><?php echo $t['name']; ?></option>
+                            					<?php } ?>
+                            					</select>
+                            					</label>
+                            				</td>
+                            				<td>请选择该广告所属广告位。</td>
+                            			</tr>
+                            			<tr id="body" <?php if($ads['type']!=5)echo 'class="none"'; ?>>
+                            				<td>自定义代码：</td>
+                            				<td style="text-align: left;"><textarea name="ads_body" style="width:400px; height:100px;" class="int"><?php echo $ads['body'] ?></textarea></td>
+                            				<td>自定义代码，请输入html代码。</td>
+                            			</tr>
+                            			<tr id="gourl" <?php if($ads['type']==5)echo 'class="none"'; ?>>
+                            				<td>链接&链接属性</td>
+                            				<td>
+                            					<label style="width: 220px;">
+                            						<input class="form-control" type="text" name="ads_gourl" value="<?php echo $ads['gourl']; ?>" />
+                            					</label>
+                            					<label style="width: 40px; margin-left: 16px;">属性：</label>
+                            					<label style="width: 60px;">
+	                            					<select class="chosen-select" name="ads_target" style="display: inline; float: left;">
+												        <option value="self"<?php if($ads['target']=='self'){echo ' selected="selected"';} ?>>本窗</option>
+												        <option value="blank"<?php if($ads['type']=='target'){echo ' selected="selected"';} ?>>新窗</option>
+													</select>
+												</label>
+                            				</td>
+                            				<td>广告的外部链接地址。</td>
+                            			</tr>
+                            			<tr>
+                            				<td>广告文件</td>
+                            				<td class="file_upload">
+                            					<label style="width: 220px;">
+                            						<input class="form-control" name="ads_adfile" id="adfile" value="<?php echo $ads['adfile']; ?>" />
+                            					</label>
+                            					<label style="padding: 0 8px; font-size: 20px;">
+	                        						<div class="tooltip-demo">
+	                                        		<a title="查看图片" data-toggle="tooltip" data-placement="top" onclick="Layerview();"><i class="fa fa-picture-o"></i></a>
+	                                        	</div>
+	                        					</label>
+                            					<label>
+                            						<button type="button" class="btn btn-primary" name="<?php echo $ads_typename; ?>" id="inputid" value="<?php echo $ads_type; ?>" onclick="Layerupload(this)"><i class="fa fa-upload"></i> 上传文件</button>
+                            					</label>
+                            				</td>
+                            				<td>广告文件，请根据广告类型选择对应文件上传。</td>
+                            			</tr>
+                            		</tbody>
+                            	</table>
+                            	<div class="mar-20 clear">
+				                	<button class="btn btn-primary" type="submit" onclick="Layerconfirm();"><i class="fa fa-check"></i> 提交</button>
+				                </div>
+                            </form>
+				        </div>
+				    </div>
+				</div>
+			</div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<script type="text/javascript">
+		function typeinfo(){
+			if($("#type").prop("value")==1){
+				document.getElementById("inputid").disabled="disabled";
+			} 
+			if($("#type").prop("value")==2){
+				$("#inputid").removeAttr("disabled");
+				document.getElementById("inputid").value = "*.jpg;*.jpeg;*.gif;*.png";
+				document.getElementById("inputid").name = "图片";
+			}
+			if($("#type").prop("value")==3){
+				$("#inputid").removeAttr("disabled");
+				document.getElementById("inputid").value = "*.swf;*.flv";
+				document.getElementById("inputid").name = "Flash";
+			}
+			if($("#type").prop("value")==4){
+				$("#inputid").removeAttr("disabled");
+				document.getElementById("inputid").value = "*.mp4";
+				document.getElementById("inputid").name = "视频";
+			}
+			if($("#type").prop("value")==5){
+				$("#inputid").removeAttr("disabled");
+				document.getElementById("inputid").value = "*.jpg;*.jpeg;*.gif;*.png;*.swf;*.flv;*.mp4";
+				document.getElementById("inputid").name = "全部";
+				$("#body").removeClass("none");
+				$("#gourl").addClass("none");
+			}else{
+				$("#body").addClass("none");
+				$("#gourl").removeClass("none");
+			}
+		}
+	</script>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要提交修改？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	var mark=document.getElementById("ads_name").value;
+                    	if(!from_null(mark)){
+	                    	layer.alert("广告名称不能为空！");return false;
+	                    }
+                        document.getElementById("adseditform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    	function Layerupload(id){
+    		var filetype=id.value;
+    		var fileName=id.name;
+    		$.layer({
+			    type: 2,
+			    shadeClose: true,
+			    title: false,
+			    closeBtn: [1, true],
+			    offset: ['',''],
+			    area: ['1000px','424px'],
+			    iframe: {src: '?action=uploads&o=loadup&inputid=adfile&filesdir=ads&filesType='+fileName+'文件&fileExt='+filetype+'&filesize=<?php echo $filesize; ?>&fileover=1'}
+			});
+    	}
+    	function Layerview(){
+    		var imgsrc=document.getElementById("adfile").value;
+    		if(imgsrc==''){
+    			return false;
+    		}
+    		$.layer({
+			    type: 1,
+			    title: false,
+			    area: ['auto', 'auto'],
+			    shadeClose: true ,
+			    closeBtn: [1,true],
+			    page: {
+			        html: '<div style="width:300px;padding:20px; border:1px solid #ccc; border-radius:5px; box-shadow:0 0 5px #999; background-color:#eee;"><img id="fileimg" width="100%" src="'+imgsrc+'" /></div>'
+			    }
+			});
+    	}
+    </script>
+</body>
+</html>

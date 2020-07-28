@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="keywords" content="{$type['keywords']}"/>
+    <meta name="description" content="{$type['description']}"/>
+    {include="public/css.html"}
+</head>
+<body>
+{include="public/header.html"}
+<div id="fh5co-wrapper">
+    <div id="fh5co-page">
+        {$type['detail']}
+        {include="public/footer.html"}
+    </div>
+</div>
+{include="public/js.html"}
+<script type="text/javascript" src="{$GLOBALS['styles']}js/product.js"></script>
+</body>
+</html>

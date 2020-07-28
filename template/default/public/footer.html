@@ -1,0 +1,136 @@
+{if ($type && $type['nid']==2)}
+<div id="fh5co-contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h3>
+                    定制demo
+                </h3>
+                <p class="subtitle">
+                    发送邮件给我们，与专家讨论您的使用需求
+                </p>
+            </div>
+        </div>
+        <div class="row flex-row align-items-center justify-content-center">
+            <div class="card mega">
+                <form id="contact-form" method="post" class="form-horizontal" action="/?action=message&amp;o=sendmail">
+                    <div class="form-group">
+                        <label class="col-md-12">邮箱地址</label>
+                        <div class="col-md-12">
+                            <input type="email" placeholder="请输入邮箱地址，如：example@yourcompany.com。" name="email" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">姓名</label>
+                        <div class="col-md-12">
+                            <input placeholder="您的姓名，不愿透露的请务必提供您的贵姓，例如：张先生/女士。" class="form-control" name="name" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">联系电话</label>
+                        <div class="col-md-12">
+                            <input placeholder="您的手机号或座机号码，请务必填写以便工作人员与您取得联系。" class="form-control" name="phone" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-12">邮件内容</label>
+                        <div class="col-md-12">
+                            <textarea rows="5" placeholder="您的需求，例如：我正在寻找一个识别车牌号的解决方案。" name="message" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">发送</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
+<div id="fh5co-feature-product">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p>受广大人工智能公司以及研究机构信任，合作单位遍布全球</p>
+            </div>
+            <div class="links-area">
+                {getdata data_table="links" data_gid="3" data_type="2" data_limit="10"}
+                {if ($v['url'])}
+                <a href="{$v['url']}" target="_blank" rel="nofollow">
+                    <img src="{$v['lipic']}">
+                </a>
+                {else}
+                <a href="javascript:void(0);">
+                    <img src="{$v['lipic']}">
+                </a>
+                {/if}
+                {/getdata}
+            </div>
+        </div>
+    </div>
+</div>
+{if($type['nid']!=39)}
+<div id="fh5co-contact-section">
+    <div class="container">
+        <div class="row please-buy">
+            <div class="col-lg-6 col-md-12">
+                <h3 class="text-muted">联系 <b>博登</b> 可以帮助您现在开发高质量的标注。</h3>
+            </div>
+            <div class="col-lg-6 col-md-12 contact-btn">
+                {getdata data_table="navigators" data_nid="39" data_limit="1"}
+                <a href="{$v['url']}" class="btn btn-primary shadow">开始联系</a>
+                {/getdata}
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
+<div class="footer d-none d-lg-block" id="footer">
+    <div class="robot-bg">
+        <div class="container">
+            <div class="popup">
+                <div>powered by <a href="http://www.nwpit.com" rel="nofollow" target="_blank">风之力科技</a></div>
+                <div><a href="mailto:service@nwpit.com">service@nwpit.com</a></div>
+            </div>
+            <div class="row flex-row justify-content-center">
+                <div class="col-md-4 text-center"><b>服务</b>
+                    <ul class="list-unstyled">
+                        <li><a href="/" class="nuxt-link-exact-active nuxt-link-active" target="_blank">注释平台</a></li>
+                        <li><a href="/" class="nuxt-link-exact-active nuxt-link-active" target="_blank">需求注释</a></li>
+                        <li><a href="/" class="nuxt-link-exact-active nuxt-link-active" target="_blank">人工数据</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="d-inline-block"><b>公司</b>
+                        <ul class="list-unstyled">
+                            {getdata data_table="navigators" data_nid="4" data_limit="1"}
+                            <li><a href="{$v['url']}" class="" target="_blank">关于我们</a></li>
+                            <li><a href="{$v['url']}#team" class="" target="_blank">团队介绍</a></li>
+                            {/getdata}
+                            <li><a href="/">新浪微博</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="d-inline-block"><b>资源</b>
+                        <ul class="list-unstyled">
+                            {getdata data_table="navigators" data_nid="32" data_limit="1"}
+                            <li><a href="{$v['url']}" target="_blank">开发文档</a></li>
+                            {/getdata}
+                            <li><a href="/article/ad9" class="" target="_blank">服务条款</a></li>
+                            <li><a href="/article/ad10" class="" target="_blank">隐私政策</a></li>
+                            {getdata data_table="navigators" data_nid="39" data_limit="1"}
+                            <li><a href="{$v['url']}" class="" target="_blank">联系我们</a></li>
+                            {/getdata}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row flex-row justify-content-center align-items-center">
+                <div class="col-md-12 social-networks text-center">
+                    <small>© 2019-2024 博登智能 <a style="font-size: 12px;" href="http://www.beian.miit.gov.cn" rel="nofollow" target="_blank">浙ICP备19017426号-1</a> All rights reserved. Powered by <a style="font-size: 12px;" href="http://www.bodenai.com" rel="nofollow" target="_blank">博登智能</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

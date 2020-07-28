@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>静态html生成 - <?php echo $title; ?></title>
+    <meta name="keywords" content="导风系统网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style type="text/css">
+		.chosen-search,.xubox_msgico{display: none;}
+	</style>
+</head>
+<body style="background: #FFF;">
+<div class="panel blank-panel">
+	<div class="panel-body">
+		<div class="tab-content" id="content">
+    		<div class="tab-pane active">
+            	<form action="?action=statichtml&o=clear&t=1" method="post">
+            	<input name="cmark" type="hidden" value="article" />
+        		<table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;"><?php echo channelsinfo('article','cname'); ?>：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label style="width: 140px; margin-right: 10px;">
+                            			<select name="nid" class="chosen-select">
+                                			<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;" value="">所属栏目</option>
+                                			<option hassubinfo="true" value="">全部</option>
+                                			<?php foreach($navigators as $v){ ?>
+                                			<option hassubinfo="true" value="<?php echo $v['nid']; ?>"<?php if($v['channels']!='article'){echo ' style="display:none" disabled="disabled"';} ?>><?php if($v['n']>0){echo '|';}echo str_repeat('-',$v['n']).$v['name']; ?></option>
+                                			<?php } ?>
+                                		</select>
+                            		</label>
+                            		<label style="margin-right: 30px;">
+                            		id范围：<input type="text" name="minid" class="form-control no-clip W-20" />
+                            		~
+                            		<input type="text" name="maxid" class="form-control no-clip W-20" />
+                            		</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo();"><i class="fa fa-refresh"></i> 更新html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>	
+                </form>
+            	<form action="?action=statichtml&o=clear&t=1" method="post">
+            	<input name="cmark" type="hidden" value="product" />
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;"><?php echo channelsinfo('product','cname'); ?>：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label style="width: 140px; margin-right: 10px;">
+                            			<select name="nid" class="chosen-select">
+                                			<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;" value="">所属栏目</option>
+                                			<option hassubinfo="true" value="">全部</option>
+                                			<?php foreach($navigators as $v){ ?>
+                                			<option hassubinfo="true" value="<?php echo $v['nid']; ?>"<?php if($v['channels']!='product'){echo ' style="display:none" disabled="disabled"';} ?>><?php if($v['n']>0){echo '|';}echo str_repeat('-',$v['n']).$v['name']; ?></option>
+                                			<?php } ?>
+                                		</select>
+                            		</label>
+                            		<label style="margin-right: 30px;">
+                            		id范围：<input type="text" name="minid" class="form-control no-clip W-20" />
+                            		~
+                            		<input type="text" name="maxid" class="form-control no-clip W-20" />
+                            		</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 更新html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>
+                <?php if(channelsinfo('message','statu')==1){ ?>
+                <form action="?action=statichtml&o=clear&t=1" method="post">
+                <input name="cmark" type="hidden" value="message" />
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;"><?php echo channelsinfo('message','cname'); ?>：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label style="width: 140px; margin-right: 10px;">
+                            			<select name="nid" class="chosen-select">
+                                			<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;" value="">所属栏目</option>
+                                			<option hassubinfo="true" value="">全部</option>
+                                			<?php foreach($navigators as $v){ ?>
+                                			<option hassubinfo="true" value="<?php echo $v['nid']; ?>"<?php if($v['channels']!='message'){echo ' style="display:none" disabled="disabled"';} ?>><?php if($v['n']>0){echo '|';}echo str_repeat('-',$v['n']).$v['name']; ?></option>
+                                			<?php } ?>
+                                		</select>
+                            		</label>
+                            		<label style="margin-right: 30px;">
+                            		id范围：<input type="text" name="minid" class="form-control no-clip W-20" />
+                            		~
+                            		<input type="text" name="maxid" class="form-control no-clip W-20" />
+                            		</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 更新html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>
+                <?php } ?>
+        		<?php if(channelsinfo('recruitment','statu')==1){ ?>
+    			<form action="?action=statichtml&o=clear&t=1" method="post">
+                <input name="cmark" type="hidden" value="recruitment" />
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;"><?php echo channelsinfo('recruitment','cname'); ?>：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label style="width: 140px; margin-right: 10px;">
+                            			<select name="nid" class="chosen-select">
+                                			<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;" value="">所属栏目</option>
+                                			<option hassubinfo="true" value="">全部</option>
+                                			<?php foreach($navigators as $v){ ?>
+                                			<option hassubinfo="true" value="<?php echo $v['nid']; ?>"<?php if($v['channels']!='recruitment'){echo ' style="display:none" disabled="disabled"';} ?>><?php if($v['n']>0){echo '|';}echo str_repeat('-',$v['n']).$v['name']; ?></option>
+                                			<?php } ?>
+                                		</select>
+                            		</label>
+                            		<label style="margin-right: 30px;">
+                            		id范围：<input type="text" name="minid" class="form-control no-clip W-20" />
+                            		~
+                            		<input type="text" name="maxid" class="form-control no-clip W-20" />
+                            		</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 更新html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>
+                <?php } ?>
+                <form action="?action=statichtml&o=clear&t=2" method="post">
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;">更新栏目：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label style="width: 140px; margin-right: 10px;">
+                            			<select name="nid" class="chosen-select">
+                                			<option value=''>所有栏目</option>
+                                			<?php foreach($navigators as $v){ ?>
+                                			<option hassubinfo="true" value="<?php echo $v['nid']; ?>"><?php if($v['n']>0){echo '|';}echo str_repeat('-',$v['n']).$v['name']; ?></option>
+                                			<?php } ?>
+                                		</select>
+                            		</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 更新栏目html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>
+                <!--<form action="?action=statichtml&o=clear&t=4" method="post">
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;">更新自定义页面：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 更新自定义页面html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>-->
+                <form action="?action=statichtml&o=clear&t=99" method="post">
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;">更新首页：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 更新首页html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>
+                <!--<form action="?action=statichtml&o=clear&t=0" method="post">
+                <table class="table table-bordered article-table">
+            		<tbody>	
+                		<tr>
+                        	<td>
+                        		<div class="label-pannel">
+                        			<label style="width:120px; text-align: right;">更新全部：</label>
+                        		</div>
+                        		<div class="label-pannel">
+                            		<label>
+                            			<button type="submit" class="btn btn-primary" onclick="Layergo()"><i class="fa fa-refresh"></i> 一键更新所有html</button>
+                            		</label>
+                        		</div>
+                        	</td>
+                		</tr>
+                	</tbody>
+                </table>
+                </form>-->
+    		</div>
+		</div>
+	</div>
+</div>
+<?php include "manage/admin/template/js.html"; ?>
+	<script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function Layergo(){
+    		var loading = layer.msg('正在更新静态文件，请稍后...',99,11);
+    	}
+	</script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+</body>
+</html>
+                        

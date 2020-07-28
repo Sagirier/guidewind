@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="keywords" content="{$type['keywords']}"/>
+	<meta name="description" content="{$type['description']}"/>
+	{include="public/css.html"}
+</head>
+<body>
+{include="public/header.html"}
+<div id="fh5co-wrapper">
+	<div id="fh5co-page">
+		{$type['detail']}
+		<div class="fh5co-wrapper">
+			<div class="container">
+				<div class="row">
+					<ul class="tasks row flex-row justify-content-center nav nav-tabs" role="tablist">
+						{foreach $lists as $k=>$v}
+						<li role="presentation" class="task {if($k==0)}active{/if}"><a id="case-{$v['id']}-tab" href="#case-{$v['id']}" aria-controls="case-{$v['id']}" role="tab" data-toggle="tab"><img src="{$v['lipic']}"><h3>{$v['title']}</h3></a></li>
+						{/foreach}
+					</ul>
+					<div class="description text-center tab-content">
+						{foreach $lists as $k=>$v}
+						<div id="case-{$v['id']}" class="tab-pane {if($k==0)}active{/if}" role="tabpanel">
+							<h3>{$v['title']}</h3>
+							{if(detailinfo('article',$v['id'],'case_tags'))}
+							<section class="tools row flex-row justify-content-center">
+								{foreach caseTags(detailinfo('article',$v['id'],'case_tags')) as $tag}
+								<div class="tool {$tag['class']}">{$tag['text']}</div>
+								{/foreach}
+							</section>
+							{/if}
+							<p class="text-muted">{$v['description']}</p>
+							{fun detailinfo('article',$v['id'],'detail')}
+						</div>
+						{/foreach}
+					</div>
+				</div>
+			</div>
+		</div>
+		{include="public/footer.html"}
+	</div>
+</div>
+{include="public/js.html"}
+<script type="text/javascript">
+    $('.tasks .task a').hover(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    });
+</script>
+</body>
+</html>

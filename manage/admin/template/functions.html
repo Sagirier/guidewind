@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - <?php echo $title; ?></title>
+    <meta name="keywords" content="导风系统网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>插件管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li>
+                            <a>插件管理</a>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394"><?php echo $title; ?></font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated fadeInRight">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox ">
+                        	<div class="ibox-title">
+                            	<h5><?php echo $title; ?>设置</h5>
+                        	</div>
+                            <div class="ibox-content">
+                                <form id="functionsform" action="?action=functions&o=<?php echo $o; ?>&go=1" method="post" onsubmit="return false;">
+                                	<table class="table table-bordered article-table">
+                                		<?php if($o=='member_sys'){ ?>
+	                                	<tr>
+	                                		<td style="width: 260px;"><?php echo $title; ?>状态</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="member_sys_switch" value="1"<?php if($member_sys['statu']==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="member_sys_switch" value="0"<?php if($member_sys['statu']==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <tr>
+	                                		<td>允许QQ登陆</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="member_sys_tencent" value="1"<?php if($member_sys['tecent']==1){ echo ' checked="checked"';} ?> /> 允许
+		                                        <input type="radio" class="i-checks" name="member_sys_tencent" value="0"<?php if($member_sys['tecent']==0){ echo ' checked="checked"';} ?> /> 禁止
+	                                        </td>
+	                                    </tr>
+	                                    <?php }if($o=='transaction'){ ?>
+	                                    <tr>
+	                                		<td style="width: 260px;"><?php echo $title; ?>状态</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="transaction_switch" value="1"<?php if($transaction['statu']==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="transaction_switch" value="0"<?php if($transaction['statu']==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <?php } if($o=='payment'){ ?>
+	                                    <tr>
+	                                		<td style="width: 260px;"><?php echo $title; ?>状态</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="payment_switch" value="1"<?php if($payment['statu']==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="payment_switch" value="0"<?php if($payment['statu']==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <?php } if($o=='ads_sys'){ ?>
+	                                    <tr>
+	                                		<td style="width: 260px;"><?php echo $title; ?>状态</td>
+	                                		<td>
+	                                			<label>
+		                                        <input type="radio" class="i-checks" name="ads_sys_switch" value="1"<?php if($ads_sys['statu']==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        </label>
+		                                        <label style="margin-left: 15px;">
+		                                        <input type="radio" class="i-checks" name="ads_sys_switch" value="0"<?php if($ads_sys['statu']==0){ echo ' checked="checked"';} ?> /> 关闭
+		                                        </label>
+	                                		</td>
+	                                    </tr>
+	                                    <tr>
+	                                		<td>允许上传类型</td>
+	                                		<td>
+		                                        <label style="width: 80%;">
+		                                        <input type="text" class="form-control" name="ads_sys_filetype" value="<?php echo $ads_sys['filetype']; ?>" />
+		                                        </label>
+	                                		</td>
+	                                    </tr>
+	                                    <tr>
+	                                		<td>允许最大上传</td>
+	                                		<td>
+		                                        <label style="width: 80%;">
+		                                        	<input type="text" class="form-control" name="ads_sys_filemaxsize" value="<?php echo floor($ads_sys['filemaxsize']/1024); ?>" />
+		                                        </label>
+		                                        <label style="margin-left: 5px;">KB</label>
+	                                		</td>
+	                                    </tr>
+	                                    <?php } if($o=='links_sys'){ ?>
+	                                    <tr>
+	                                		<td style="width: 260px;"><?php echo $title; ?>状态</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="links_sys_switch" value="1"<?php if($links_sys['statu']==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="links_sys_switch" value="0"<?php if($links_sys['statu']==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <?php } if($o=='comment_sys'){ ?>
+	                                    <tr>
+	                                		<td style="width: 260px;"><?php echo $title; ?>状态</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="comment_sys_switch" value="1"<?php if($comment_sys['statu']==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="comment_sys_switch" value="0"<?php if($comment_sys['statu']==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <tr>
+	                                		<td style="width: 260px;">评论默认审核</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="comment_audit" value="1"<?php if(syExt('comment_audit')==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="comment_audit" value="0"<?php if(syExt('comment_audit')==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <tr>
+	                                		<td style="width: 260px;">评论需要登录</td>
+	                                		<td>
+		                                        <input type="radio" class="i-checks" name="comment_user" value="1"<?php if(syExt('comment_user')==1){ echo ' checked="checked"';} ?> /> 开启
+		                                        <input type="radio" class="i-checks" name="comment_user" value="0"<?php if(syExt('comment_user')==0){ echo ' checked="checked"';} ?> /> 关闭
+	                                		</td>
+	                                    </tr>
+	                                    <?php } ?>
+                                    </table>
+                                    <div class="form-group mar-20" style="margin-left: 0;">
+                                        <button class="btn btn-sm btn-primary m-t-n-xs btn-basic" type="submit" onclick="Layerconfirm()"><strong>提交</strong>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>设置参数说明</h5>
+                            </div>
+                            <div class="ibox-content">
+                            	<?php if($o=='member_sys'){ ?>
+                                <p>1.会员系统状态设置为<font color="#F00">关闭</font>，则会员注册及管理功能被关闭；</p>
+                                <p>2.允许QQ登陆设置为允许，则会员可以通过QQ账号密码登陆网站。</p>
+                                <?php }if($o=='transaction'){ ?>
+                                <p>1.购物系统状态设置为<font color="#F00">关闭</font>，则购物功能被关闭；</p>
+                               	<?php }if($o=='payment'){ ?>
+                               	<p>1.支付系统状态设置为<font color="#F00">关闭</font>，则支付功能被关闭；</p>
+                                <?php }if($o=='ads_sys'){ ?>
+                                <p>1.广告投放状态设置为<font color="#F00">关闭</font>，则不允许投放广告；</p>
+                                <p>2.广告上传类型控制上传广告文件时的类型，可自定义，每个类型用英文逗号","分隔，不能设置系统默认上传文件类型外的文件，<br/>&nbsp;&nbsp;&nbsp;留空则默认为所有广告文件类型：<font color="#1AB394">jpg,png,bmp,jpeg,gif,flv,swf</font>；</p>
+                                <p>3.允许最大上传控制上传广告文件时的大小，可自定义，但不能超过系统默认上传文件大小，<br/>&nbsp;&nbsp;&nbsp;留空或设为0则默认继承系统设置：<font color="#1AB394"><?php echo floor($GLOBALS['WP']['ext']['filesize']/1024); ?></font> KB；</p>
+                                <p>4.系统默认文件上传设置可以在 <a>系统设置</a>-><a>文件上传设置</a>中查看；</p>
+                                <?php }if($o=='ads_sys'){ ?>
+                                <p>1.友情链接状态设置为<font color="#F00">关闭</font>，则不允许设置友链；</p>
+                                <?php }if($o=='comment_sys'){ ?>
+                                <p>1.评论系统状态设置为<font color="#F00">关闭</font>，则不允许评论内容；</p>
+                                <p>2.若设置评论默认审核为<font color="#1AB394">开启</font>，则前台发布的所有评论及回复将默认为<font color="#1AB394">已审核</font>状态；</p>
+                                <p>2.若设置评论需要登录为<font color="#1AB394">开启</font>，则用户必须登录后才能发表评论；</p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php include "manage/admin/template/footer.html"; ?>
+    </div>
+</div>
+<?php include "manage/admin/template/js.html"; ?>
+	<!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+	<script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要提交修改？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                        document.getElementById("functionsform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{if(!$_SESSION['auser'] && $member['uid']==0)}
+<a href="{$GLOBALS['WWW']}index.php?action=member&o=regedit"><i class="fa fa-user-md"></i> 注册</a><a href="{$GLOBALS['WWW']}index.php?action=member&o=login"><i class="fa fa-user"></i> 登录</a>
+{else}
+<link href="{$GLOBALS['styles']}css/animate.css" rel="stylesheet">
+	{if($_SESSION['auser'])}
+	<div class="dropdown profile-element"> 
+	    <a data-toggle="dropdown" class="dropdown-toggle" href="?">
+	        <span class="clear"> 
+	        	<span class="text-muted text-xs block"><i class="fa fa-admin"></i> {fun adminuser_oneinfo($_SESSION['auser']['uid'],'user')}<b class="caret"></b></span> 
+	        </span>
+	    </a>
+	    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+	        <li><a style="margin-left: 0;" href="index.php?action=member&o=myportrait">修改头像</a></li>
+	        <li><a style="margin-left: 0;" href="index.php?action=adminuser">管理员中心</a></li>
+	        <li><a style="margin-left: 0;" href="index.php?action=member&o=publish">发布信息</a></li>
+	        <li class="divider"></li>
+	        <li><a style="margin-left: 0;" href="index.php?action=member&o=out">安全退出</a></li>
+	    </ul>
+	</div>
+	{else}
+	<div class="dropdown profile-element"> 
+	    <a data-toggle="dropdown" class="dropdown-toggle" href="?">
+	        <span class="clear"> 
+	        	<span class="text-muted text-xs block">{if($member['nickname']!='')}{$member['nickname']}{else}{$member['username']}{/if}<b class="caret"></b></span> 
+	        </span>
+	    </a>
+	    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+	        <li><a style="margin-left: 0;" href="index.php?action=member&o=myportrait">修改头像</a></li>
+	        <li><a style="margin-left: 0;" href="index.php?action=member">个人中心</a></li>
+	        <li><a style="margin-left: 0;" href="index.php?action=member&o=publish">发布信息</a></li>
+	        <li class="divider"></li>
+	        <li><a style="margin-left: 0;" href="index.php?action=member&o=out">安全退出</a></li>
+	    </ul>
+	</div>
+	{/if}
+<!--{if(funsinfo('goods','isshow'))}
+<script type="text/javascript">
+$(function(){
+	$('#mycart').mouseover(function () {mycart_show()});
+	$('#mycart_info').mouseover(function () {mycart_show()});
+	$('#mycart').mouseout(function () {mycart_none()});
+	$('#mycart_info').mouseout(function () {mycart_none()});
+})
+function mycart_show(){
+	$('#mycart').addClass("cart_c");
+	$('#mycart_info').removeClass("none");
+}
+function mycart_none(){
+    $('#mycart').removeClass("cart_c");
+	$('#mycart_info').addClass("none");
+}
+</script>
+<span id="mycart" class="cart"><a href="{$GLOBALS['WWW']}index.php?c=pay&cart=1">购物车(<strong id="mycart_total">{$mycart_total}</strong>)</a></span>
+<div id="mycart_info" class="cartdb none"></div>
+<script type="text/javascript">mycart_info('mycart_info','member/ajax_cart.html');</script>
+{/if}-->
+{/if}

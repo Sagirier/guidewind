@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 广告设置</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="manage/admin/template/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="manage/admin/template/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <link href="manage/admin/template/js/plugins/layer/skin/layer.css" rel="stylesheet" />
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-4">
+                    <h2>广告设置</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li>
+                            <a>网站相关设置</a>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394">广告<?php if($o=='tedit' || $o=='tadd'){echo "位";} ?>设置</font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="wrapper wrapper-content animated fadeInUp">
+                        <div class="ibox">
+                        	<?php if(!$o){ ?>
+                            <div class="ibox-title">
+                                <h5><?php echo $top_txt; ?>广告列表</h5>
+                                <div class="ibox-tools">
+                                    <a href="?action=ads&o=add" class="btn btn-primary btn-xs">添加广告</a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <form action="" method="get" id="adssearch">
+                            	<input type="hidden" value="ads" name="action" />
+                            	<div class="sch">
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="taid" name="ads-schbytaid">
+										<option hassubinfo="true" value=""<?php if(!$conditions['taid']){echo ' selected="selected"';} ?>>广告位筛选</option>
+										<?php foreach($adstype as $n){ ?>
+								        <option value="<?php echo $n['taid']; ?>"<?php if($conditions['taid']==$n['taid']){echo ' selected="selected"';} ?>><?php echo $n['name']; ?></option>
+								        <?php } ?>
+									</select>
+                            		</div>
+                            		<div class="sch-form">
+                            		<select class="chosen-select searchauto" id="sid" name="ads-schbystatu">
+                            			<option hassubinfo="true" value=""<?php if(!$conditions['statu']){echo ' selected="selected"';} ?>>广告状态</option>
+                            			<option hassubinfo="true" value="1"<?php if($conditions['statu']==1){echo ' selected="selected"';} ?>>显示</option>
+                            			<option hassubinfo="true" value="2"<?php if($conditions['statu']==2){echo ' selected="selected"';} ?>>隐藏</option>
+                            		</select>
+                            		</div>
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="tid" name="ads-schbytype">
+										<option hassubinfo="true" value=""<?php if(!$conditions['type']){echo ' selected="selected"';} ?>>广告类型</option>
+								        <option value="1"<?php if($conditions['type']==1){echo ' selected="selected"';} ?>>文字广告</option>
+								        <option value="2"<?php if($conditions['type']==2){echo ' selected="selected"';} ?>>图片广告</option>
+								        <option value="3"<?php if($conditions['type']==3){echo ' selected="selected"';} ?>>Flash</option>
+								        <option value="4"<?php if($conditions['type']==4){echo ' selected="selected"';} ?>>视频</option>
+								        <option value="5"<?php if($conditions['type']==5){echo ' selected="selected"';} ?>>自定义广告</option>
+									</select>
+                            		</div>
+                            		<div class="sch-form width-auto">
+                            			<input type="search" id="schid" name="name" class="form-control" placeholder="请输入广告名称" />
+                            			<button type="submit" id="sbtnid" class="btn btn-info">搜索</button>
+                            		</div>
+                            	</div>
+                            	</form>
+                                <form action="?action=ads&o=alledit" id="formall" method="post" onsubmit="return false;">
+                                <input name="formnum" id="formnum" type="hidden" value="" />
+                            	<div class="btn-group full-width">
+                            		<table class="full-width m-b table-bordered article-table ads-table">
+                            			<thead>
+                            			<tr>
+                            				<td>id</td>
+                            				<td>选择</td>
+                            				<td>顺序</td>
+                            				<td>名称&尺寸</td>
+                            				<td>状态</td>
+                            				<td>类型</td>
+                            				<td>所属广告位</td>
+                            				<!--<td>链接</td>
+                            				<td>内容</td>-->
+                            				<td>操作</td>
+                            			</tr>
+                            			</thead>
+                                        <tbody>
+                                        	<?php if($lists[0]['id']){foreach($lists as $v){ ?>
+                                            <tr>
+                                                <td>
+                                                    <span class="label label-primary"><?php echo $v['id']; ?></span>
+                                        		</td>
+                                        		<td><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $v['id']; ?>" /></td>
+                                        		<td>
+                                        			<input type="text" name="orders[<?php echo $v['id']; ?>]" value="<?php echo $v['order']; ?>" class="form-control W-20 no-clip" />
+                                        		</td>
+		                                        <td>
+		                                            <a href="?action=ads&o=edit&id=<?php echo $v['id']; ?>"><?php if($conditions['name']!=''){ echo highLight($v['name'],$conditions['name']);}else{ echo $v['name'];} ?></a>
+		                                            <br/>
+		                                            <small>宽：<?php echo $v['adsw']; ?></small><small style="margin-left: 20px;">高：<?php echo $v['adsh']; ?></small>
+		                                        </td>
+		                                        <td><?php if($v['statu']==1){ echo ' <font color="#1AB394">显示</font>';}else{ echo ' <font color="#ED5565">隐藏</font>';} ?></td>
+                                        		<td>
+                                        			<?php if($v['type']==1){echo "文字广告";} ?>
+                                        			<?php if($v['type']==2){echo "图片广告";} ?>
+                                        			<?php if($v['type']==3){echo "视频广告";} ?>
+                                        			<?php if($v['type']==4){echo "Flash广告";} ?>
+                                        			<?php if($v['type']==5){echo "自定义广告";} ?>
+                                        		</td>
+		                                        <td>
+		                                        	<?php $adstype_info=$Classtype->find(array('taid'=>$v['taid'])); ?>
+		                                                <div class="project-ads"><span><?php echo $adstype_info['name']; ?></span>
+		                                                <br/>
+		                                            	<small>宽：<?php echo $adstype_info['adsw']; ?></small><small style="margin-left: 20px;">高：<?php echo $adstype_info['adsh']; ?></small></div>
+		                                            	<div class="project-ads"><a href="?action=ads&o=tedit" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i> 广告位管理 </a></div>
+		                                        </td>
+		                                        <!--<td><?php echo $v['gourl']; ?></td>
+		                                        <td>
+		                                            <a href="?action=ads&o=edit&id=<?php echo $v['id']; ?>"><img alt="<?php echo $v['name']; ?>" src="<?php if($v['adfile']!=''){ echo $v['adfile'];}else{ echo 'manage/admin/template/img/nopic.jpg'; } ?>" width="189" height="68" /></a>
+		                                        </td>-->
+		                                        <td>
+		                                            <a href="?action=ads&o=edit&id=<?php echo $v['id']; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i> 编辑 </a>
+		                                            <button type="button" value="<?php echo $v['id']; ?>" class="btn btn-danger" onclick="LayerconfirmDel(this);" name="<?php echo $v['name']; ?>"><i class="fa fa-times"></i> 删除</button></td>
+		                                        </td>
+		                                    </tr>
+		                                    <?php }}else{ ?>
+		                                    <tr>
+                            					<td colspan="10" style="text-align: left;">暂未发现任何广告。您可以     <a class="btn btn-primary" href="?action=ads&o=add"><i class="fa fa-plus"></i> 添加广告</a></td>
+                            				</tr>
+                            				<?php } ?>
+                                    	</tbody>
+                                	</table>
+                                	</div>
+                                	<div class="btn-group full-width">
+										<div class="alledit-form">
+											<input type="button" id="alltype" class="btn btn-primary" onclick="alls('types[]','alltype');" value="全选" />
+											<input type="button" class="btn btn-info" onclick="LayerconfirmAll(1);" value="批量显示" />
+											<input type="button" class="btn btn-warning" onclick="LayerconfirmAll(2);" value="批量隐藏" />
+											<input type="button" class="btn btn-danger" onclick="LayerconfirmAll(3);" value="批量删除" />
+											<input type="button" class="btn btn-success" onclick="LayerconfirmAll(4);" value="提交排序" />
+											<label style="margin-left: 30px; width: 150px;">
+												<select class="chosen-select" style="width: 100%;" name="ataid">
+													<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;">更改所属广告位为</option>
+													<?php foreach($adstype as $n){ ?>
+											        <option value="<?php echo $n['taid']; ?>"><?php echo $n['name']; ?></option>
+											        <?php } ?>
+												</select>
+											</label>
+											<input type="button" class="btn btn-success" onclick="LayerconfirmAll(5);" value="更改" />
+										</div>
+                            		</div>
+                            	</form>
+                        	</div>
+                        	<?php }if($o=='tedit' || $o=='tadd'){ ?>
+                        		<div class="ibox-title">
+                                <h5>广告位管理</h5>
+                                <div class="ibox-tools">
+                                    <a href="?action=ads" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回广告管理</a>
+                                </div>
+                                <?php if($o=='tadd'){ ?>
+                                <div class="ibox-tools">
+                                    <a href="?action=ads&o=tedit" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回广告位管理</a>
+                                </div>
+                                <?php } ?>
+                            </div>
+                            <div class="ibox-content">
+                        		<table class="table table-bordered article-table">
+                        			<thead>
+                        			<tr>
+                        				<td style="text-align:left;">名称</td>
+                        				<td width="200">宽度(px)</td>
+                        				<td width="200">高度(px)</td>
+                        				<td width="280">操作</td>
+                        			</tr>
+                        			</thead>
+                                    <tbody>
+                                    	<?php foreach($adstype as $t){ ?>
+                                    	<form action="?action=ads&o=tedit&taid=<?php echo $t['taid']; ?>&go=1" method="post" id="adstypeedit<?php echo $t['taid']; ?>" onsubmit="return false">
+                                    	<tr>
+                                    		<td><label><input class="form-control" id="adstype_name<?php echo $t['taid']; ?>" type="text" value="<?php echo $t['name']; ?>" name="adstype_name<?php echo $t['taid']; ?>" /></label></td>
+                                    		<td><label><input class="form-control no-clip" type="text" name="adstype_adsw<?php echo $t['taid']; ?>" value="<?php echo $t['adsw']; ?>" /></label></td>
+                        					<td><label><input class="form-control no-clip" type="text" name="adstype_adsh<?php echo $t['taid']; ?>" value="<?php echo $t['adsh']; ?>" /></label></td>
+                        					<td>
+	                                            <button class="btn btn-primary" value="<?php echo $t['taid']; ?>" onclick="Layerconfirm(this);" name="<?php echo $t['name']; ?>"><i class="fa fa-check"></i> 提交</a></button>
+	                                            <button type="button" value="<?php echo $t['taid']; ?>" class="btn btn-danger" onclick="LayerconfirmDeladstype(this);" name="<?php echo $t['name']; ?>"><i class="fa fa-times"></i> 删除</button></td>
+	                                        </td>
+                                    	</tr>
+                                    	</form>
+                                    	<?php }if($o=='tadd'){ ?>
+                                    	<form action="?action=ads&o=tadd&go=1" method="post" id="adstypetadd" onsubmit="return false">
+                                    	<tr>
+                                    		<td><label><input class="form-control" id="adstype_name" type="text"  name="adstype_name" /></label></td>
+                                    		<td><label><input class="form-control no-clip" type="text" name="adstype_adsw" /></label></td>
+                        					<td><label><input class="form-control no-clip" type="text" name="adstype_adsh" /></label></td>
+                        					<td>
+	                                            <button class="btn btn-info" style="width: 144px;" onclick="Layerconfirmtadd();"><i class="fa fa-check"></i> 提交</a></button>
+	                                        </td>
+                                    	</tr>
+                                    	</form>
+                                    	<?php } ?>
+                                	</tbody>
+                            	</table>
+	                        	<div class="clear">
+			                		<a class="btn btn-primary" href="?action=ads&o=tadd"><i class="fa fa-check"></i> 添加广告位</a>
+			                	</div>
+                    		<?php } ?>
+                    	</div>
+                	</div>
+            	</div>
+        	</div>
+        <?php include "manage/admin/template/footer.html"; ?>
+    	</div>
+	</div>
+	<?php include "manage/admin/template/js.html"; ?>
+    <script type="text/javascript">
+		function alls(divc,inputs){
+			if($("#"+inputs).attr('value') == '全选'){
+				$('.i-checks').iCheck('check');
+				$("#"+inputs).attr('value','取消全选');
+				$("input[name='"+divc+"']").attr('checked',true);
+			}else{
+				$('.i-checks').iCheck('uncheck');
+				$("#"+inputs).attr('value','全选');
+				$("input[name='"+divc+"']").removeAttr('checked',true);
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$("#taid option[class='hidden']").remove();
+			$("#tid option[class='hidden']").remove();
+			$("#sid option[class='hidden']").remove();
+			$(".searchauto").change(function(){$("#adssearch").submit();});
+		});
+	</script>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmAll(num){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要执行批量操作吗？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	document.getElementById("formnum").value=num;
+                    	document.getElementById("formall").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function Layerconfirm(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要修改 [<font color="#337AB7">'+name+'</font>]？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	var tname=document.getElementById("adstype_name"+id.value).value;
+                    	if(!from_null(tname)){
+                    		layer.alert("广告位名称不能为空");return false;
+                    	}
+                    	document.getElementById("adstypeedit"+id.value).submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function Layerconfirmtadd(){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要添加该广告位？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	var tname=document.getElementById("adstype_name").value;
+                    	if(!from_null(tname)){
+                    		layer.alert("广告位名称不能为空");return false;
+                    	}
+                    	document.getElementById("adstypetadd").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function LayerconfirmDel(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要删除 [<font color="#337AB7">'+name+'</font>]？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	window.location.href="?action=ads&o=del&id="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    	function LayerconfirmDeladstype(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '<font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 该广告位下所有广告将被删除!<br/>确定要删除 [<font color="#337AB7">'+name+'</font>]？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	window.location.href="?action=ads&o=tdel&taid="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+</body>
+</html>

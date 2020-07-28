@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看回复详情</title>
+	<link href="{$GLOBALS['styles']}css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+	<link href="{$GLOBALS['styles']}css/font-awesome.css?v=4.3.0" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="background: none;overflow-x: hidden;">
+<div class="gray-bg dashbard-1">
+	<div class="wrapper wrapper-content animated">
+		<div class="row">
+			<div class="col-lg-12">			
+				<div class="ibox chat-view">
+					<div class="ibox-title">
+						<h5>留言：<font color="#1AB394">{fun newstr($messageinfo['title'],40);}</font> 回复详情</h5>
+					</div>
+				
+					<div class="ibox-content">
+				
+				    <div class="row">
+				        <div class="col-md-9 full-width">
+				            <div class="chat-discussion">
+				                <div class="chat-message">
+				                	<div class="imgpanel">
+					                	{if($messageinfo['uid']==0)}
+					                	<img class="message-avatar" src="manage/admin/template/img/visitors.png" alt="游客">
+					                	{else}
+						                <img class="message-avatar" src="{$messageinfo['uportrait']}" alt="{$messageinfo['uname']}">
+						                <span class="uid-panel">uid:{$messageinfo['uid']}</span>
+					                   	{/if}
+				                   	</div>
+				                    <div class="message">
+				                        <a class="message-author">{if($messageinfo['uid']==0)}游客{else}{$messageinfo['uname']}{/if}</a>
+				                        <span class="message-date">于 {fun date('Y-m-d H:i:s',$messageinfo['addtime'])} 留言：</span>
+				                        <span class="message-content" id="comment_detail">{$messageinfo['detail']}</span>
+				                    </div>
+				                </div>
+				            	{foreach $replyinfo as $vr}
+				            	{if($vr['adminid']==1)}
+				                <div class="chat-message-reply">
+				                    <img class="message-avatar" src="{$vr['admin_avator']}" alt="{$vr['admin_user']}">
+				                    <div class="message">
+				                        <a class="message-author"> {$vr['admin_user']} </a>
+				                        <span class="message-date">于 {fun date('Y-m-d H:i:s',$vr['retime'])}
+				                        	{if($vr['upid']==0)}
+				                        		回复 <font color="#337AB7">{if($messageinfo['uid']==0)}游客{else}{$messageinfo['uname']}{/if}</font> 的内容: "<font color="#6935eb">{fun newstr($vr['reply_detail'],40)}</font>"
+				                        	{else}
+				                        	 回复 <font color="#337AB7">{if($messageinfo['uid']==0)}游客{else}{$messageinfo['uname']}{/if}</font> 的内容: "<font color="#6935eb">{fun replydetail('message',$vr['upid'],'reply')}</font>"
+				                        	{/if}
+				                        </span>
+				                        <span class="message-content">{$vr['reply']}</span>
+				                    </div>
+				                </div>
+				                {else}
+				               	<!--回复管理员-->
+				               <div class="chat-message">
+				                    <div class="imgpanel">
+						                <img class="message-avatar" src="{$messageinfo['uportrait']}" alt="{$messageinfo['uname']}">
+						                <span class="uid-panel">uid:{$messageinfo['uid']}</span>
+				                    </div>
+				                    <div class="message">
+				                        <a class="message-author">{$messageinfo['uname']}</a>
+				                        <span class="message-date">于 {fun date('Y-m-d H:i:s',$vr['retime'])} 回复 <font color="#337AB7">{fun adminuser_info($vr['reuid'],'user')}</font> 的内容: "<font color="#6935eb">{fun replydetail('message',$vr['upid'],'reply')}</font>"
+				                        </span>
+				                        <span class="message-content">{$vr['reply']}</span>
+				                    </div>
+				                </div>
+				                {/if}
+				                {/foreach}
+				                {if($_SESSION['member']['uid']==0)}
+				                <div class="message-hints">
+				                	<p>温馨提示：<a href="index.php?action=member&o=login">登录</a>后可以继续回复管理员。</p>
+				                </div>
+				                {else}
+				                <div class="message-hints">
+				                	<p>温馨提示：进入<a href="index.php?action=member&o=login">会员中心</a>可以继续回复管理员。</p>
+				                </div>
+				                {/if}
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

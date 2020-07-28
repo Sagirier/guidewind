@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{$GLOBALS['SITE']['title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="keywords" content="{$GLOBALS['SITE']['keywords']}" />
+	<meta name="description" content="{$GLOBALS['SITE']['description']}" />
+	{include="public/css.html"}
+</head>
+<body>
+{include="public/header.html"}
+<div id="fh5co-wrapper">
+	<div id="fh5co-page">
+		<div id="fh5co-features">
+			<h1>一站式计算机视觉生态平台</h1>
+			<div class="subtitle">比从图像注释到精确神经网络的迭代速度快10倍</div>
+			<a href="javascript:void(0);" class="btn btn-primary order-button shadow">申请企业试用</a><span class="text-muted d-sm-inline d-none">或</span><a href="javascript:void(0);" class="btn btn-outline-dark">免费试用个人版</a>
+			<div class="container">
+				<div class="row screenbox">
+					{getdata data_table="navigators" data_ngid="20"}
+					<div class="col-md-4">
+						<div class="feature-left">
+							<img src="{$v['lipic']}">
+							<div class="feature-copy">
+								<h3>{$v['nname']}</h3>
+								<p>{$v['description']}</p>
+							</div>
+						</div>
+					</div>
+					{/getdata}
+				</div>
+			</div>
+			<div class="curveline"><div></div></div>
+		</div>
+		<!--<div id="fh5co-feature-product">-->
+			<!--<div class="container">-->
+				<!--<div class="row">-->
+					<!--<div class="col-md-12 text-center animate-box">-->
+						<!--<p>受广大人工智能公司以及研究机构信任，合作单位遍布全球</p>-->
+					<!--</div>-->
+					<!--<div class="links-area">-->
+						<!--{getdata data_table="links" data_gid="3" data_type="2" data_limit="10"}-->
+						<!--<a href="javascript:void(0);">-->
+							<!--<img src="{$v['lipic']}">-->
+						<!--</a>-->
+						<!--{/getdata}-->
+					<!--</div>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+		<div id="fh5co-portfolio" style="padding: 2em 0;margin: 40px 0 0;">
+			{getdata data_table="navigators" data_ngid="24" data_detail="1"}
+			<div class="container">
+				<div class="row">
+					<div class="text-center heading-section animate-box">
+						<h3>{$v['nname']}</h3>
+						<p>{fun htmlspecialchars_decode($v['description'])}</p>
+					</div>
+				</div>
+				<div class="row screens-row">
+					{$v['detail']}
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4 text-center animate-box">
+						<a href="/product_type/1" target="_blank" class="btn btn-primary btn-lg more-btn">产品详情</a>
+					</div>
+				</div>
+			</div>
+			{/getdata}
+		</div>
+		<div id="fh5co-content-section">
+			{getdata data_table="navigators" data_ngid="26" data_detail="1"}
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+						<h3>{$v['nname']}</h3>
+						<p>{fun htmlspecialchars_decode($v['description'])}</p>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row schema">
+					{$v['detail']}
+				</div>
+			</div>
+			{/getdata}
+		</div>
+		<div id="fh5co-blog-section">
+			{getdata data_table="navigators" data_ngid="28" data_detail="1"}
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+						<h3>{$v['nname']}</h3>
+						<p>{fun htmlspecialchars_decode($v['description'])}</p>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					{$v['detail']}
+				</div>
+				<div class="row">
+					<div class="col-md-4 col-md-offset-4 text-center animate-box">
+						<a href="/article_type/2" class="btn btn-primary btn-lg">企业服务</a>
+					</div>
+				</div>
+			</div>
+			{/getdata}
+		</div>
+		{include="public/footer.html"}
+	</div>
+</div>
+{include="public/js.html"}
+</body>
+</html>

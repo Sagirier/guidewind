@@ -1,0 +1,40 @@
+<div id="fh5co-header">
+    <header id="fh5co-header-section">
+        <div class="container">
+            <div class="nav-header">
+                <a href="javascript:void(0);" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+                <h1 id="fh5co-logo"><a href="{$GLOBALS['WWW']}"><img src="{$GLOBALS['styles']}images/logo_m.png" alt="{$GLOBALS['SITE']['title']}" /></a></h1>
+                <nav id="fh5co-menu-wrap" role="navigation">
+                    <ul class="sf-menu" id="fh5co-primary-menu">
+                        {getdata data_table="navigators" data_ngid="0" data_statu="1" data_limit="6"}
+                        <li {if($type['nid']==$v['nid'] || $article['nid']==$v['nid'] || $product['nid']==$v['nid'] || $recruitment['nid']==$v['nid'] || $type['ngid']==$v['nid'] || navinfo($type['ngid'],'ngid')==$v['nid'] || navinfo($article['nid'],'ngid')==$v['nid'] || navinfo($product['nid'],'ngid')==$v['nid'] || navinfo($recruitment['nid'],'ngid')==$v['nid'])}class="active"{/if}>
+                            <a href="{$v['url']}" class="fh5co-sub-ddown">{$v['nname']}</a>
+                            {if ($v['nid_leafid']!=$v['nid'])}
+                            <ul class="fh5co-sub-menu">
+                                {getdata data_table="navigators" data_ngid="$v['nid']" data_statu="1" mark="v1"}
+                                {if ($v1['description']==='hr')}
+                                <li class="hr"></li>
+                                {else}
+                                <li {if($type['nid']==$v1['nid'] || $article['nid']==$v1['nid'] || $product['nid']==$v1['nid'] || $recruitment['nid']==$v1['nid'] || $type['ngid']==$v1['nid'] || navinfo($type['ngid'],'ngid')==$v1['nid'] || navinfo($article['nid'],'ngid')==$v1['nid'] || navinfo($product['nid'],'ngid')==$v1['nid'] || navinfo($recruitment['nid'],'ngid')==$v1['nid'])}class="active"{/if}>
+                                <a href="{$v1['url']}" class="fh5co-sub-ddown">{if ($v1['lipic'])}{if (stripos($v1['lipic'],'glyphicon')!==false)}{fun htmlspecialchars_decode($v1['lipic'])}{else}<img src="{$v1['lipic']}">{/if}{/if}{$v1['nname']}</a>
+                                {if ($v1['nid_leafid']!=$v1['nid'])}
+                                    <ul class="fh5co-sub-menu">
+                                        {getdata data_table="navigators" data_ngid="$v1['nid']" data_statu="1" mark="v2"}
+                                        <li {if($type['nid']==$v2['nid'] || $article['nid']==$v2['nid'] || $product['nid']==$v2['nid'] || $recruitment['nid']==$v2['nid'] || $type['ngid']==$v2['nid'] || navinfo($type['ngid'],'ngid')==$v2['nid'] || navinfo($article['nid'],'ngid')==$v2['nid'] || navinfo($product['nid'],'ngid')==$v2['nid'] || navinfo($recruitment['nid'],'ngid')==$v2['nid'])}class="active"{/if}><a href="{$v2['url']}">{if ($v2['lipic'])}{if (stripos($v2['lipic'],'glyphicon')!==false)}{fun htmlspecialchars_decode($v2['lipic'])}{else}<img src="{$v2['lipic']}">{/if}{/if}{$v2['nname']}</a></li>
+                                        {/getdata}
+                                    </ul>
+                                {/if}
+                                </li>
+                                {/if}
+                                {/getdata}
+
+                            </ul>
+                            {/if}
+                        </li>
+                        {/getdata}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+</div>

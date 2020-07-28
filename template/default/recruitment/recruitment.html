@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$recruitment['keywords']}" />
+<meta name="description" content="{$recruitment['description']}" />
+<title>{$recruitment['title']}-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public2.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/font-awesome.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+</head>
+
+<body>
+{include="header.html"}
+<div class="parbase clearfix keyvisual">
+<div class="visual_top" id="visualSubMain">
+	<figure class="visual_image" id="visTop01">
+		{getdata data_table="ads" data_taid="6" data_type="2" data_limit="1"}
+		<img src="{$v['adfile']}" alt="">
+		{/getdata}
+		<figcaption style="height: 360px; margin-top: -360px;">
+			<div class="tit">诚聘英才，虚位以待</div>           
+			<p style="">我们竭尽全力吸引和培育认同我们核心价值观<br/>
+(开拓进取、无私奉献和诚实公正)的人才。<br/>
+在相互信任、彼此忠诚的环境下，我们全力支持各位人才的发展，<br/>
+努力将其培育成世界一流的领导者，共创更加美好的未来。</p>            
+		</figcaption>
+	</figure>
+</div>
+</div>
+<div class="nav">
+    <div class="g-wrap">
+    	{$positions}
+        <div class="columns">
+        	{getdata data_table="navigators" data_ngid="5" data_statu="1"}
+            <a id="li{$v['nid']}" href="{$v['url']}" {if($type['nid']==$v['nid'])} class="on"{/if}>{$v['nname']}<span></span></a>
+            {/getdata}
+        </div>
+    </div>
+</div>
+<div id="main-post">
+  <article class="post type-post status-publish format-standard has-post-thumbnail hentry category-jobs category-architecture category-yangtze-area">
+    <div class="single-wrapper">
+      <div class="single-container">
+        <div id="post-content">
+          <div id="content-post">
+            <div class="content" style="max-width: 1000px;margin-left: auto;margin-right: auto;">
+              <div class="entry-header">
+                <h1>{$recruitment['title']}</h1>
+                <span class="hidden"><i class="fa fa-eye"></i> 2,646</span>
+              </div>
+              <div class="entry-content">
+                {$recruitment['detail']}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>      
+{include="footer.html"}
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 网站内容管理</title>
+    <meta name="keywords" content="导风系统网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>网站内容管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            <a href="?a=contents&c=<?php echo $cname['cmark']; ?>">网站内容管理</a>
+                        </li>
+                        <li>
+                            <strong>
+                            	<font color="#1AB394"><?php echo $cname['cname']; ?>管理</font>
+                            </strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated">
+                <div class="row">
+                    <div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5><?php echo $top_txt.$cname['cname']; ?>列表</h5>
+                            </div>
+                            <div class="ibox-content">
+                            	<form action="" method="get" id="recruitmentsearch">
+                            	<input type="hidden" value="<?php echo $cname['cmark']; ?>" name="action" />
+                            	<div class="sch">
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="nid" name="recruitment-schbynid">
+										<option hassubinfo="true" value=""<?php if(!$conditions['statu']){echo ' selected="selected"';} ?>>所属栏目</option>
+										<?php foreach($navtree as $n){ ?>
+								        <option value="<?php echo $n['nid']; ?>"<?php if($n['channels']!=$cname['cmark']){echo ' style="display:none"';} ?><?php if($conditions['nid']==$n['nid']){echo ' selected="selected"';} ?>><?php echo str_repeat('—',$n['n']).$n['name']; ?></option>
+								        <?php } ?>
+									</select>
+                            		</div>
+                            		<div class="sch-form">
+                            		<select class="chosen-select searchauto" id="sid" name="recruitment-schbystatu">
+                            			<option hassubinfo="true" value=""<?php if(!$conditions['statu']){echo ' selected="selected"';} ?>>审核状态</option>
+                            			<option hassubinfo="true" value="1"<?php if($conditions['statu']==1){echo ' selected="selected"';} ?>>已审核</option>
+                            			<option hassubinfo="true" value="2"<?php if($conditions['statu']==2){echo ' selected="selected"';} ?>>未审核</option>
+                            		</select>
+                            		</div>
+                            		<div class="sch-form">
+                            		<select class="chosen-select searchauto" id="tid" name="recruitment-schbytrait">
+                            			<option hassubinfo="true" value=""<?php if(!$conditions['traits']){echo ' selected="selected"';} ?>>属性</option>
+                            			<?php foreach($traits_lists as $t){ ?>
+											<option hassubinfo="true" value="<?php echo $t['tid']; ?>"<?php if($conditions['traits']==$t['tid']){echo ' selected="selected"';} ?>><?php echo $t['tname']; ?></option>
+										<?php } ?>
+                            		</select>
+                            		</div>
+                            		<div class="sch-form width-auto">
+                            			<input type="search" id="schid" name="title" class="form-control" placeholder="请输入标题" />
+                            			<button type="submit" id="sbtnid" class="btn btn-info">搜索</button>
+                            		</div>
+                            	</div>
+                            	</form>
+                            	<form action="?action=<?php echo $cname['cmark']; ?>&o=alledit" id="formall" method="post" onsubmit="return false;">
+                            	<input name="formnum" id="formnum" type="hidden" value="" />
+                            	<div class="btn-group full-width">
+                            	<table class="full-width m-b table-bordered article-table">
+                            		<thead>
+                            			<tr>
+                            				<td>id</td>
+                            				<td>选择</td>
+                            				<td>顺序</td>
+                            				<td>标题 & 属性<a style="float: right;" href="?a=functions&c=traits">属性管理</a></td>
+                            				<td>状态</td>
+                            				<td>所属栏目</td>
+                            				<td>更新时间</td>
+                            				<td>点击量</td>
+                            				<td>操作</td>
+                            			</tr>
+                            		</thead>
+                            		<tbody>
+                            			<?php if($lists[0]['id']){foreach($lists as $v){ ?>
+                            			<tr>
+                            				<td><?php echo $v['id']; ?></td>
+                            				<td><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $v['id']; ?>" /></td>
+                            				<td><input type="text" name="orders[<?php echo $v['id']; ?>]" value="<?php echo $v['order']; ?>" class="form-control W-20 no-clip" /></td>
+                            				<td style="text-align: left;"><a href="?action=<?php echo $cname['cmark']; ?>&o=edit&id=<?php echo $v['id']; ?>"><?php if($conditions['title']!=''){ echo highLight($v['title'],$conditions['title']);}else{ echo $v['title'];} if($v['lipic']!=''){ echo ' <i class="fa fa-picture-o" style="color:#1AB394"></i>';} if($v['password']!=''){ echo ' <i class="fa fa-lock" style="color:#EC4758"></i>';} ?></a><span style="float: right;"><?php echo $traits_class->get_traits_image($v['traits']); ?></span></td>
+                            				<td><?php if($v['statu']==1){ echo ' <font color="#1AB394">已审核</font>';}else{ echo ' <font color="#ED5565">未审核</font>';} ?></td>
+                            				<td><?php echo navname($v['nid']); ?></td>
+                            				<td><?php echo date("Y-m-d H:i:s",$v['addtime']); ?></td>
+                            				<td><?php echo $v['hints']; ?></td>
+                            				<td>
+                            					<a class="btn btn-primary" href="" target="_blank"><i class="fa fa-eye"></i> 预览</a>
+						                        <a class="btn btn-info" href="?action=<?php echo $cname['cmark']; ?>&o=edit&id=<?php echo $v['id']; ?>"><i class="fa fa-pencil"></i> 编辑</a>
+						                        <button type="button" value="<?php echo $v['id']; ?>" class="btn btn-danger" onclick="LayerconfirmDel(this);" name="<?php echo $v['title']; ?>"><i class="fa fa-times"></i> 删除</button></td>
+                            			</tr>
+                            			<?php }}else{ ?>
+                            			<tr>
+                            				<td colspan="9" style="text-align: left;">暂未发布任何招聘信息。您可以     <a class="btn btn-primary" href="?action=<?php echo $cname['cmark']; ?>&o=add"><i class="fa fa-plus"></i> 发布招聘信息</a></td>
+                            			</tr>
+                            			<?php } ?>
+                            		</tbody>
+                            	</table>
+                            	</div>
+                            	<div class="btn-group full-width">
+									<div class="alledit-form">
+										<input type="button" id="alltype" class="btn btn-primary" onclick="alls('types[]','alltype');" value="全选" />
+										<input type="button" class="btn btn-info" onclick="LayerconfirmAll(1);" value="批量审核" />
+										<input type="button" class="btn btn-warning" onclick="LayerconfirmAll(2);" value="批量取消审核" />
+										<input type="button" class="btn btn-danger" onclick="LayerconfirmAll(3);" value="批量删除" />
+										<input type="button" class="btn btn-success" onclick="LayerconfirmAll(4);" value="提交排序" />
+										<label style="margin-left: 30px; width: 150px;">
+											<select class="chosen-select" style="width: 100%;" name="rnid">
+												<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;">更改所属栏目为</option>
+												<?php foreach($navtree as $n){ ?>
+										        <option value="<?php echo $n['nid']; ?>"<?php if($n['channels']!=$cname['cmark']){echo ' style="display:none"';} ?>><?php echo str_repeat('—',$n['n']).$n['name']; ?></option>
+										        <?php } ?>
+											</select>
+										</label>
+										<label style="width: 150px;">
+											<select class="chosen-select" style="width: 100%;" data-placeholder="更改属性为" multiple="" name="rtid[]">
+												<option hassubinfo="true" value="clear">清空属性</option>
+												<?php foreach($traits_lists as $t){ ?>
+												<option hassubinfo="true" value="<?php echo $t['tid']; ?>"><?php echo $t['tname']; ?></option>
+												<?php } ?>
+											</select>
+										</label>
+										<input type="button" class="btn btn-success" onclick="LayerconfirmAll(5);" value="更改" />
+									</div>
+                            	</div>
+                            	</form>
+                            	<div class="btn-group pages"><?php echo $pages; ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<script type="text/javascript">
+		function alls(divc,inputs){
+			if($("#"+inputs).attr('value') == '全选'){
+				$('.i-checks').iCheck('check');
+				$("#"+inputs).attr('value','取消全选');
+				$("input[name='"+divc+"']").attr('checked',true);
+			}else{
+				$('.i-checks').iCheck('uncheck');
+				$("#"+inputs).attr('value','全选');
+				$("input[name='"+divc+"']").removeAttr('checked',true);
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$("#nid option[class='hidden']").remove();
+			$("#sid option[class='hidden']").remove();
+			$("#tid option[class='hidden']").remove();
+			$(".searchauto").change(function(){$("#recruitmentsearch").submit();});
+		});
+	</script>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmAll(num){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要执行批量操作吗？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	document.getElementById("formnum").value=num;
+                    	document.getElementById("formall").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function LayerconfirmDel(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要删除 [<font color="#337AB7">'+name+'</font>]？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	window.location.href="?action=<?php echo $cname['cmark']; ?>&o=del&id="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+
+</body>
+</html>

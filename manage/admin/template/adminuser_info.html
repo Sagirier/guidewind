@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 管理员管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/layer/laydate.css" rel="stylesheet">
+	<style type="text/css">
+	#maillabel{width: 100%; position: relative;}
+	#mailBox{background:#fff;border:1px solid #ddd;padding:3px 5px 5px;position:absolute;z-index:9999;display:none;-webkit-box-shadow:0px 2px 7px rgba(0, 0, 0, 0.35);-moz-box-shadow:0px 2px 7px rgba(0, 0, 0, 0.35);  width: 100%;}
+	#mailBox p{width:100%;margin:0;padding:0;height:20px;line-height:20px;clear:both;font-size:12px;color:#ccc;cursor:default;}
+	#mailBox ul{padding:0;margin:0; float: left; width: 100%;}
+	#mailBox li{font-size:12px;height:22px;line-height:22px;color:#939393;font-family:'Tahoma';list-style:none;cursor:pointer;overflow:hidden; width: 100%;}
+	#mailBox .cmail{color:#000;background:#e8f4fc;}
+	.chosen-search{display: none;}
+	</style>
+</head>
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+      	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>管理员详细资料</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li><a>会员管理</a></li>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394">管理员详细资料</font></strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content">
+                <div class="row animated fadeInRight">
+                    <div class="col-md-4 full-width">
+                    	<form action="?action=adminuser&o=info&auid=<?php echo $adminuser['auid']; ?>&go=1" method="post" onsubmit="return false" id="adminuserform">
+                        <div class="ibox float-e-margins" style="margin-bottom: 0;">
+                            <div class="ibox-title">
+                                <h5>管理员：<font color="#1AB394"><?php echo $adminuser['user']; ?></font> 个人资料</h5>
+                                <div class="ibox-tools">
+                                	<a href="?action=adminuser" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回管理员列表</a>
+                            	</div>
+                            </div>
+                        	<div class="panel-heading">
+		                        <div class="panel-options">
+		                            <ul class="nav nav-tabs">
+		                                <li class="active"><a data-toggle="tab" href="#base">基本信息</a>
+		                                </li>
+		                                <?php if($user['auid']==1){ ?>
+		                                <li class=""><a data-toggle="tab" href="#expand">权限设置</a>
+		                                </li>
+		                                <?php } ?>
+		                            </ul>
+		                        </div>
+		                    </div>
+                        	<div class="panel-body">
+		                		<div class="tab-content">
+		                    		<div id="base" class="tab-pane active">
+		                        		<table class="table table-bordered">
+		                        		<thead>
+	                                    	<tr>
+	                                        	<td style="background: #efefef;width:260px;">设置项目</td>
+	                                        	<td style="background: #efefef;width:360px;">设置详情/选项<span style="float: right;color: #999;">带“<font color="red">*</font>”的为必填项</span></td>
+	                                        	<td style="background: #efefef;">备注/说明</td>
+	                                    	</tr>
+	                            		</thead>
+		                        		<tbody>
+		                        		<tr>
+		                            		<td width="140">管理员头像：</td>
+		                            		<td width="360">
+		                            			<input type="hidden" value="<?php echo $adminuser['avator']; ?>" id="adminuserid" name="adminuser_avator" />
+		                            			<img id="imageid" style="height: 200px; width: 200px;" alt="<?php echo $adminuser['user']; ?>" class="img-responsive box-s-10 border-r-30" src="<?php echo $adminuser['avator']; ?>">
+		                            			<button type="button" class="btn btn-primary btn-xs m-l-md" style="vertical-align: bottom;" name="<?php echo $member_typename; ?>" id="inputid" value="<?php echo $member_type; ?>" onclick="Layerupload(this)"><?php if($adminuser['avator']!=$GLOBALS['WP']['member']['default_avator']){ echo '更换头像';}else{ echo '上传头像';} ?></button>
+		                            			<?php if($adminuser['avator']!=$GLOBALS['WP']['member']['default_avator']){ ?>
+												<div class="row m-l-none">
+													<input type="checkbox" name="adminuser_avator_del" class="i-checks" /><span style="line-height: 40px; display: inline-block; margin-left:5px;">删除头像</span>
+												</div>
+												<?php } ?>
+		                            			<div class="row m-t-sm">
+			                                        <div class="col-md-4">
+			                                            <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
+			                                            <h5><strong><?php echo $adminuser['total_article']; ?></strong> 文章</h5>
+			                                        </div>
+			                                        <div class="col-md-4">
+			                                            <span class="line">5,3,9,6,5,9,7,3,5,2</span>
+			                                            <h5><strong>28</strong> 关注</h5>
+			                                        </div>
+			                                        <div class="col-md-4">
+			                                            <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
+			                                            <h5><strong>240</strong> 关注者</h5>
+			                                        </div>
+			                                    </div>
+			                                    <div class="user-button">
+			                                        <div class="row">
+			                                            <div class="col-md-6">
+			                                                <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 发送消息</button>
+			                                            </div>
+			                                            <div class="col-md-6">
+			                                                <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> 赞助</button>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+		                            		</td>
+		                            		<td rowspan="8">
+		                            			<p>1.除<font style="color: red;">超级管理员</font>外，头像均继承至原先的会员个人头像，也可以在本页面更换/删除头像。</p>
+		                            			<p>2.管理员登录名用于管理员登录后台，<font style="color: #1AB394;">不允许为空，只能包含英文与数字且不能超过20个字符</font>。</p>
+		                            			<p>3.管理员登录密码用于管理员登录后台，<font style="color: #1AB394;">只能包含英文与数字</font>，不填则默认为原先的会员登录密码。</p>
+		                            			<p>4.管理员名称可以包含特殊字符、中文、英文字母与数字，但不能超过30个字符。</p>
+		                            			<p>5.管理员分组可以控制该管理员的权限，如果更改管理员分组，对应权限也会被更换，具体在权限设置中设置权限。</p>
+		                            			<p>6.真实姓名与邮箱为该管理员的密码凭证，可以用于找回密码。</p>
+		                            			<p>7.有效期为该管理员的任职时间，请选择正确日期，2030-12-31 23:59:59为最大时间；<br/>&nbsp;&nbsp;&nbsp;如果选择清空（不填），则自动被视为该管理员拥有<font color="#F00">永久权限</font>。</p>
+		                            		</td>
+		                            	</tr>
+		                            	<tr>
+		                                	<td><font color="#F00"><i class="fa fa-asterisk"></i></font> 修改登录名：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input class="form-control" name="adminuser_auser" id="adminuser_auser" value="<?php echo $adminuser['auser']; ?>" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                            	<tr>
+		                                	<td>修改登录密码：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input class="form-control" name="adminuser_apass" id="adminuser_apass" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                            	<tr>
+		                                	<td>管理员名称：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input value="<?php echo $adminuser['user']; ?>" class="form-control" name="adminuser_user" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <?php if($adminuser['auid']!=1){ if($user['auid']==1){ ?>
+		                                <tr>
+		                            		<td>管理员分组：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<select class="chosen-select" name="adminuser_group">
+		                            					<?php foreach($group as $n){ ?>
+												        <option hassubinfo="true" value="<?php echo $n['gid']; ?>"<?php if($adminuser['gid']==$n['gid']){echo ' selected="selected"';} ?>><?php echo $n['name']; ?></option>
+												        <?php } ?>
+		                            				</select>	
+		                            			</label>
+		                            		</td>
+		                            	</tr>
+		                            	<tr>
+	                                    	<td>有效期至：</td>
+	                                    	<td>
+	                                    		<label style="width: 320px; position: relative;" id="admindate">
+	                                    			<i class="laydate-icon"></i>
+	                                    			<input class="form-control adminuser-date" id="start" name="adminuser_period" value="<?php if($adminuser['period']!=0){ echo date('Y-m-d H:i:s',$adminuser['period']);}else{ echo date('Y-m-d H:i:s',1924963199);} ?>" />
+	                                    		</label>
+	                                    	</td>
+	                            		</tr>
+		                            	<?php }else{ ?>
+		                            	<tr>
+		                            		<td>管理员分组：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<?php foreach($group as $n){ if($adminuser['gid']==$n['gid']){  ?>
+		                            				<input class="form-control" disabled="disabled" value="<?php echo $n['name']; ?>" />
+		                            				<?php }} ?>
+		                            			</label>
+		                            		</td>
+		                            	</tr>
+		                            	<tr>
+	                                    	<td>有效期至：</td>
+	                                    	<td>
+	                                    		<label style="width: 320px; position: relative;" id="admindate">
+	                                    			<i class="laydate-icon"></i>
+	                                    			<input class="form-control adminuser-date" disabled="disabled" id="start" name="adminuser_period" value="<?php if($adminuser['period']!=0){ echo date('Y-m-d H:i:s',$adminuser['period']);}else{ echo date('Y-m-d H:i:s',1924963199);} ?>" />
+	                                    		</label>
+	                                    	</td>
+	                            		</tr>
+	                            		<?php }} ?>
+		                            	<tr>
+		                                	<td>邮箱：</td>
+		                                	<td>
+		                                		<label id="maillabel">
+		                                			<input id="email" value="<?php echo $adminuser['aemail']; ?>" name="adminuser_aemail" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                            	<tr>
+		                                	<td>真实姓名：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input value="<?php echo $adminuser['aname']; ?>" class="form-control" name="adminuser_aname" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                </tbody>
+		                                </table>
+                        			</div>
+                        			<?php if($user['auid']==1){ ?>
+                        			<div id="expand" class="tab-pane">
+                        				<?php if($adminuser['auid']==1){ ?>
+                        				<div class="inherit_group"><span>您是尊贵的(<font color="#F00">超级管理员</font>)，您拥有所有的操作权限。</span></div>
+                        				<?php }else{ ?>
+                        				<div class="inherit_group"><input type="checkbox" name="inherit_group" class="i-checks" /><span>不自定义设置，继承分组权限(<font color="#F00">勾选该项后，以下的任何权限选择则自动视为无效</font>)</span></div>
+                        				<input type="button" id="allauthority" class="btn btn-primary auth_btn" onclick="alls('allauthority','');" value="全选" />
+                                		<?php foreach($authority0 as $a){ ?>
+                                		<div class="auth_div field_mainnav">
+                                			<label class="auth_label">
+                                				<input type="button" id="allauthority<?php echo $a['authid']; ?>" class="btn btn-info btn-xs" onclick="alls('allauthority','<?php echo $a['authid']; ?>');" value="全选" /><?php if($a['cmark']==''){ echo $a['name']; }else{ $cname=$channels->find(array('cmark'=>$a['cmark'])); echo $cname['cname'].'管理'; } ?>
+                                			</label>
+                                			<p class="auth_p">
+                                				<?php $alist=syDB('admin_authority')->findAll(array('up'=>$a['authid'],'no'=>0),' `order` desc,`authid`');
+                                					  foreach($alist as $al){ if($al['cmark']==''){ ?>
+                                				<span class="auth_span"><input type="checkbox" class="i-checks authority authority<?php echo $a['authid']; ?>" value="<?php echo $al['action']; ?>" name="authority[]"<?php if(strpos($adminuser['authority'],$al['action'])){ echo ' checked="checked"';} ?> /> <?php echo $al['name']; ?></span>
+                                				<?php }} ?>
+                                			</p>
+                                		</div>
+                                		<?php } foreach($authority1 as $b){ ?>
+                                		<div class="auth_div field_mainnav">
+                                			<label class="auth_label">
+                                				<input type="button" id="allauthority<?php echo $b['authid']; ?>" class="btn btn-info btn-xs" onclick="alls('allauthority','<?php echo $b['authid']; ?>');" value="全选" /><?php echo $b['name']; ?>
+                                			</label>
+                                			<p class="auth_p">
+                                				<?php $blist=syDB('admin_authority')->findAll(array('up'=>$b['authid'],'no'=>0),' `order` desc,`authid`');
+                                					  foreach($blist as $bl){ ?>
+                                				<span class="auth_span"><input type="checkbox" class="i-checks authority authority<?php echo $b['authid']; ?>" value="<?php echo $bl['action']; ?>" name="authority[]"<?php if(strpos($adminuser['authority'],$bl['action'])){ echo ' checked="checked"';} ?> /> <?php echo $bl['name']; ?></span>
+                                				<?php } ?>
+                                			</p>
+                                		</div>
+                                		<?php }} ?>
+                        			</div>
+                        			<?php } ?>
+                        		</div>
+                        	</div>
+                        	
+                        </div>
+                        <div class="clear mar-20">
+                            <button type="button" class="btn btn-primary" name="<?php echo $adminuser['user']; ?>" onclick="Layerconfirm(this)">修改</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<script type="text/javascript">
+		document.getElementById("adminuser_period").value=document.getElementById("start").innerHTML;
+	</script>
+	<script type="text/javascript">
+		function alls(inputs,id){
+			if($("#"+inputs+id).attr('value') == '全选'){
+				$('.authority'+id).iCheck('check');
+				$("#"+inputs+id).attr('value','取消全选');
+				$('.authority'+id).attr('checked',true);
+			}else{
+				$('.authority'+id).iCheck('uncheck');
+				$("#"+inputs+id).attr('value','全选');
+				$('.authority'+id).removeAttr('checked',true);
+			}
+		}
+	</script>
+	<!-- Peity -->
+    <script src="manage/admin/template/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="manage/admin/template/js/demo/peity-demo.js"></script>
+	<script type="text/javascript" src="manage/admin/template/js/autoMail.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#email').autoMail({
+				emails:['qq.com','163.com','126.com','sina.com','sohu.com','yahoo.cn','gmail.com','hotmail.com','live.cn']
+			});
+		});
+	</script>
+	<script type="text/javascript" src="manage/admin/template/js/date-select.js"></script>
+	<script type="text/javascript"> 
+		var selYear = window.document.getElementById("selYear"); 
+		var selMonth = window.document.getElementById("selMonth"); 
+		var selDay = window.document.getElementById("selDay"); 
+		// 新建一个DateSelector类的实例，将三个select对象传进去 
+		new DateSelector(selYear, selMonth, selDay, <?php echo $contactinfo['birthyear']; ?>, <?php echo $contactinfo['birthmonth']; ?>, <?php echo $contactinfo['birthday']; ?>); 
+	</script> 
+	<script type="text/javascript">
+		function changeprovince(id){
+			var cid=id.value;
+			$.ajax({
+				type:"post",
+				url:"?action=district&o=get_city",
+				async:true,
+				data:"upid="+cid,
+				success: function(html){
+					$("#cityinfo").empty();
+					$("#cityinfo").append(html);
+				}
+			});
+		}
+		function changecity(id){
+			var did=id.value;
+			$.ajax({
+				type:"post",
+				url:"?action=district&o=get_dist",
+				async:true,
+				data:"upid="+did,
+				success: function(html){
+					$("#distinfo").empty();
+					$("#distinfo").append(html);
+				}
+			});
+		}
+	</script>
+	 <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+    	//i-checks
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    </script>
+	<script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <!-- layerDate plugin javascript -->
+    <script src="manage/admin/template/js/plugins/layer/laydate/laydate.js"></script>
+    <script>
+		var start = {
+		    elem: '#start',
+		    format: 'YYYY/MM/DD hh:mm:ss',
+		    min: laydate.now(), //设定最小日期为当前日期
+		    max: '2030-12-31 23:59:59', //最大日期
+		    istime: true,
+		    istoday: true,
+		    choose: function(datas){
+		         end.min = datas; //开始日选好后，重置结束日的最小日期
+		         end.start = datas //将结束日的初始值设定为开始日
+		    }
+		};
+		var end = {
+		    elem: '#end',
+		    format: 'YYYY/MM/DD hh:mm:ss',
+		    min: laydate.now(),
+		    max: '2030-12-31 23:59:59',
+		    istime: true,
+		    istoday: true,
+		    choose: function(datas){
+		        start.max = datas; //结束日选好后，重置开始日的最大日期
+		    }
+		};
+		laydate(start);
+		laydate(end);
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(id){
+    		var name=id.name;
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要修改管理员[<font color="#1AB394">'+name+'</font>]的信息？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	var username=document.getElementById("adminuser_auser").value;
+                    	var pass=document.getElementById("adminuser_apass").value;
+                    	if(!from_null(username)){
+                    		layer.msg('管理员登录名不能为空'); return false;
+                    	}
+                    	if(!from_max(username,20)){
+                    		layer.msg('管理员登录名不能超过20个字符'); return false;
+                    	}
+                    	if(!from_string(username) || !from_chinese(username)){
+                    		layer.msg('管理员登录名只能包含英文与数字'); return false;
+                    	}
+                    	if(pass!='' && !from_max(pass,30)){
+                    		layer.msg('管理员密码不能超过30个字符'); return false;
+                    	}
+                    	if((pass!='' && !from_string(pass)) || (pass!='' && !from_chinese(pass))){
+                    		layer.msg('管理员密码只能包含英文与数字'); return false;
+                    	}
+                    	document.getElementById("adminuserform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function Layerupload(id){
+    		var filetype=id.value;
+    		var fileName=id.name;
+    		$.layer({
+			    type: 2,
+			    shadeClose: true,
+			    title: false,
+			    closeBtn: [1, true],
+			    offset: ['',''],
+			    area: ['940px','620px'],
+			    iframe: {src: '?action=avator&o=loadup&inputid=adminuserid&imgid=imageid&filesdir=member'}
+			});
+    	}
+    </script>
+</body>
+
+</html>

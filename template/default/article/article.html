@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<title>{$article['title']}-{$GLOBALS['SITE']['title']}</title>
+	<meta name="keywords" content="{$article['keywords']}"/>
+	<meta name="description" content="{$article['description']}"/>
+	{include="public/css.html"}
+</head>
+<body>
+{include="public/header.html"}
+<div id="fh5co-wrapper">
+    <div id="fh5co-page">
+        <div class="fh5co-wrapper first mini-hero">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h3>
+                            {$article['title']}
+                        </h3>
+                        <p>{$article['description']}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fh5co-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="display: none;">作者：{$article['user']}<span class="ml-20">发布于：{fun tmspan($article['addtime'])}</span><span class="ml-20">人气：<script src="{$GLOBALS['WWW']}?action=article&o=hints&id={$article['id']}" type="text/javascript"></script></span></p>
+                    </div>
+                    <div class="article-content">
+                        {$article['detail']}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {include="public/footer.html"}
+    </div>
+</div>
+{include="public/js.html"}
+</body>
+</html>

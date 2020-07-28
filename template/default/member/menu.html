@@ -1,0 +1,12 @@
+<dl class="szmx_dl">
+    <dd {if(!$tag)} class="active" {/if}><a href="index.php?action=member"><i class="fa fa-caret-right"></i> 会员详情</a> </dd>
+    {if($mymessage)}
+    <dd {if($tag=='mymessage')} class="active" {/if}><a href="index.php?action=member&o=mymessage"><i class="fa fa-caret-right"></i> {$channels_message['cname']}管理</a> </dd>
+    {/if}
+    <!--<dd><a href="/REBATE/USER.html"><i class="fa fa-caret-right"></i> 发布内容</a> </dd>
+    <dd><a href="/Income/index.html"><i class="fa fa-caret-right"></i> 积分奖励明细</a> </dd>
+    <dd><a href="/Integral/index.html"><i class="fa fa-caret-right"></i> 交易记录</a> </dd>  -->
+    <dd{if($tag=='myinfo')} class="active" {/if}><a href="?action=member&o=myinfo"><i class="fa fa-caret-right"></i> 更改个人资料</a> </dd>
+    <dd style="border-bottom: 0px;"{if($tag=='mypassword')} class="active" {/if}><a href="?action=member&o=mypassword"><i class="fa fa-caret-right"></i> 修改登录密码</a> </dd>
+    <dd><a href="?action=member&o=out"><i class="fa fa-caret-right"></i> 退出登录</a> </dd>
+</dl>

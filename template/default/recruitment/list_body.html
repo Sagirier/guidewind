@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$type['keywords']}" />
+<meta name="description" content="{$type['description']}" />
+<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public2.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+<script type="text/javascript" src="{$GLOBALS['styles']}js/other.js"></script>
+</head>
+
+<body>
+{include="header.html"}
+<div class="parbase clearfix keyvisual">
+<div class="visual_top" id="visualSubMain">
+	<figure class="visual_image" id="visTop01">
+		{getdata data_table="ads" data_taid="6" data_type="2" data_limit="1"}
+		<img src="{$v['adfile']}" alt="">
+		{/getdata}
+		<figcaption style="height: 360px; margin-top: -360px;">
+			<div class="tit">诚聘英才，虚位以待</div>           
+			<p style="">我们竭尽全力吸引和培育认同我们核心价值观<br/>
+(开拓进取、无私奉献和诚实公正)的人才。<br/>
+在相互信任、彼此忠诚的环境下，我们全力支持各位人才的发展，<br/>
+努力将其培育成世界一流的领导者，共创更加美好的未来。</p>            
+		</figcaption>
+	</figure>
+</div>
+</div>
+<div class="nav">
+    <div class="g-wrap">
+    	{$positions}
+        <div class="columns">
+        	{getdata data_table="navigators" data_ngid="5" data_statu="1"}
+            <a id="li{$v['nid']}" href="{$v['url']}" {if($type['nid']==$v['nid'])} class="on"{/if}>{$v['nname']}<span></span></a>
+            {/getdata}
+        </div>
+    </div>
+</div>
+<div id="mainCont">
+	<div class="parsys">
+		<div class="parbase section content_container">
+			<section class="box_main_cont">
+				<div class="parsys box_inner">
+					<div class="title parbase section">
+						<div class="tit_type01">工作方式</div>
+					</div>
+					<div class="text parbase section">
+						<p class="article_area">我们正在寻找认同我们核心价值观（开拓进取、无私奉献和诚实公正），<br>并按照这些价值观行事的人才。</p>
+					</div>
+					<div class="pure_html parbase section">
+						<ul class="list_career clearfix">
+							<li>
+								<figure>
+									<img src="{$GLOBALS['styles']}images/img_list_career01.jpg" alt="">
+									<figcaption>
+										<h2>勇于开拓进取的人</h2>
+										<dl>
+											<dt>这样的人敢于挑战，勇于创新，追求完美，不满足于现有标准。</dt>
+											<dd><span>-</span>他们积极发展自我，努力成为业界翘楚。</dd>
+											<dd><span>-</span>他们思想开放，思维新颖，能够发现新机会和新方法。</dd>
+											<dd><span>-</span>他们以“我能行”的精神，制定和实现具有挑战性的目标。</dd>
+										</dl>
+									</figcaption>
+								</figure>
+							</li>
+							<li>
+								<figure>
+									<img src="{$GLOBALS['styles']}images/img_list_career02.jpg" alt="">
+									<figcaption>
+										<h2>乐于无私奉献的人</h2>
+										<dl>
+											<dt>这样的人尽力创造更大利益，看重与公司、客户和同事之间关系。</dt>
+											<dd><span>-</span>他们将“我们”和共同目标放在第一位。</dd>
+											<dd><span>-</span>他们看重对客户所做的承诺，持续为客户创造价值。</dd>
+											<dd><span>-</span>他们相互协作，相信他人，具有团队精神。</dd>
+										</dl>
+									</figcaption>
+								</figure>
+							</li>
+							<li>
+								<figure>
+									<img src="{$GLOBALS['styles']}images/img_list_career03.png" alt="">
+									<figcaption>
+										<h2>敢于诚实公正的人</h2>
+										<dl>
+											<dt>这样的人按原则行事，并以此为豪。</dt>
+											<dd><span>-</span>他们诚实行事，遵循原则，能够抵制眼前短期利益的诱惑。</dd>
+											<dd><span>-</span>他们待人公平，为人坦荡，理性处事，诚实对待自己的能力和表现。</dd>
+										</dl>
+									</figcaption>
+								</figure>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+		<div class="parbase section content_container">
+			<section class="box_main_cont even">
+				<div class="parsys">
+					<div class="title parbase section">
+						<div class="tit_type01">未来展望</div>
+					</div>
+					<div class="text parbase section">
+						<p class="article_area">开展了广泛的系统培训计划、各级领导力课程和各职位专业培训。</p>
+					</div>
+					<div class="pure_html parbase section">
+						<ul class="list_career type02 clearfix">
+							<li>
+								<figure>
+									<img src="{$GLOBALS['styles']}images/img_list_career04.jpg" alt="">
+									<figcaption>
+										<h2>培养战略性人才</h2>
+										<p>我们推行广泛的培训计划，包括为无工作经验和有经验的员工开设定向课程。<br><br><br></p>
+									</figcaption>
+								</figure>
+							</li>
+							<li>
+								<figure>
+									<img src="{$GLOBALS['styles']}images/img_list_career05.jpg" alt="">
+									<figcaption>
+										<h2>培育未来领导人才</h2>
+										<p>我们支持多种高级学位课程，<br>培养韩华顶尖人才，<br>引领我们进军全球市场。<br><br><br></p>
+									</figcaption>
+								</figure>
+							</li>
+							<li>
+								<figure>
+									<img src="{$GLOBALS['styles']}images/img_list_career06.jpg" alt="">
+									<figcaption>
+										<h2>培养工作与生活兼得的人才</h2>
+										<p>我们在全公司范围内施行工作与生活平衡策略，提高员工的生活质量。<br><br><br><br></p>
+									</figcaption>
+								</figure>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+{include="footer.html"}
+</body>
+</html>

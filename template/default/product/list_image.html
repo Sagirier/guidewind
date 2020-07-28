@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="{$type['seo_keywords']}" />
+	<meta name="description" content="{$type['description']}" />
+	<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+	{include="public/css.html"}
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">您的浏览器 <strong>版本太低</strong> ，请 <a href="http://browsehappy.com/" rel="nofollow">升级</a> 后再访问本站！</p>
+<![endif]-->
+{include="public/header.html"}
+<div class="wrapper body-wrapper blue-bg">
+	<div class="wrapper-content">
+		<div class="slider-area slider-2">
+			<div id="single-slider" class="nivoSlider">
+				{getdata data_table="ads" data_taid="3" data_type="2" data_limit="5"}
+				<img style ="display:none" src="{$v['adfile']}"  data-thumb="{$v['adfile']}"  alt="{$v['name']}" title="#htmlcaption{$v['n']}">
+				{/getdata}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper gray-bg">
+	<div class="wrapper-content">
+		<section class="product-area ptb-100">
+			<div class="container">
+				<div class="row">
+					<div class="client-product-owl">
+						{foreach $lists as $k=>$v}
+						<div class="col-xs-12 col-sm-12">
+							<div class=" product-list">
+								<div class="col-md-6">
+									<div class="product-img">
+										<img src="{$v['lipic']}"/>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="product-title">
+										<h1>01<span>{$v['title']}</span></h1>
+										<div class="clearfix"></div>
+										<h5>{$v['keywords']}</h5>
+										<p>{$v['description']}</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12 ptb-80">
+								<div class="section-title text-center">
+									<h1>02<span>参数说明</span></h1>
+									<div class="clearfix"></div>
+									<p>几乎涉及所有共享领域，满足你的共享需求</p>
+								</div>
+								<div class="product-content pt-60">
+									<div class="col-xs-6 product-param">
+										<div class="product-param-title text-center">
+											<h4>基本参数</h4>
+										</div>
+										<table class="product-param-table">
+											<colgroup>
+												<col width="30%" />
+												<col width="70%" />
+											</colgroup>
+											{foreach $v['fields'] as $fk=>$fv}
+											<tr>
+												<td align="center">{fun fieldsinfo($fk,'fname','product')}</td>
+												<td>{$fv}</td>
+											</tr>
+											{/foreach}
+										</table>
+									</div>
+									<div class="col-xs-6">
+										<div class="product-detail">
+											{$v['detail']}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 col-sm-12">
+								<a class="buy-button" target="_blank" href="{$v['url']}"><i class="fa fa-rmb"></i> 立即购买</a>
+								<!--<a class="buy-button" href="javascript:void(0);"><i class="fa fa-rmb"></i> 立即购买</a>-->
+							</div>
+						</div>
+						{/foreach}
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+{include="public/footer.html"}
+{include="public/js.html"}
+<script type="text/javascript">
+	$(function () {
+	    var pdt = $(".product-detail"),pdp = $(".product-detail").parents('.product-content:eq(0)').find('.product-param');
+        pdt.css("height",pdp.height());
+        // var by = $(".owl-buttons").position().top;
+        // $(window).scroll(function(){
+        //     var yy = $(this).scrollTop();//获得滚动条top值
+		// 	$(".owl-buttons").css({top:(by+yy)+"px"}); //设置div层定位，要绝对定位
+        // });
+    })
+</script>
+</body>
+</html>

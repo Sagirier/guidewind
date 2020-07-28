@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - <?php echo $title; ?></title>
+    <meta name="keywords" content="导风系统网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style type="text/css">
+		.chosen-search{display: none;}
+		.chosen-container{text-align: left;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2><?php echo $title; ?></h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li>
+                            <a>系统设置</a>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394"><?php echo $title; ?></font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated fadeInRight">
+
+                <div class="row">
+                    <div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                        	<div class="ibox-title">
+                            	<h5><?php echo $title; ?></h5>
+                        	</div>
+                            <div class="ibox-content">
+                            	<?php if($o!='sys_ecache'){ ?>
+                            	<div class="hints">
+	                    		带"<font color="#F00"><i class="fa fa-asterisk"></i></font>"的为必填项
+	                    		</div>
+	                    		<?php } ?>
+                                <form id="systemform" action="?action=system&o=<?php echo $o; ?>&go=1" method="post"<?php if($o!='sys_ecache'){ echo ' onsubmit="return false;"';} ?>>
+                                	<table class="table<?php if($o!='sys_ecache'){ echo ' table-bordered';} ?>">
+                                		<thead>
+                                			<tr>
+                                				<th>设置项目</th>
+                                				<th>设置详情/选项</th>
+                                				<th>备注/参数说明</th>
+                                			</tr>
+                                		</thead>
+                                		<tbody>
+	                                		<?php if($o=='uploads'){ ?>
+		                                	<tr>
+		                                		<td style="width: 260px;">允许上传类型</td>
+		                                		<td>
+		                                			<label style="width: 80%;">
+			                                        	<input type="text" class="form-control" name="filetype" value="<?php echo $uploads['filetype']; ?>" />
+			                                        </label>
+		                                		</td>
+		                                		<td>系统默认允许的文件类型，请输入正确的文件类型，每个类型用英文逗号","分隔；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td>允许最大上传</td>
+		                                		<td>
+		                                			<label style="width: 80%;">
+			                                        	<input type="text" class="form-control" name="filesize" value="<?php echo $uploads['filesize']; ?>" />
+			                                        </label>
+			                                        <label style="margin-left: 5px;">KB</label>
+		                                        </td>
+		                                        <td>系统默认允许单个文件的最大上传大小，超过该值的文件将不允许上传；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">自动缩略图</td>
+		                                		<td>
+			                                        <label>
+			                                        <input type="radio" class="i-checks" name="thumbnail" value="1"<?php if($uploads['thumbnail']==1){ echo ' checked="checked"';} ?> /> 开启
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="thumbnail" value="0"<?php if($uploads['thumbnail']==0){ echo ' checked="checked"';} ?> /> 关闭
+			                                         </label>
+		                                		</td>
+		                                		<td>开启自动缩略图，全站编辑器中上传的图片均会自动缩略；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="line-height: 73px;">缩略图范围限制</td>
+		                                		<td>
+		                                			<label>宽：</label>
+		                                			<label style="width: 20%;" title="宽">
+			                                        	<input type="text" class="form-control" name="img_w" value="<?php echo $uploads['img_w']; ?>" />
+			                                        </label>
+			                                        <label style="margin-left: 5px;">px</label>
+			                                        <div class="clearfix" style="margin: 2px 0;"></div>
+			                                        <label>高：</label>
+			                                        <label style="width: 20%;" title="高">
+			                                        	<input type="text" class="form-control" name="img_h" value="<?php echo $uploads['img_h']; ?>" />
+			                                        </label>
+			                                        <label style="margin-left: 5px;">px</label>
+		                                        </td>
+		                                        <td>缩略图范围限制值，全站编辑器内图片上传超过设置值将自动缩略；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">自动加水印</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="imgwater" value="1"<?php if($uploads['imgwater']==1){ echo ' checked="checked"';} ?> /> 开启
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="imgwater" value="0"<?php if($uploads['imgwater']==0){ echo ' checked="checked"';} ?> /> 关闭
+			                                         </label>
+		                                		</td>
+		                                		<td>自动加水印设为开启，全站编辑器内图片上传会自动添加水印；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">水印位置</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="imgwater_type" value="1"<?php if($uploads['imgwater_type']==1){ echo ' checked="checked"';} ?> /> 左上
+			                                        </label>
+			                                        <label style="margin-left: 5px;">
+			                                        <input type="radio" class="i-checks" name="imgwater_type" value="2"<?php if($uploads['imgwater_type']==2){ echo ' checked="checked"';} ?> /> 右上
+			                                        </label>
+			                                        <label style="margin-left: 5px;">
+			                                        <input type="radio" class="i-checks" name="imgwater_type" value="3"<?php if($uploads['imgwater_type']==3){ echo ' checked="checked"';} ?> /> 左下
+			                                        </label>
+			                                        <label style="margin-left: 5px;">
+			                                        <input type="radio" class="i-checks" name="imgwater_type" value="4"<?php if($uploads['imgwater_type']==4){ echo ' checked="checked"';} ?> /> 右下
+			                                         </label>
+		                                		</td>
+		                                		<td>水印位置为水印图片相对于上传图片的位置,水印图片位置为<font color="#F00">system/water.png</font>。</td>
+		                                    </tr>
+		                                    <?php }if($o=='statichtml'){ ?>
+		                                    <tr>
+		                                		<td style="width: 260px;">静态html</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="site_statichtml" value="1"<?php if($statichtml['site_statichtml']==1){ echo ' checked="checked"';} ?> /> 开启
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="site_statichtml" value="0"<?php if($statichtml['site_statichtml']==0){ echo ' checked="checked"';} ?> /> 关闭
+			                                        </label>
+		                                		</td>
+		                                		<td>静态html设置为<font color="#F00">关闭</font>，则全站使用动态页面；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;"><font color="#F00"><i class="fa fa-asterisk"></i></font> 静态html默认目录</td>
+		                                		<td>
+		                                			<div style="position: relative;">
+		                                				<label style="width: 90px;text-align: right;">目录名：</label>
+		                                				<label style="width: 100%; position: absolute;padding-left: 90px; left:0;top: 0;">
+		                                				<input id="htmldirname" type="text" class="form-control" name="site_statichtml_dir" value="<?php echo $statichtml['site_statichtml_dir']; ?>" />
+		                                				</label>
+		                                			</div>
+		                                		</td>
+		                                		<td>静态html默认目录指静态页面的总目录，若未自定义静态文件目录，默认使用该目录作为静态文件目录；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td>静态生成规则</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="site_statichtml_rules" value="<?php echo $statichtml['site_statichtml_rules']; ?>" type="text" />
+		                                				
+		                                			</label>
+		                                		</td>
+		                                		<td><font color="#1AB394">静态生成规则设置：</font><br/>
+                                	&nbsp;&nbsp;&nbsp;<span>(1).导航栏<font color="#F00"> [dir] </font>代表<a href="?action=navigators">导航栏管理</a>中每个导航栏的静态目录名，若未自定义设置则默认为静态html默认目录中的目录名</span>；<br/>
+                                	&nbsp;&nbsp;&nbsp;<span>(2).<font color="#F00"> [Y] </font><font color="#F00"> [m] </font><font color="#F00"> [d] </font>分别代表当前的年月日；<br/>
+                                	&nbsp;&nbsp;&nbsp;<span>(3).<font color="#F00"> [file] </font>代表<a href="?action=navigators">导航栏管理</a>/<a>内容管理</a>中所设置的静态文件名，若未自定义设置则默认为id</span>；<br/>
+                                	&nbsp;&nbsp;&nbsp;<span>(4).内容目录<font color="#F00"> [dir] </font>指静态html默认目录的目录名；<br/>
+                                	&nbsp;&nbsp;&nbsp;<span>(5).内容目录<font color="#F00"> [channel] </font>代表内容所在频道的频道标识，例如<font color="#F00"> 文章 </font>频道的<font color="#F00"> [channel] </font>就是<font color="#F00"> article </font>；<br/>
+                                	&nbsp;&nbsp;&nbsp;<span>(6).内容规则<font color="#F00"> [file] </font>代表内容所设置的静态文件名，若未自定义设置则默认为id；<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（例如某文章<font color="#F00"> aaa </font>设置静态文件名为<font color="#F00"> a </font>，内容目录为<font color="#F00"> [channel] </font>，则生成的静态文件为<font color="#F00"> article/a.html </font>）；</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">是否省略index</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="site_statichtml_index" value="1"<?php if($statichtml['site_statichtml_index']==1){ echo ' checked="checked"';} ?> /> 是
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="site_statichtml_index" value="0"<?php if($statichtml['site_statichtml_index']==0){ echo ' checked="checked"';} ?> /> 否
+			                                        </label>
+		                                		</td>
+		                                		<td>省略index选<font color="#1AB394">是</font>，静态url将省略index.html；（仅对导航栏静态url生效）</td>
+		                                    </tr>
+		                                    <?php }if($o=='rewrite'){ ?>
+		                                    <tr>
+		                                		<td style="width: 260px;">伪静态状态</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="rewrite_open" value="1"<?php if($rewrite['rewrite_open']==1){ echo ' checked="checked"';} ?> /> 开启
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="rewrite_open" value="0"<?php if($rewrite['rewrite_open']==0){ echo ' checked="checked"';} ?> /> 关闭
+			                                        </label>
+		                                		</td>
+		                                		<td>伪静态开启后，系统将启用伪静态规则，同时请修改主机伪静态规则才能生效；</td>
+		                                    </tr>	
+		                                    <tr>
+		                                		<td>系统根目录</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_dir" value="<?php echo $rewrite['rewrite_dir']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>如你的网站访问地址是http://www.guide.com/aa/，这里就填写/aa/，如果系统放在根目录则无需修改</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td><?php echo channelsinfo('article','cname');?>URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_article" value="<?php echo $rewrite['rewrite_article']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>ID：{id}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页：{page}&nbsp;&nbsp;频道(必须)：{article}</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td><?php echo channelsinfo('article','cname');?>栏目URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_article_type" value="<?php echo $rewrite['rewrite_article_type']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>栏目ID：{nid}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页(必须)：{page}&nbsp;&nbsp;频道标识(必须)：{article}&nbsp;&nbsp;栏目标识(必须)：{type}</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td><?php echo channelsinfo('product','cname');?>URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_product" value="<?php echo $rewrite['rewrite_product']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>ID：{id}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页：{page}&nbsp;&nbsp;频道(必须)：{product}</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td><?php echo channelsinfo('product','cname');?>栏目URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_product_type" value="<?php echo $rewrite['rewrite_product_type']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>栏目ID：{nid}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页(必须)：{page}&nbsp;&nbsp;频道标识(必须)：{product}&nbsp;&nbsp;栏目标识(必须)：{type}</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td><?php echo channelsinfo('message','cname');?>栏目URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_message_type" value="<?php echo $rewrite['rewrite_message_type']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>栏目ID：{nid}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页(必须)：{page}&nbsp;&nbsp;频道(必须)：{message}</td>
+		                                    </tr>
+		                                    	<td><?php echo channelsinfo('recruitment','cname');?>URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_recruitment" value="<?php echo $rewrite['rewrite_recruitment']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>ID：{id}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页：{page}&nbsp;&nbsp;频道(必须)：{recruitment}</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td><?php echo channelsinfo('recruitment','cname');?>栏目URL</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="rewrite_recruitment_type" value="<?php echo $rewrite['rewrite_recruitment_type']; ?>" type="text" />
+		                                			</label>
+		                                		</td>
+		                                		<td>栏目ID：{nid}&nbsp;&nbsp;文件名：{file}&nbsp;&nbsp;分页(必须)：{page}&nbsp;&nbsp;频道标识(必须)：{recruitment}&nbsp;&nbsp;栏目标识(必须)：{type}</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td>生成规则</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<a href="?action=system&o=rewriterules&article=<?php echo $rewrite['rewrite_article'] ?>&article_type=<?php echo $rewrite['rewrite_article_type'] ?>&product=<?php echo $rewrite['rewrite_product'] ?>&product_type=<?php echo $rewrite['rewrite_product_type'] ?>&recruitment=<?php echo $rewrite['rewrite_recruitment'] ?>&recruitment_type=<?php echo $rewrite['rewrite_recruitment_type'] ?>&message_type=<?php echo $rewrite['rewrite_message_type'] ?>" target="_blank" style=" font-size:14px; font-weight:bold;">生成伪静态规则</a>
+		                                			</label>
+		                                		</td>
+		                                		<td>(如修改过规则，请先提交保存)</td>
+		                                    </tr>
+		                                    <?php } if($o=='other'){ ?>
+		                                    <tr>
+		                                		<td>缓存时间</td>
+		                                		<td>
+		                                			<label style="width: 100%;">
+		                                				<input class="form-control" name="cache_time" value="<?php echo $other['cache_time']; ?>" type="text" />
+		                                				
+		                                			</label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">GZip压缩</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="enable_gzip" value="1"<?php if($other['enable_gzip']==1){ echo ' checked="checked"';} ?> /> 开启
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="enable_gzip" value="0"<?php if($other['enable_gzip']==0){ echo ' checked="checked"';} ?> /> 关闭
+			                                        </label>
+			                                        <label style="margin-left: 30px;">压缩级别</label>
+			                                        <label style="margin-left: 15px;"><input type="text" class="form-control W-60" name="enable_gzip_level" value="<?php echo $other['enable_gzip_level']; ?>" />
+			                                        </label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">验证码</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="vercode" value="1"<?php if($other['vercode']==1){ echo ' checked="checked"';} ?> /> 开启
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="vercode" value="0"<?php if($other['vercode']==0){ echo ' checked="checked"';} ?> /> 关闭
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        	<img src="system/verifycode.php" width="58" height="25">
+			                                        </label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">评论需审核</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="comment_audit" value="1"<?php if($other['comment_audit']==1){ echo ' checked="checked"';} ?> /> 是
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="comment_audit" value="0"<?php if($other['comment_audit']==0){ echo ' checked="checked"';} ?> /> 否
+			                                        </label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">评论限制</td>
+		                                		<td>
+		                                			<label>
+			                                        <input type="radio" class="i-checks" name="comment_user" value="1"<?php if($other['comment_user']==1){ echo ' checked="checked"';} ?> /> 仅登录会员
+			                                        </label>
+			                                        <label style="margin-left: 15px;">
+			                                        <input type="radio" class="i-checks" name="comment_user" value="0"<?php if($other['comment_user']==0){ echo ' checked="checked"';} ?> /> 所有人
+			                                        </label>
+		                                		</td>
+		                                    </tr>
+		                                    <?php } if($o=='email'){ ?>
+		                                    <tr>
+		                                		<td style="width: 260px;">发信人邮件地址</td>
+		                                		<td>
+			                                        <label style="width: 100%;">
+		                                				<input id="smtp_usermail" type="text" class="form-control" name="smtp_usermail" value="<?php echo $email['smtp_usermail']; ?>" />
+		                                			</label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">发信人身份验证用户名</td>
+		                                		<td>
+			                                        <label style="width: 100%;">
+		                                				<input id="smtp_user" type="text" class="form-control" name="smtp_user" value="<?php echo $email['smtp_user']; ?>" />
+		                                			</label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">发信人身份验证密码</td>
+		                                		<td>
+			                                        <label style="width: 100%;">
+		                                				<input id="smtp_pass" type="password" class="form-control" name="smtp_pass" value="<?php echo $email['smtp_pass']; ?>" />
+		                                			</label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">SMTP 服务器地址</td>
+		                                		<td>
+			                                        <label style="width: 100%;">
+		                                				<input id="smtp_server" type="text" class="form-control" name="smtp_server" value="<?php echo $email['smtp_server']; ?>" />
+		                                			</label>
+		                                		</td>
+		                                    </tr>
+		                                    <tr>
+		                                		<td style="width: 260px;">SMTP 端口</td>
+		                                		<td>
+			                                        <label style="width: 100%;">
+		                                				<input id="smtp_serverport" type="text" class="form-control" name="smtp_serverport" value="<?php echo $email['smtp_serverport']; ?>" />
+		                                			</label>
+		                                		</td>
+		                                    </tr>
+		                                    <?php } ?>
+		                                    <?php if($o=='sys_ecache'){ ?>
+										  	<tr>
+										    	<td style="border: none;">
+										    	<label style="float: none;"><input name="tpl" class="i-checks" type="checkbox" value="1" checked="checked" /></label>
+										    	<label style="margin-left: 10px;float: none;">更新模板缓存</label>
+									    		<label style="margin-left: 30px;float: none;"><input name="tmp" class="i-checks" type="checkbox" value="1" checked="checked" /></label>
+										    	<label style="margin-left: 10px;float: none;">更新数据缓存</label>
+										    	</td>
+										  	</tr>
+											<?php } ?>
+										</tbody>
+                                    </table>
+                                    <div class="form-group mar-20" style="margin-left: 0;<?php if($o=='sys_ecache'){echo 'text-align: center;';} ?>">
+                                        <button class="btn btn-sm btn-primary m-t-n-xs btn-basic" type="submit"<?php if($o!='sys_ecache'){ echo ' onclick="Layerconfirm()"';}else{ echo ' style="width:100px;padding:8px 0"';} ?>><strong>提交</strong>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if($o!='sys_ecache'){ ?>
+                    <div class="col-lg-6 hidden">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>设置参数说明</h5>
+                            </div>
+                            <div class="ibox-content">
+                            	<?php if($o=='uploads'){ ?>
+                                
+                                <?php }if($o=='statichtml'){ ?>
+                                
+                                <?php }if($o=='other'){ ?>
+                                <p>1.缓存时间代表数据缓存时间，单位秒，输入0表示关闭缓存</p>
+                                <p>2.GZip打开后，压缩级别1—9,越大压缩率越高，相应兼容越差</p>
+                                <p>3.如无法看到验证码，请关闭验证码功能</p>
+                               	<?php }if($o=='label'){ ?>
+                               	<p>1.支付系统状态设置为<font color="#F00">关闭</font>，则支付功能被关闭；</p>
+                                <?php }if($o=='ads_sys'){ ?>
+                                <p>1.广告投放状态设置为<font color="#F00">关闭</font>，则不允许投放广告；</p>
+                                <p>2.广告上传类型控制上传广告文件时的类型，可以自定义，但不能设置系统默认上传文件类型外的文件，<br/>&nbsp;&nbsp;&nbsp;留空则默认为所有广告文件类型：<font color="#1AB394">jpg,png,bmp,jpeg,gif,flv,swf</font>；</p>
+                                <p>3.允许最大上传控制上传广告文件时的大小，可以自定义，但不能超过系统默认上传文件大小，<br/>&nbsp;&nbsp;&nbsp;留空或设为0则默认继承系统设置：<font color="#1AB394">10240</font> KB；</p>
+                                <p>4.系统默认文件上传设置可以在 <a>系统设置</a>-><a>文件上传设置</a>中查看；</p>
+                                <?php }if($o=='comment_sys'){ ?>
+                                <p>1.评论系统状态设置为<font color="#F00">关闭</font>，则不允许评论内容；</p>
+                                <p>2.若设置评论默认审核为<font color="#1AB394">开启</font>，则前台会员发布的所有评论及回复将默认为<font color="#1AB394">已审核</font>状态；</p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
+        <?php include "manage/admin/template/footer.html"; ?>
+    </div>
+</div>
+<?php include "manage/admin/template/js.html"; ?>
+	<!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+	<script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要提交修改？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                        document.getElementById("systemform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+</body>
+</html>

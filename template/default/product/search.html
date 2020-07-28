@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$type['keywords']}" />
+<meta name="description" content="{$type['description']}" />
+<title>{$type['title']}-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+
+<link href="{$GLOBALS['styles']}css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/font-awesome.css?v=4.3.0" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/plugins/chosen/chosen.css" rel="stylesheet">
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+</head>
+
+<body>
+<div class="banner inner-banner" >
+{include="header.html"}
+<div id="breadcrumb_wrapper">
+	<div class="container">		
+		<h3>{$type['nname']}</h3>
+		<h6>{$type['description']}</h6>
+		<div class="clearfix"></div>
+	</div>
+</div>
+</div>
+<div class="clearfix"> </div>
+<div class="no-padding no-margin bgefe">
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="pannel">
+				<div class="list-top">
+					<h5>当前位置：{$positions}</h5>
+				</div>
+				<ul class="plists">
+					{if($lists)}
+					{foreach $lists as $v}
+					<li>
+						<div class="one_third pricing">
+							<div class="pricing_top" style="background:#d5d5d5 url({$v['lipic']}) no-repeat;background-size:auto 100%;background-position: center;">
+							<a href="{$v['url']}">
+								<div class="shadow">
+									<h6>{$v['title']}</h6>
+									<p><sup>￥</sup>{$v['price']}</p>
+								</div>
+							</a>
+							</div>
+							<div class="pricing_bottom">
+								<a href="{$v['url']}"><i class="fa fa-search"></i> 点击查看详情</a>
+							</div>
+						</div>
+					</li>
+					{/foreach}
+					{else}
+					未找到任何内容。
+					{/if}
+				</ul>
+				{if($pages)}<ul class="pages">{$pages}</ul>{/if}
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+{include="footer.html"}
+</body>
+</html>

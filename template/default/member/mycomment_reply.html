@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>查看回复详情</title>
+	<link href="{$GLOBALS['styles']}css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+	<link href="{$GLOBALS['styles']}css/font-awesome.css?v=4.3.0" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+	</script>
+	{include="js.html"}
+	<!-- layer弹出层 -->
+	<script src="{$GLOBALS['styles']}js/plugins/layer/layer.min.js"></script>
+</head>
+
+<body style="background: none;overflow-x: hidden;">
+<div class="gray-bg dashbard-1">
+	<div class="wrapper wrapper-content animated">
+		<div class="row">
+			<div class="col-lg-12">			
+				<div class="ibox chat-view">
+					<div class="ibox-title">
+						<h5>我的评论： <font color="#1AB394">{$commentinfo['detail']}</font> 详情 {if($commentinfo['statu']==0)}(<font color="red">未审核</font>){else}(<font color="green">已审核</font>){/if}<span style="float: right;">来源>>【<font color="red">{fun channelsinfo($commentinfo['cmark'],'cname')}</font>】<a href="{$commentinfo['aurl']}" target="_blank"><font color="#1AB394">{fun contentinfo($commentinfo['cmark'],$commentinfo['aid'],'title')}</font></a></span></h5>
+					</div>
+				
+					<div class="ibox-content">
+				
+				    <div class="row">
+				        <div class="col-md-9 full-width">
+				            <div class="chat-discussion">
+				                <div class="chat-message">
+				                	<div class="imgpanel">
+						                <img class="message-avatar" src="{$commentinfo['uportrait']}" alt="{$commentinfo['uname']}">
+				                   	</div>
+				                    <div class="message">
+				                        <span class="message-author">我</span>
+				                        <span class="message-date">于 {fun date('Y-m-d H:i:s',$commentinfo['addtime'])} 留言：</span>
+				                        <span class="message-content" id="comment_detail">{$commentinfo['detail']}</span>
+				                        {if($commentinfo['statu']==0)}
+				                        <textarea id="comment_edit" name="detail" style="display: none;width: 100%; height: 40px; margin-bottom: 5px;"></textarea>
+                                        <button class="btn btn-primary btn-xs" type="button" id="comment_btn" onclick="Edittext(this);" value=""><i class="fa fa-pencil"></i> 修改</button>
+                                        <button class="btn btn-primary btn-xs" type="button" id="comment_btn_sub" style="display: none;" onclick="ajax_myedit(this,'comment','comment_edit','comment_btn','comment_detail');" value="{$commentinfo['id']}"><i class="fa fa-check"></i> 提交</button>
+                                        {/if}
+				                    </div>
+				                </div>
+				            	{foreach $replyinfo as $vr}
+				            	{if($vr['adminid']==1)}
+				                <div class="chat-message-reply">
+				                    <img class="message-avatar" src="{$vr['admin_avator']}" alt="{$vr['admin_user']}">
+				                    <div class="message">
+				                        <a class="message-author"> {$vr['admin_user']} </a>
+				                        <span class="message-date">于 {fun date('Y-m-d H:i:s',$vr['retime'])}
+				                        	{if($vr['upid']==0)}
+				                        		回复 <font color="#337AB7">我</font> 的内容: "<font color="#6935eb">{fun newstr($vr['reply_detail'],40)}</font>"
+				                        	{else}
+				                        	 回复 <font color="#337AB7">我</font> 的内容: "<font color="#6935eb">{fun replydetail('comment',$vr['upid'],'reply')}</font>"
+				                        	{/if}
+				                        </span>
+				                        <span class="message-content">{$vr['reply']}</span>
+				                        <button class="btn btn-info btn-xs" onclick="LayerconfirmTabuser(this)" value="{$vr['id']}" title="{$vr['admin_user']}" name="{$vr['reply']}"><i class="fa fa-reply"></i> 回复</button> 
+				                    </div>
+				                </div>
+				                {else}
+				               	<!--回复管理员-->
+				               <div class="chat-message">
+				                    <div class="imgpanel">
+						                <img class="message-avatar" src="{$commentinfo['uportrait']}" alt="{$commentinfo['uname']}">
+				                    </div>
+				                    <div class="message">
+				                        <a class="message-author">我</a>
+				                        <span class="message-date">于 {fun date('Y-m-d H:i:s',$vr['retime'])} 回复 <font color="#337AB7">{fun reply_admin_userinfo($vr['upid'],'message','user')}</font> 的内容: "<font color="#6935eb">{fun replydetail('message',$vr['upid'],'reply')}</font>"
+				                        </span>
+				                        <span class="message-content" id="comment_detail{$vr['id']}">{$vr['reply']}</span>
+				                        {if(timemus(time(),$vr['retime']))}
+				                        <textarea id="comment_edit{$vr['id']}" name="message_reply<?php echo $r['id']; ?>" style="display: none;width: 100%; height: 40px; margin-bottom: 5px;"></textarea>
+                                        <button class="btn btn-primary btn-xs" type="button" id="comment_btn{$vr['id']}" onclick="Edittext(this)" value="{$vr['id']}"><i class="fa fa-pencil"></i> 编辑</button>
+                                        <button class="btn btn-primary btn-xs" type="submit" id="comment_btn_sub{$vr['id']}" style="display: none;" onclick="ajax_myedit(this,'comment_reply','comment_edit{$vr['id']}','comment_btn{$vr['id']}','comment_detail{$vr['id']}');" value="{$vr['id']}"><i class="fa fa-check"></i> 提交</button>
+                                        <a class="btn btn-danger btn-xs" href="?action=member&o=mydel&cmark=comment_reply&id={$vr['id']}"><i class="fa fa-times"></i> 删除</a>
+				                        {/if}
+				                    </div>
+				                </div>
+				                {/if}
+				                {/foreach}
+				                <div class="message-hints">
+				                	<p>温馨提示：<br/>1、<font color="green">已审核</font>的信息不能被修改；<br/>2、可以在<font color="red">24小时内</font>修改与删除自己回复管理员的信息<br/>3、如果信息被回复，则无法删除，需要联系管理员删除。</p>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<script type="text/javascript">
+		function Edittext(inputs){
+			var id=inputs.value;
+			var detail=document.getElementById("comment_detail"+id);
+			var edit=document.getElementById("comment_edit"+id);
+			var btn=document.getElementById("comment_btn"+id);
+			var sub=document.getElementById("comment_btn_sub"+id);
+			if(edit.style.display=="none"){
+				edit.style.display="block";
+				edit.value=detail.innerHTML;
+				btn.style.display="none";
+				sub.style.display="inline-block";
+				detail.style.display="none";
+			}
+		}
+	</script>
+    <script type="text/javascript">
+    	function LayerconfirmTabuser(obj){
+    		var username=obj.title;
+    		var rname=obj.name;
+    		var rid=obj.value;
+    		var repannel=$.layer({
+			    type: 1,
+			    title: '回复：<font color="#337AB7">'+username+'</font> 的内容 <font color="#6935eb">'+rname+'</font>',
+			    offset: ['', ''],
+			    area: ['auto', 'auto'],
+			    border: [4,0.3,'#000',true], 
+			    shadeClose: false,
+			    closeBtn: [1,true], //去掉默认关闭按钮
+			    shift: 'left', //从左动画弹出
+			    page: {
+			        html: '<div style="width:700px; height:120px; padding:20px; background-color:#eee;"><form action="?action=member&o=myreply&cmark=comment&id={$commentinfo['id']}&upid='+rid+'" method="post"><textarea style="width:100%; height:60px; margin-bottom:5px;" name="reply"></textarea><button class="btn btn-info btn-xs"><i class="fa fa-check"></i> 提交</button></form></div>'
+			    }
+			});
+		}
+    </script>
+</body>
+</html>

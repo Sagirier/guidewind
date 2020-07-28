@@ -1,0 +1,344 @@
+<div id="header">
+<div class="g-wrap">
+<a id="logo" href="{$GLOBALS['WWW']}"></a>
+<ul id="nav">
+<li class="n1"><a href="{$GLOBALS['WWW']}"{if(!$type['nid'])} data-class="on"{/if}><span>首页</span><span class="bkg"></span></a></li>
+{getdata data_table="navigators" data_statu="1" data_limit="6"}
+<li class="n{$v['n']+1} {if($v['nid_leafid']!=$v['nid'])}more{/if}"><a href="{$v['url']}" {if($type['nid']==$v['nid'] || $article['nid']==$v['nid'] || $product['nid']==$v['nid'] || $recruitment['nid']==$v['nid'] || $type['ngid']==$v['nid'] || navinfo($type['ngid'],'ngid')==$v['nid'] || navinfo($article['nid'],'ngid')==$v['nid'] || navinfo($product['nid'],'ngid')==$v['nid'] || navinfo($recruitment['nid'],'ngid')==$v['nid'])} data-class="on" {/if}><span>{$v['nname']}</span><span class="bkg"></span></a></li>
+{/getdata}
+</ul>
+<div id="shop">
+{if($_SESSION['member']['uid'])}
+<span class="btn-lang tmp-unselect" href="javascript:void(0);"><a href="/member">个人中心</a></span>
+{else}
+<span class="btn-lang tmp-unselect" href="javascript:void(0);"><a href="/member/regedit">注册</a> | <a href="/member/login">登录</a></span>
+{/if}
+<span class="header-nwbtn">【<a href="http://www.china-lsw.cn">中文</a> / <a href="http://en.china-lsw.cn">EN</a>】</span>
+<span href="javascript:void(0);" class="btn-search"></span>
+</div>
+</div>
+</div>
+<div id="content">
+<div id="subNav">
+<div class="g-wrap">
+<div class="item about">
+{getdata data_table="navigators" data_ngid="1" data_statu="1"}
+<a href="{$v['url']}">{$v['nname']}<span></span></a>
+{/getdata}
+</div>
+<div class="item news">
+{getdata data_table="navigators" data_ngid="2" data_statu="1"}
+<a href="{$v['url']}">{$v['nname']}<span></span></a>
+{/getdata}
+</div>
+<div class="item relation">
+{getdata data_table="navigators" data_ngid="3" data_statu="1"}
+<a href="{$v['url']}">{$v['nname']}<span></span></a>
+{/getdata}
+</div>
+<div class="item service">
+{getdata data_table="navigators" data_ngid="4" data_statu="1"}
+<a href="{$v['url']}">{$v['nname']}<span></span></a>
+{/getdata}
+</div>
+<div class="item citizenship">
+{getdata data_table="navigators" data_ngid="5" data_statu="1"}
+<a href="{$v['url']}">{$v['nname']}<span></span></a>
+{/getdata}
+</div>
+<div class="item contactus">
+{getdata data_table="navigators" data_ngid="6" data_statu="1"}
+<a href="{$v['url']}">{$v['nname']}<span></span></a>
+{/getdata}
+</div>
+<div class="item search">
+<input id="searchbox" placeholder="请输入关键词" type="text">
+</div>
+</div>
+</div>
+<script type="text/javascript">
+$(function () {
+var arr = new Array("zh-CN", "zh-Hant", 'en');
+$("#language-box a").each(function (index) {
+$(this).click(function () {
+setCookieLanguage('Language', arr[index]);
+});
+});
+})
+function setCookieLanguage(name, value) {
+var argv = setCookieLanguage.arguments;
+var argc = setCookieLanguage.arguments.length;
+var expires = (argc > 2) ? argv[2] : null;
+if (expires != null) {
+var LargeExpDate = new Date();
+LargeExpDate.setTime(LargeExpDate.getTime() + (expires * 1000 * 3600 * 24));
+}
+document.cookie = name + "=" + escape(value) + ((expires == null) ? "" : ("; expires=" + LargeExpDate.toGMTString())) + ("; path=/") + ("; domain=.vanke.com");
+}
+</script>
+
+
+<div id="banner">
+<ul class="pics">
+{getdata data_table="ads" data_taid="1" data_type="2" data_limit="3"}
+<li class="b{$v['n']}" style="background-image: url({$v['adfile']}); {if($v['n']!=1)}display: none;{else}display: list-item;{/if}"></li>
+{/getdata}
+</ul>
+<div class="g-wrap">
+<ul class="idxs">
+<li style="margin-top: 0px;" class="on">1</li>
+<li style="margin-top: 0px;" class="">2</li>
+<li style="margin-top: 0px;" class="">3</li>
+</ul>
+</div>
+</div>
+<div class="clearfix"></div>
+<div id="container">
+<div id="about">
+<div class="tab-nav tab1">
+<h2 class="ab-h2">关于路石</h2>
+<p class="ab-p">
+{getdata data_table="navigators" data_ngid="4" data_statu="1"}
+{if($v['n']!=1)}<span>/</span>{/if}<a href="{$v['url']}" target="_blank">{$v['nname']}</a>
+{/getdata}
+</p>
+</div>
+<div class="tab-con">
+<div class="lf-pic">
+<img src="{$GLOBALS['styles']}{$GLOBALS['styles']}images/company_pic.jpg" />
+</div>
+<div class="rt-desc">
+{getdata data_table="navigators" data_nid="4" data_limit="1" data_detail="1"}
+{$v['detail']}
+<a href="?action=article&o=type&nid=29" target="_blank"><span class="view-all">查看全文</span></a>
+{/getdata}
+
+</div>
+</div>
+</div>
+<div class="about-xian-news"></div>
+<div id="news-1">
+<div class="tab-nav tab1">
+<h2 class="ab-h2">新闻资讯</h2>
+<p class="ab-p">
+{getdata data_table="navigators" data_ngid="3" data_statu="1"}
+{if($v['n']!=1)}<span>/</span>{/if}<a href="{$v['url']}" target="_blank">{$v['nname']}</a>
+{/getdata}
+</p>
+<a href="?action=article&o=type&nid=3" target="_blank"><span class="view-more">更多</span></a>
+</div>
+<div class="tab-con">
+<div class="news-tab">
+{getdata data_table="article" data_nid="3" data_order="order|desc,addtime|desc" data_limit="3"}
+{if($v['n']==1)}
+<div class="first list-item">
+<a href="{$v['url']}" target="_blank">
+<div class="lf-pic">
+<img src="{if($v['lipic']!='')}{$v['lipic']}{else}{$GLOBALS['styles']}{$GLOBALS['styles']}images/nopic.jpg{/if}" />
+</div>
+<div class="rt-detail">
+<h3 class="t{if(newest($v['addtime'],24))} red{/if}">{fun newstr($v['title'],30)}</h3>
+<p class="d">{if(detailinfo('article',$v['id'],'detail')!='')}{fun detailinfo('article',$v['id'],'detail',true,80)}{else}~~该资讯暂无内容！{/if}</p>
+</div>
+<span class="time">{fun date("Y.m.d",$v['addtime'])}</span>
+</a>
+</div>
+{else}
+<div class="list-item">
+<a href="{$v['url']}" target="_blank">
+<div class="detail">
+<h3 class="t">{fun newstr($v['title'],30)}</h3>
+<p class="d">{if(detailinfo('article',$v['id'],'detail')!='')}{fun detailinfo('article',$v['id'],'detail',true,80)}{else}~~该资讯暂无内容！{/if}</p>
+</div>
+<span class="time">{fun date("Y.m.d",$v['addtime'])}</span>
+</a>
+</div>
+{/if}
+{/getdata}
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+<div id="service">
+<div class="tab-nav tab1">
+<h2 class="ab-h2">服务案例</h2>
+<p class="ab-p">
+{getdata data_table="navigators" data_ngid="2" data_statu="1"}
+{if($v['n']!=1)}<span>/</span>{/if}<a href="{$v['url']}" target="_blank">{$v['nname']}</a>
+{/getdata}
+</p>
+<a href="?action=article&o=type&nid=2" target="_blank"><span class="view-more">更多</span></a>
+</div>
+<div class="tab-con">
+<div id="services-gun">
+
+</div>
+<div id="services-lun" class="theme1">
+<ul>
+{getdata data_table="article" data_nid="2" data_order="order|desc,addtime|desc" data_limit="10"}
+<li>
+<a class="morebutton" href="{$v['url']}" target="_blank">View More</a>
+<img class="thumb" src="{$v['lipic']}" data-bw="{$v['lipic']}">
+<div class="left-detail">
+<h2 class="title"><a href="{$v['url']}" target="_blank">{$v['title']}</a></h2>
+<h5 class="desc">{$v['description']}</h5>
+<p class="detail">{fun detailinfo("article",$v['id'],'detail',true,150)}</p>
+</div>
+</li>
+{/getdata}
+</ul>
+<div class="toolbar">
+<div class="left"></div>
+<div class="right"></div>
+</div>
+</div>
+<script type="text/javascript">
+
+$(function() {
+jQuery('#services-lun').services(
+{
+width:798,
+height:216,
+slideAmount:2,
+slideSpacing:8,
+touchenabled:"on",
+mouseWheel:"on",
+hoverAlpha:"off",
+slideshow:3000,
+hovereffect:"on",
+callBack:function() {
+var leftd=$('#services-lun ul:first > li:first .left-detail').html();
+$('#services-gun').empty().html("<div class='left-detail'>"+leftd+"</div>");
+}
+
+});
+});
+</script>
+</div>
+</div>
+<div class="clearfix"></div>
+<div id="products">
+<div class="tab-nav tab1">
+<h2 class="ab-h2">产业板块</h2>
+<p class="ab-p">
+{getdata data_table="navigators" data_ngid="1" data_statu="1"}
+{if($v['n']!=1)}<span>/</span>{/if}<a href="{$v['url']}" target="_blank">{$v['nname']}</a>
+{/getdata}
+</p>
+<a href="?action=article&o=type&nid=1" target="_blank"><span class="view-more">更多</span></a>
+</div>
+<div class="tab-con">
+<div id="products-lun" class="theme1">
+<div class="div05b" id="divId1" style="display: block;">
+<div class="blk_21">
+<div class="pcont" id="ISL_Cont_2">
+<div class="ScrCont">
+<div id="List1_2">
+{getdata data_table="navigators" data_ngid="1" data_statu="1"}
+<div class="pl dtl30">
+<img src="{$v['lipic']}" />
+<a href="{$v['url']}" class="aImg" target="_blank">
+<div class="dtl">
+{fun navinfo($v['nid'],'detail')}
+</div>
+</a>
+<div class="navinfo">
+<a href="{$v['url']}" class="aImg" target="_blank">
+<span>{$v['nname']}</span>
+<em></em>
+</a>
+</div>
+</div>
+{/getdata}
+</div>
+<div id="List2_2">
+{getdata data_table="navigators" data_ngid="1" data_statu="1"}
+<div class="pl">
+<a href="{$v['url']}" class="aImg" target="_blank">
+<img src="{$v['lipic']}" />
+</a>
+<div class="navinfo">
+<a href="{$v['url']}" class="aImg" target="_blank">
+<span>{$v['nname']}</span>
+<em></em>
+</a>
+</div>
+</div>
+{/getdata}
+</div>
+</div>
+</div>
+</div>
+</div>
+<script language="javascript" type="text/javascript">
+var Speed_2 = 20; //速度(毫秒)
+var Space_2 =10; //每次移动(px)
+var PageWidth_2 = 302; //翻页宽度
+var interval_2 = 3000; //翻页间隔
+var fill_2 = 0; //整体移位
+var MoveLock_2 = false;
+var MoveTimeObj_2;
+var MoveWay_2 = "right";
+var Comp_2 = 0;
+var AutoPlayObj_2 = null;
+function GetObj(objName) { if (document.getElementById) { return eval('document.getElementById("' + objName + '")') } else { return eval('document.all.' + objName) } }
+function AutoPlay_2() { clearInterval(AutoPlayObj_2); AutoPlayObj_2 = setInterval('ISL_GoDown_2();ISL_StopDown_2();', interval_2) }
+function ISL_GoUp_2() { if (MoveLock_2) return; clearInterval(AutoPlayObj_2); MoveLock_2 = true; MoveWay_2 = "left"; MoveTimeObj_2 = setInterval('ISL_ScrUp_2();', Speed_2); }
+function ISL_StopUp_2() {
+if (MoveWay_2 == "right") { return }; clearInterval(MoveTimeObj_2); if ((GetObj('ISL_Cont_2').scrollLeft - fill_2) % PageWidth_2 != 0) { Comp_2 = fill_2 - (GetObj('ISL_Cont_2').scrollLeft % PageWidth_2); CompScr_2() } else { MoveLock_2 = false }
+AutoPlay_2()
+}
+function ISL_ScrUp_2() {
+if (GetObj('ISL_Cont_2').scrollLeft <= 0) { GetObj('ISL_Cont_2').scrollLeft = GetObj('ISL_Cont_2').scrollLeft + GetObj('List1_2').offsetWidth }
+GetObj('ISL_Cont_2').scrollLeft -= Space_2
+}
+function ISL_GoDown_2() { clearInterval(MoveTimeObj_2); if (MoveLock_2) return; clearInterval(AutoPlayObj_2); MoveLock_2 = true; MoveWay_2 = "right"; ISL_ScrDown_2(); MoveTimeObj_2 = setInterval('ISL_ScrDown_2()', Speed_2) }
+function ISL_StopDown_2() {
+if (MoveWay_2 == "left") { return }; clearInterval(MoveTimeObj_2); if (GetObj('ISL_Cont_2').scrollLeft % PageWidth_2 - (fill_2 >= 0 ? fill_2 : fill_2 + 1) != 0) { Comp_2 = PageWidth_2 - GetObj('ISL_Cont_2').scrollLeft % PageWidth_2 + fill_2; CompScr_2() } else { MoveLock_2 = false }
+AutoPlay_2()
+}
+function ISL_ScrDown_2() {
+if (GetObj('ISL_Cont_2').scrollLeft >= GetObj('List1_2').scrollWidth) { GetObj('ISL_Cont_2').scrollLeft = GetObj('ISL_Cont_2').scrollLeft - GetObj('List1_2').scrollWidth }
+GetObj('ISL_Cont_2').scrollLeft += Space_2
+}
+function CompScr_2() {
+if (Comp_2 == 0) { MoveLock_2 = false; return }
+var num, TempSpeed = Speed_2, TempSpace = Space_2; if (Math.abs(Comp_2) < PageWidth_2 / 2) { TempSpace = Math.round(Math.abs(Comp_2 / Space_2)); if (TempSpace < 1) { TempSpace = 1 } }
+if (Comp_2 < 0) {
+if (Comp_2 < -TempSpace) { Comp_2 += TempSpace; num = TempSpace } else { num = -Comp_2; Comp_2 = 0 }
+GetObj('ISL_Cont_2').scrollLeft -= num; setTimeout('CompScr_2()', TempSpeed)
+} else {
+if (Comp_2 > TempSpace) { Comp_2 -= TempSpace; num = TempSpace } else { num = Comp_2; Comp_2 = 0 }
+GetObj('ISL_Cont_2').scrollLeft += num; setTimeout('CompScr_2()', TempSpeed)
+}
+}
+function picrun_inib() {
+GetObj("List2_2").innerHTML = GetObj("List1_2").innerHTML;
+GetObj('ISL_Cont_2').scrollLeft = fill_2 >= 0 ? fill_2 : GetObj('List1_2').scrollWidth - Math.abs(fill_2);
+GetObj("ISL_Cont_2").onmouseover = function() { clearInterval(AutoPlayObj_2) }
+GetObj("ISL_Cont_2").onmouseout = function() { AutoPlay_2() }
+AutoPlay_2();
+}
+
+</script>
+
+<script type="text/javascript">
+picrun_inib();
+</script>
+</div>
+</div>
+</div>
+<div class="clearfix"></div>
+<div id="cooperation">
+<div class="tab-nav tab1">
+<h2 class="ab-h2">行业合作</h2>
+<p class="ab-p">
+{getdata data_table="links"}
+{if($v['n']!=1)}<span>/</span>{/if}<a href="{$v['url']}" target="_blank">{$v['name']}</a>
+{/getdata}
+</p>
+<a href="?action=article&o=type&nid=1" target="_blank"><span class="view-more">更多</span></a>
+</div>
+</div>
+</div>
+ Start of slider area

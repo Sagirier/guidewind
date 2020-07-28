@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7">
+<![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8">
+<![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="keywords" content="{$type['keywords']}"/>
+	<meta name="description" content="{$type['description']}"/>
+	{include="public/css.html"}
+</head>
+<body>
+{include="public/header.html"}
+<div id="fh5co-wrapper">
+	<div id="fh5co-page">
+		<div class="fh5co-wrapper first mini-hero">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h1>
+							数据转换语言
+						</h1>
+						<h3>
+							自动化数据科学家的日常任务，如数据集组合、类映射和数据扩充。
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fh5co-wrapper example">
+			<div class="container">
+				<div class="row flex-row justify-content-center">
+					<div class="col-md-4">
+						<img src="/uploads/2019/04/261031489116.png" class="arrow" alt="" />
+						<div class="code card">
+		<pre>[
+		  {
+			"src": [
+			  "source/*"
+			],
+			"dst": "$0",
+			"action": "data",
+			"settings": {
+			  "classes_mapping": {
+				"person": "person",
+				"__other__": "unnec"
+			  }
+			}
+		  },
+		  {
+			"src": [
+			  "$0"
+			],
+			"dst": "$1",
+			"action": "instances_crop",
+			"settings": {
+			  "classes": [
+				"person"
+			  ],
+			  "class_for_non_target": "unnec",
+			  "pad": {
+				"sides": {
+				  "left": "10%",
+				  "top": "10%",
+				  "right": "10%",
+				  "bottom": "10%"
+				}
+			  }
+			}
+		  },
+		  {
+			"src": [
+			  "$1"
+			],
+			"dst": "$2",
+			"action": "drop_obj_by_class",
+			"settings": {
+			  "classes": [
+				"unnec"
+			  ]
+			}
+		  },
+		  {
+			"src": [
+			  "$2"
+			],
+			"dst": "$3",
+			"action": "flip",
+			"settings": {
+			  "axis": "vertical"
+			}
+		  },
+		  {
+			"src": [
+			  "$2",
+			  "$3"
+			],
+			"dst": "destination",
+			"action": "supervisely",
+			"settings": {
+			  "images": true,
+			  "annotations": true
+			}
+		  }
+		]
+		</pre>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="pipeline card">
+							<img src="/uploads/2019/04/261135549764.jpg" alt="" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fh5co-wrapper layers">
+			<div class="container">
+				<div class="row flex-row justify-content-center">
+					<div class="col-md-12 text-center">
+						<h1>
+							分层
+						</h1>
+					</div>
+					<div class="col-md-4">
+						<div class="mini-card">
+							<h3>
+								组合与过滤层
+							</h3>
+							<p>
+								组合不同数据集，映射对象及过滤垃圾
+							</p>
+							<a class="btn">数据</a><a class="btn">按类删除对象</a><a class="btn">标签</a>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="mini-card">
+							<h3>
+								逻辑层
+							</h3>
+							<p>
+								划分数据集并将子部分发送到不同的通道
+							</p>
+							<a class="btn">If判断</a><a class="btn">乘法运算</a><a class="btn">实例化</a>
+							<div>
+							</div>
+							<div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="mini-card">
+							<h3>
+								扩展层
+							</h3>
+							<p>
+								通过应用图像转换扩展培训数据
+							</p>
+							<a class="btn">图层</a><a class="btn">缩略</a><a class="btn">快速翻转</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fh5co-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<h1>
+							示例
+						</h1>
+						<p>
+							生成多个图层
+						</p>
+					</div>
+				</div>
+				<div class="row flex-row justify-content-center">
+					<div class="col-md-5">
+						<b class="label">配置文件</b>
+						<div class="code black">
+		<pre>[
+		  // First, take each image three times
+		  {
+			"dst": "$data2",
+			"src": [
+			  "$data1"
+			],
+			"action": "multiply",
+			"settings": {
+			  "multiply": 3
+			}
+		  },
+		  // Next, crop random part of image
+		  {
+			"dst": "$data3",
+			"src": [
+			  "$data2"
+			],
+			"action": "crop",
+			"settings": {
+			  "random_part": {
+				"width": {
+				  "max_percent": 80,
+				  "min_percent": 30
+				},
+				"height": {
+				  "max_percent": 40,
+				  "min_percent": 10
+				},
+				"keep_aspect_ratio": false
+			  }
+			}
+		  }
+		]
+		</pre>
+						</div>
+					</div>
+					<div class="col-md-5 results">
+						<b class="label">输出结果</b> <img src="/uploads/2019/04/261201402889.png" alt="" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fh5co-wrapper features">
+			<div class="container">
+				<div class="row flex-row justify-content-center">
+					<div class="col-md-12 text-center">
+						<h1>
+							特点
+						</h1>
+					</div>
+					<div class="col-md-4 feature">
+						<img src="/uploads/2019/04/261209561568.png" alt="" />
+						<h3>
+							无需编写代码
+						</h3>
+						<p>
+							简单易用的配置可以通过用户界面进行设置。
+						</p>
+					</div>
+					<div class="col-md-4 feature">
+						<img src="/uploads/2019/04/261210032463.png" alt="" />
+						<h3>
+							可用性高
+						</h3>
+						<p>
+							跨多台机器分布转换以处理大型数据集。
+						</p>
+					</div>
+					<div class="col-md-4 feature">
+						<img src="/uploads/2019/04/261210111109.png" alt="" />
+						<h3>
+							预置
+						</h3>
+						<p>
+							可将管道保存并重新使用，作为管理中的配置预设。
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		{include="public/footer.html"}
+	</div>
+</div>
+{include="public/js.html"}
+</body>
+</html>

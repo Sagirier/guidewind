@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 频道管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>频道管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li>
+                            <a href="?action=channels">频道管理</a>
+                        </li>
+                        <li>
+                            <strong>频道：<font color="#1AB394"><?php echo $channel['cname']; ?></font> 详情</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeIn">
+                <div class="row">
+                    <div class="col-lg-6 full-width">
+                        <div class="ibox float-e-margins">
+                        	<table class="table table-hover">
+                        		<tbody>
+                        			<tr>
+                        				<th>id</th>
+                        				<th>频道名称</th>
+                        				<th>频道类型</th>
+                        				<th>频道状态</th>
+                        				<th>频道模版</th>
+                        				<th style="text-align: right; padding-right: 4%;">操作</th>
+                        			</tr>
+                        			<form id="channelform" action="?action=channels&o=edit&cid=<?php echo $channel['cid']; ?>&go=1" method="post"  onSubmit="return false;">
+                        			<tr>
+                        				<td style="width:2%;"><span class="label label-primary label-channel"><?php echo $channel['cid']; ?></span></td>
+                        				<td style="width:15%;"><input type="text" name="channel_name" class="form-control" value="<?php echo $channel['cname']; ?>" /></td>
+                        				<td style="width:8%;">
+                        					<?php if($channel['sys']==1){echo '<span class="label-channel red">系统频道</span>';}else{echo '<span class="label-channel">自定义频道</span>';} ?>
+                        				</td>
+                        				<td style="width:8%;">
+											<select class="chosen-select" tabindex="2" name="channel_statu" style="width: 70%;">
+												<option hassubinfo="true" value="1"<?php if($channel['statu']==1){echo ' selected="selected"';} ?>>开启</option>
+												<option hassubinfo="true" value="0"<?php if($channel['statu']==0){echo ' selected="selected"';} ?>>关闭</option>
+											</select>
+										</td>
+										<td style="width:22%;" align="left">
+											<ul class="category-list channel-ul">
+												<span><i class="fa fa-exclamation channel-hint"></i> 以下模板文件请放于/template/<input type="text" class="channel-mark" disabled="disabled" value="<?php echo $channel['cmark']; ?>"></span>
+												<li><span>文字列表：<input class="form-control W-200" type="text" value="<?php echo $channel['ct_list']; ?>" name="channel_ct_list" /></span></li>
+												<li><span>图片列表：<input class="form-control W-200" type="text" value="<?php echo $channel['ct_listimg']; ?>" name="channel_ct_listimg" /></span></li>
+												<li><span>栏目介绍：<input class="form-control W-200" type="text" value="<?php echo $channel['ct_listbody']; ?>" name="channel_ct_listbody" /></span></li>
+												<li><span>内容模板：<input class="form-control W-200" type="text" value="<?php echo $channel['ct_content']; ?>" name="channel_ct_content" /></span></li>
+											</ul>
+											<p style="padding-top: 20px;">请注意，修改频道模板不影响<font color="#F00">已存在的导航栏</font>，只会影响新增加的导航栏，请及时更新相关栏目模板信息，否则不能正常显示。</p>
+										</td>
+                        				<td style="width: 15%;" align="right">
+											<button class="btn btn-primary" type="submit" value="" onclick="Layerconfirm(this);"><i class="fa fa-check"></i> 修改</button>
+											<a href="?action=channels" class="btn btn-danger"><i class="fa fa-remove"></i> 取消</a>
+										</td>
+                        			</tr>
+                        			</form>
+                        		</tbody>
+                        	</table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php include "manage/admin/template/footer.html"; ?>
+    </div>
+</div>
+<?php include "manage/admin/template/js.html"; ?>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "95%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(id){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要修改该频道？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                        document.getElementById("channelform"+id.value).submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$type['keywords']}" />
+<meta name="description" content="{$type['description']}" />
+<title>{$type['title']}-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public2.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+<script type="text/javascript" src="{$GLOBALS['styles']}js/other.js"></script>
+</head>
+
+<body>
+{include="header.html"}
+<div class="parbase clearfix keyvisual">
+<div class="visual_top" id="visualSubMain">
+	<figure class="visual_image" id="visTop01">
+		{getdata data_table="ads" data_taid="5" data_type="2" data_limit="1"}
+		<img src="{$v['adfile']}" alt="">
+		{/getdata}
+		<figcaption style="height: 360px; margin-top: -360px;">
+			<div class="tit">我们为大家的未来<br/>提供可持续能源</div>           
+			<p style="">全心全意服务我们的客户、员工、合作伙伴和社会。<br>同时为客户提供便捷的金融服务以及高端购物休闲体验。</p>            
+		</figcaption>
+	</figure>
+</div>
+</div>
+<div class="nav">
+    <div class="g-wrap">
+    	{$positions}
+        <div class="columns">
+        	{getdata data_table="navigators" data_ngid="4" data_statu="1"}
+            <a id="li{$v['nid']}" href="{$v['url']}" {if($type['nid']==$v['nid'])} class="on"{/if}>{$v['nname']}<span></span></a>
+            {/getdata}
+        </div>
+    </div>
+</div>
+<div id="mainCont">
+	<div class="parsys">
+		<div class="parbase section content_container">
+			<section class="box_main_cont">
+				<div class="parsys box_inner">
+					<div class="title parbase section">
+						<div class="tit_type01">{$type['nname']}</div>
+					</div>
+					<div class="text parbase section">
+						<p class="article_area">{$type['description']}</p>
+					</div>
+					<div class="content_list parbase section">
+						<div class="news_list">
+							<section class="grid_news">
+								<div class="list_grid">
+									<div class="wrap_list type02">
+										<ul class="clearfix">
+											{if($lists)}
+											{foreach $lists as $v}
+											<li>
+												<img src="{$v['lipic']}" alt="">
+												<a href="{$v['url']}">
+													<strong>{fun newstr($v['title'],20)}</strong>
+													<span>{fun detailinfo('article',$v['id'],'detail',true,70)} </span>
+												</a>
+											</li>
+											{/foreach}
+											{else}
+						      				<div class="no-product">很抱歉，未找到任何内容~！</div>
+											{/if}
+										</ul>
+										<div class="clearfix"></div>
+										{if($pages)}
+										<div class="paginations">{$pages}</div>
+										{/if}
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>
+{include="footer.html"}
+</body>
+</html>

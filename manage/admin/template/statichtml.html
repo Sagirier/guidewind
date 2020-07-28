@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - <?php echo $title; ?></title>
+    <meta name="keywords" content="导风系统网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style type="text/css">
+		.chosen-search,.xubox_msgico{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2><?php echo $title; ?></h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li>
+                            <a>系统设置</a>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394"><?php echo $title; ?></font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content  animated fadeInRight">
+
+                <div class="row">
+                    <div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                        	<div class="ibox-title">
+                            	<h5><?php echo $title; ?></h5>
+                        	</div>
+                        	<?php if(!function_exists('curl_init')){ ?>
+                        	<div class="hints" style="padding: 15px 20px 5px;">
+							<font color="red">您的主机未开启curl函数，将导致html生成效率降低，并可能出现部分生成不完整。强烈建议开启curl函数支持！</font>
+							</div>
+							<?php } ?>
+                            <iframe src="?action=statichtml&o=htmllabel" frameborder="0" scrolling="no" width="100%" height="600px"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php include "manage/admin/template/footer.html"; ?>
+    </div>
+</div>
+<?php include "manage/admin/template/js.html"; ?>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 留言管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/layer/laydate.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>网站内容管理</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">首页</a>
+                        </li>
+                        <li>
+                            <a>网站内容管理</a>
+                        </li>
+                        <li>
+                            <a href="?action=<?php echo $cname['cmark']; ?>">留言管理</a>
+                        </li>
+                        <li>
+                            <strong>
+                            	<font color="#1AB394">留言详情</font> 
+                            </strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated">
+				<div class="row">
+				    <div class="col-lg-6 full-width">
+				    	<div class="ibox-title">
+                                <h5>留言：<font color="#1AB394"><?php echo $message['title']; ?></font> 详情</h5>
+                                <div class="ibox-tools">
+                                <a href="?action=<?php echo $cname['cmark']; ?>" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回留言列表</a>
+                            </div>
+                        </div>
+				        <div class="ibox-content">
+				            <form action="?action=<?php echo $cname['cmark']; ?>&o=edit&id=<?php echo $id; ?>&go=1" method="post" onsubmit="return false;" id="messageeditform">
+				                <div class="panel blank-panel">
+				            		<div class="panel-body">
+				                		<div class="tab-content">
+				                    		<div id="base" class="tab-pane active">
+				                        		<table class="table table-bordered">
+				                            		<thead>
+				                                    	<tr>
+				                                        	<td style="background: #efefef;width:260px;">设置项目</td>
+				                                        	<td style="background: #efefef;width:360px;">设置详情/选项<span style="float: right;color: #999;">带“<font color="red">*</font>”的为必填项</span></td>
+				                                        	<td style="background: #efefef;">备注/说明</td>
+				                                    	</tr>
+				                            		</thead>
+				                            		<tbody>
+				                            			
+				                                		<tr>
+				                                        	<td><label>标题/顺序</label></td>
+				                                        	<td style="position: relative;">
+				                                        		<i class="fa fa-asterisk" style="position: absolute; color: #F00;left: 3px; top: 17px;"></i>
+				                                        		<label style="width: 60%;">
+				                                        			<input type="text" class="form-control" name="message_title" id="message_title" value="<?php echo $message['title']; ?>" />
+				                                        		</label>
+				                                        		<label style=" margin:0 5px 0 20px ;">顺序：</label>
+				                                        		<label  style="width: 40px;">
+				                                        			<input type="text" class="form-control no-clip" name="message_order" value="<?php echo $message['order']; ?>" />
+				                                        		</label>
+				                                        	</td>
+				                                        	<td><label class="normal-text">标题，请输入；顺序，数字越大越靠前。</label></td>
+				                                		</tr>
+				                                		<tr>
+				                                        	<td><label>留言用户名</label></td>
+				                                        	<td>
+				                                        		<label style="width: 60%; margin-right:20px;">
+				                                        			<input type="text" id="memberusername" class="form-control" name="message_username" value="<?php if($message['uid']==0){ echo '游客';}else{ $user_info=syDB('member')->find(array('uid'=>$message['uid']));echo $user_info['username'];} ?>" />
+				                                        		</label>
+				                                        		<label>
+				                                        			<button class="btn btn-success" style="height: 34px; float: left;" onclick="LayerSearch();"><i class="fa fa-search"></i> 搜索用户</button>
+				                                        		</label>
+				                                        	</td>
+				                                        	<td><label class="normal-text">该留言的用户名，可以更改，若想改为某个会员，请保证该会员已存在；留空或者输入"游客"则默认为非会员用户。</label></td>
+				                                		</tr>
+				                                		<tr>
+				                                        	<td><label>所属栏目</label></td>
+				                                        	<td>
+				                                        		<label style="width: 100%;">
+				                                        			<select class="chosen-select" name="message_nid" id="tid" tabindex="2" style="width: 100%;">
+																		<?php foreach($navtree as $n){ ?>
+																        <option value="<?php echo $n['nid']; ?>"<?php if($n['channels']!=$cname['cmark']){echo ' style="display:none"';} ?><?php if($message['nid']==$n['nid']){echo ' selected="selected"';} ?>><?php echo str_repeat('—',$n['n']).$n['name']; ?></option>
+																        <?php } ?>
+																	</select>
+				                                        		</label>
+				                                        	</td>
+				                                        	<td><label class="normal-text">所属栏目，请选择。</label></td>
+				                                		</tr>
+				                                		<?php if($message['cmark']!='' || $message['rid']!=0){ $recruitment_info=syDB($message['cmark'])->find(array('id'=>$message['rid']));?>
+				                                		<tr>
+				                                			<td><label>来自招聘<label></td>
+				                                			<td><?php echo $recruitment_info['title']; ?></td>
+				                                			<td>该留言所来自的招聘信息。</td>
+				                                		</tr>	
+				                                		<?php } ?>
+				                                		<tr>
+				                                			<td><label>回复详情</label></td>
+				                                			<td><a style="width: 60%;" class="btn btn-info" onclick="Layerconfirmframe();"><i class="fa fa-eye"></i> 查看留言详情</a></label></td>
+				                                			<td>点击可以查看回复详情，并对相关回复进行操作。</td>
+				                                		</tr>
+				                                		<tr>
+				                                        	<td><label>审核状态</label></td>
+				                                        	<td>
+				                                        		<label class="i-checks">
+					                                                <input type="radio"<?php if($message['statu']==1){echo ' checked="checked"';} ?> value="1" name="message_statu"> 已审核				                                            </label>
+					                                            <label class="i-checks" style="margin-left: 20px;">
+					                                                <input type="radio"<?php if($message['statu']==0){echo ' checked="checked"';} ?> value="0" name="message_statu"> 未审核
+					                                            </label>
+				                                        	</td>
+				                                        	<td><label class="normal-text">审核状态，未审核的信息将不会在前台页面显示。</label></td>
+				                                		</tr>
+				                                		<tr>
+				                                        	<td><label>留言时间</label></td>
+				                                        	<td>
+				                                        		<label style="width: 100%;">
+				                                        			<i class="laydate-icon"></i>
+				                                        			<input class="form-control layer-date" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" name="message_addtime" value="<?php echo date('Y-m-d H:i:s',$message['addtime']); ?>">
+				                                        		</label>
+				                                        	</td>
+				                                        	<td><label class="normal-text">可以更改该留言的时间（请注意，更改留言时间后，该留言的回复信息时间不会被更改，请谨慎操作）。</label></td>
+				                                		</tr>
+				                                    </tbody>
+				                                </table>
+				                    		</div>
+				                		</div>
+				            		</div>
+				                </div>
+				                <div class="mar-20 clear">
+				                	<button class="btn btn-primary" type="submit" onclick="Layerconfirm();"><i class="fa fa-check"></i> 提交</button>
+				                </div>
+				        	</form> 
+				        </div>
+				    </div>
+				</div>
+			</div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+    <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+        	//i-checks
+        	$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+    </script>
+    <script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+	<!-- layerDate plugin javascript -->
+    <script src="manage/admin/template/js/plugins/layer/laydate/laydate.js"></script>
+    <script>
+        //外部js调用
+        laydate({
+            elem: '#hello', 
+            event: 'focus' 
+        });
+
+         //日期范围限制
+        var start = {
+            elem: '#start',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-06-16 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: laydate.now(),
+            max: '2099-06-16 23:59:59',
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(){
+    		$.layer({
+                shade: [0.5,"#000"],
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要提交修改？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	var mark=document.getElementById("message_title").value;
+                    	if(!from_null(mark)){
+                    		layer.alert("标题不能为空！");return false;
+                    	}
+                        document.getElementById("messageeditform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    	function LayerSearch(){
+    		var pageii=$.layer({
+			    type: 1,
+			    title: '搜索用户名',
+			    offset: ['', ''],
+			    area: ['auto', 'auto'],
+			    border: [4,0.3,'#000',true], 
+			    shade: [0.4,'#000'], 
+			    shadeClose: true,
+			    closeBtn: [0,false], //去掉默认关闭按钮
+			    shift: 'top', //从左动画弹出
+			    page: {
+			        html: '<div style="width:500px; height:309px"><div class="member-title">用户列表：</div><ul class="member-list"><?php foreach($members as $m){ ?><li class="member-username"><a class="pagebtn" onclick="addmemberuser(this);" title="<?php echo $m['username']; ?>"><i class="fa fa-<?php if($m['adminid']==1){ echo 'user-md';}else{ echo 'user';} ?>"></i> <?php echo $m['username']; ?></a></li><?php } ?></ul></div>'
+			    }
+			});
+			$('.pagebtn').on('click', function(){
+			    layer.close(pageii);
+			});
+    	}
+    	function addmemberuser(member){
+			var username=member.title;
+			var user=document.getElementById("memberusername");
+			user.value=username;
+			}
+    	function Layerconfirmframe(){
+    		$.layer({
+			    type: 2,
+			    shadeClose: true,
+			    title: false,
+			    closeBtn: [0, false],
+			    shade: [0.8, '#000'],
+			    border: [0],
+			    offset: ['',''],
+			    area: ['1000px','734px'],
+			    iframe: {src: '?action=message&o=view&id=<?php echo $message['id'] ?>'}
+			});
+    	}
+    </script>
+
+</body>
+</html>

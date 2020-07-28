@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>在线报备信息详情</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <style>
+    	h3.report-basic{padding-top: 10px; color: green;left: 50%;text-align: center;}
+    	h3.report-basic span.title{border-bottom: 2px solid green;}
+    	.row .col-md-2{border: 1px solid #999;overflow: hidden;width: 458px;margin: 0 auto -1px;padding:0;}
+    	.row .ptitle{display: inline-block;width: 150px;margin-left: 15px;float: left;padding: 5px 0;}
+    	.row strong{width: 275px;display:inline-block;float:left;overflow:hidden;word-wrap: break-word; word-break: break-all; margin-right: 15px;padding: 5px 0 5px 20px;border-left: 1px solid #999;min-height: 28.5px;}
+    </style>
+</head>
+
+<body style="background: none;">
+       	<div class="gray-bg dashbard-1">
+            <div class="wrapper wrapper-content animated">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="ibox chat-view">
+
+                            <div class="ibox-title">
+                                <h5>标题：<font color="green"><?php echo $report['title'] ?></font></h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="usercenter accdv">
+									<div class="row">
+								     	<div class="col-md-12"><h3 class="report-basic"><span class="title">报备人信息</span></h3></div>
+								   	</div>
+								  	<div class="row">
+								     	<div class="col-md-2"><span class="ptitle">姓名：</span><strong><?php echo $report_fields['name'] ?></strong></div>
+								   	</div>
+								   	<div class="row">
+								     	<div class="col-md-2"><span class="ptitle">电话：</span><strong><?php echo $report_fields['mobile'] ?></strong></div>
+								   	</div>
+								</div>
+								<div class="usercenter accdv">
+								   	<div class="row">
+								     	<div class="col-md-12"><h3 class="report-basic"><span class="title">报备客户信息</span></h3></div>
+								   	</div>
+								   	<div class="row">
+								     	<div class="col-md-2"><span class="ptitle">报备客户名称：</span><strong><?php echo $report_fields['cname'] ?></strong></div>
+								   	</div>
+								   	<div class="row">
+								     	<div class="col-md-2"><span class="ptitle">报备客户地址：</span><strong><?php echo $report_fields['caddress']; ?></strong></div>
+								   	</div>
+								   	<div class="row">
+								     	<div class="col-md-2"><span class="ptitle">报备客户联系人：</span><strong><?php echo $report_fields['cmember'] ?></strong></div>
+								   	</div> 
+								   	<div class="row">
+								     	<div class="col-md-2"><span class="ptitle">报备客户联系电话：</span><strong><?php echo $report_fields['cmobile'] ?></strong></div>
+								   	</div>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+    </div><!--#page-wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+</body>
+</html>

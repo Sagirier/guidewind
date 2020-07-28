@@ -1,0 +1,470 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="{$GLOBALS['SITE']['keywords']}" />
+<meta name="description" content="{$GLOBALS['SITE']['description']}" />
+<title>更改个人资料-{$GLOBALS['SITE']['title']}</title>
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
+<link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/member.css" rel="stylesheet" type="text/css" />
+<link href="{$GLOBALS['styles']}css/font-awesome.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	var site_dir="{$GLOBALS['WWW']}";
+</script>
+{include="js.html"}
+<script src="{$GLOBALS['WWW']}system/js/wpfrom.js" type="text/javascript"></script>
+<script src="{$GLOBALS['styles']}js/main.js" type="text/javascript"></script>
+<!-- layer弹出层 -->
+<script src="{$GLOBALS['styles']}js/layer.min.js"></script>
+<script type="text/javascript">
+	function Layerformpost(){
+		var nickname=$("#nickname").val();
+		if(!from_max(nickname,20)){
+			layer.msg("用户昵称不要超过20个字符");return false;
+		}
+		var mobile=$("#mobile").val();
+		if(mobile!='' && !from_mobile(mobile)){
+			layer.msg("请输入正确格式的手机号码");return false;
+		}
+		var telephone=$("#telephone").val();
+		if(telephone!='' && !from_phone(telephone)){
+			layer.msg("请输入正确格式的电话号码，如010-88888888");return false;
+		}
+		var email=$("#email").val();
+		if(email!='' && !from_email(email)){
+			layer.msg("请输入正确格式的邮箱");return false;
+		}
+		var zipcode=$("#zipcode").val();
+		if(zipcode!='' && !from_zipCode(zipcode)){
+			layer.msg("请输入正确格式的邮政编码");return false;
+		}
+	}
+</script>
+</head>
+
+<body>
+{include="header.html"}
+<div id="container" style="width:100%;height:700px;">
+    <div id="anitOut">
+    	<div class="wrap center_wrap">
+			<div class="content">
+				<div class="member_nav">
+					{include="member/menu.html"}
+					<div class="logo">
+						<a href="/?action=article&o=type&nid=40" target="_blank">
+							<i class="fa fa-envelope-o"></i>
+							<span>发送邮件</span>
+						</a>
+					</div>
+				</div>
+				<div class="login_box">	
+					
+					<div class="login_form">
+						
+			            <form action="./?action=member&o=myinfo&go=1" onsubmit="return Layerformpost();" method="post">
+			            <div class="login_title">
+							基本资料
+			            </div>
+			            <div class="form_text_ipt">
+			            <table class="user_info_ul user_myinfo_table" border="0" width="100%" cellpadding="0" cellspacing="0">
+			                <tr>
+			                    <th scope="row">用户昵称：</th>
+			                    <td width="45%"><input placeholder="可包含中文及特殊字符，不超过20个字符" class="form-control" value="{$member['nickname']}" onblur="ajax_check_nickname(this,'nickname_msg')" name="nickname" id="nickname" /></td>
+			                    <td align="left"><!--<span id="username_msg"></span>--></td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">真实姓名：</th>
+			                    <td><input class="form-control" placeholder="实名认证后，该项不可更改" value="{$member['realname']}" name="realname" id="realname" /></td>
+			                    <td><span id="realname_msg"></span></td>
+			                </tr>
+			                <tr>
+			            		<th scope="row">性别：</th>
+			                	<td>
+				                	<label class="addlabel" style="width: auto;margin-right: 5px;">
+				                		<input name="sexuality" type="radio" class="i-checks" value="1" {if($member['sexuality']==1)} checked="checked" {/if} /> 
+				                		<img class="sexuality" src="{$GLOBALS['member']['male_icon']}" />
+				                	</label>
+				                	<label class="addlabel" style="width: auto;">
+				                		<input name="sexuality" type="radio" class="i-checks" value="2" {if($member['sexuality']==2)} checked="checked" {/if} /> 
+				                		<img class="sexuality" src="{$GLOBALS['member']['female_icon']}" />
+				                	</label>
+			            		</td>
+			            		<td></td>
+			                </tr>
+			                <tr>
+			            		<th scope="row">出生日期：</th>
+			                	<td>
+				                	<label class="addlabel">
+										<select name="birthyear" class="ex-select" id="selYear"></select> 
+				                	</label>
+				                	<label class="addlabel">
+				                		<select name="birthmonth" class="ex-select" id="selMonth"></select>
+				                	</label>
+				            		<label class="addlabel">
+				                		<select name="birthday" class="ex-select" id="selDay"></select>
+				            		</label>
+			            		</td>
+			            		<td></td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">手机号：</th>
+			                    <td><input class="form-control" placeholder="绑定手机号后，该项不可更改" value="{$member['mobile']}" name="mobile" id="mobile" /></td>
+			                    <td><span id="mobile_msg"></span></td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">电话号码：</th>
+			                    <td><input class="form-control" placeholder="格式如：010-12345678" value="{$member['telephone']}" name="telephone" id="telephone" /></td>
+			                    <td><span id="telephone_msg"></span></td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">邮箱：</th>
+			                    <td id="maillabel"><input type="text" placeholder="格式如：example@163.com" class="form-control" value="{$member['email']}" name="email" id="email" /></td>
+			                    <td></td>
+			                </tr>
+			                {foreach $field1 as $name=>$input}
+			                <tr>
+			                    <th scope="row">{$name}：</th>
+			                    <td>{$input}</td>
+			                    <td></td>
+			                </tr>
+			                {/foreach}
+			            </table>
+						</div>
+						<div class="login_title">
+							通讯方式
+			            </div>
+			            <div class="form_text_ipt">
+			            <table class="user_info_ul user_info_ul1" border="0" width="100%" cellpadding="0" cellspacing="0">
+			                <tr>
+			                    <th scope="row">通讯地址：</th>
+			                    <td id="addressinfo" width="45%">{$member['resideprovince']}{$member['residecity']}{$member['residedist']}{$member['address']}</td>
+			                    <td id="addresspanel" style="display: none;" width="45%">
+		                    		<label class="addlabel">
+                                		<select name="resideprovince" class="ex-select" id="province">
+                                			<option value="">请选择</option>
+                                			{foreach $province as $p}
+                                			<option hassubinfo="true" value="{$p['id']}">{$p['name']}</option>
+                                			{/foreach}
+                                		</select>
+	                                </label>
+			                    	<label class="addlabel" id="cityinfo" style="display: none;">
+			                    		<select name="residecity" class="ex-select" id="city">
+			                    			<option value="">请选择</option>
+			                    		</select>
+			                    	</label>
+	                        		<label class="addlabel" id="distinfo" style="display: none;">
+	                        			<select name="residedist" class="ex-select" id="dist">
+	                        				<option value="">请选择</option>
+	                        			</select>
+	                        		</label>
+	                        		<div class="clearfix"></div>
+	                        		<label class="addresslabel" id="addinfo" style="display: none;">
+	                        			<textarea class="form-control" name="address" placeholder="请输入详细地址">{$member['address']}</textarea>
+	                        		</label>
+			                    </td>
+			                    <td><span id="addressset"><button id="changebtn" class="btn btn-primary btn-xs m-l-md" type="button" onclick="changeadd(this,'addressinfo','addresspanel');">修改</button></span></td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">邮政编码：</th>
+			                    <td><input type="text" placeholder="请输入正确格式的邮政编码" class="form-control" value="{$member['zipcode']}" name="zipcode" id="zipcode" /></td>
+			                    <td></td>
+			                </tr>
+			                <tr>
+			                    <th scope="row">公司：</th>
+			                    <td><input type="text" placeholder="您所在的公司名称" class="form-control" value="{$member['company']}" name="company" id="company" /></td>
+			                </tr>
+			                {foreach $field2 as $name=>$input}
+			                <tr>
+			                    <th scope="row">{$name}：</th>
+			                    <td>{$input}</td>
+			                    <td></td>
+			                </tr>
+			                {/foreach}
+			            </table>
+			            </div>
+			            <!--<div class="login_title">
+			            	账户信息
+			            </div>
+			            <div class="form_text_ipt">
+						<table class="user_info_ul user_info_ul1" border="0" width="100%" cellpadding="0" cellspacing="0">
+			                {foreach $field3 as $name=>$input}
+			                <tr>
+			                    <th scope="row">{$name}：</th>
+			                    <td width="45%">{$input}</td>
+			                    <td></td>
+			                </tr>
+			                {/foreach}
+			            </table>
+			            </div>-->
+			            <div class="form_btn">
+							<button type="submit" class="submit_btn">提交</button>
+						</div>
+			            </form>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function () {
+    if (!window.ActiveXObject && !!document.createElement("canvas").getContext) {
+        $.getScript("{$GLOBALS['styles']}js/cav.js",
+                function () {
+                    var t = {
+                        width: 1.5,
+                        height: 1.5,
+                        depth: 10,
+                        segments: 12,
+                        slices: 6,
+                        xRange: 0.8,
+                        yRange: 0.1,
+                        zRange: 1,
+                        ambient: "#525252",
+                        diffuse: "#FFFFFF",
+                        speed: 0.0002
+                    };
+                    var G = {
+                        count: 2,
+                        xyScalar: 1,
+                        zOffset: 100,
+                        ambient: "#ff6100",
+                        diffuse: "#fd9454",
+                        speed: 0.001,
+                        gravity: 1200,
+                        dampening: 0.95,
+                        minLimit: 10,
+                        maxLimit: null,
+                        minDistance: 20,
+                        maxDistance: 400,
+                        autopilot: false,
+                        draw: false,
+                        bounds: CAV.Vector3.create(),
+                        step: CAV.Vector3.create(Math.randomInRange(0.2, 1), Math.randomInRange(0.2, 1), Math.randomInRange(0.2, 1))
+                    };
+                    var m = "canvas";
+                    var E = "svg";
+                    var x = {
+                        renderer: m
+                    };
+                    var i, n = Date.now();
+                    var L = CAV.Vector3.create();
+                    var k = CAV.Vector3.create();
+                    var z = document.getElementById("container");
+                    var w = document.getElementById("anitOut");
+                    var D, I, h, q, y;
+                    var g;
+                    var r;
+
+                    function C() {
+                        F();
+                        p();
+                        s();
+                        B();
+                        v();
+                        K(z.offsetWidth, z.offsetHeight);
+                        o()
+                    }
+
+                    function F() {
+                        g = new CAV.CanvasRenderer();
+                        H(x.renderer)
+                    }
+
+                    function H(N) {
+                        if (D) {
+                            w.removeChild(D.element)
+                        }
+                        switch (N) {
+                            case m:
+                                D = g;
+                                break
+                        }
+                        D.setSize(z.offsetWidth, z.offsetHeight);
+                        w.appendChild(D.element)
+                    }
+
+                    function p() {
+                        I = new CAV.Scene()
+                    }
+
+                    function s() {
+                        I.remove(h);
+                        D.clear();
+                        q = new CAV.Plane(t.width * D.width, t.height * D.height, t.segments, t.slices);
+                        y = new CAV.Material(t.ambient, t.diffuse);
+                        h = new CAV.Mesh(q, y);
+                        I.add(h);
+                        var N, O;
+                        for (N = q.vertices.length - 1; N >= 0; N--) {
+                            O = q.vertices[N];
+                            O.anchor = CAV.Vector3.clone(O.position);
+                            O.step = CAV.Vector3.create(Math.randomInRange(0.2, 1), Math.randomInRange(0.2, 1), Math.randomInRange(0.2, 1));
+                            O.time = Math.randomInRange(0, Math.PIM2)
+                        }
+                    }
+
+                    function B() {
+                        var O, N;
+                        for (O = I.lights.length - 1; O >= 0; O--) {
+                            N = I.lights[O];
+                            I.remove(N)
+                        }
+                        D.clear();
+                        for (O = 0; O < G.count; O++) {
+                            N = new CAV.Light(G.ambient, G.diffuse);
+                            N.ambientHex = N.ambient.format();
+                            N.diffuseHex = N.diffuse.format();
+                            I.add(N);
+                            N.mass = Math.randomInRange(0.5, 1);
+                            N.velocity = CAV.Vector3.create();
+                            N.acceleration = CAV.Vector3.create();
+                            N.force = CAV.Vector3.create()
+                        }
+                    }
+
+                    function K(O, N) {
+                        D.setSize(O, N);
+                        CAV.Vector3.set(L, D.halfWidth, D.halfHeight);
+                        s()
+                    }
+
+                    function o() {
+                        i = Date.now() - n;
+                        u();
+                        M();
+                        requestAnimationFrame(o)
+                    }
+
+                    function u() {
+                        var Q, P, O, R, T, V, U, S = t.depth / 2;
+                        CAV.Vector3.copy(G.bounds, L);
+                        CAV.Vector3.multiplyScalar(G.bounds, G.xyScalar);
+                        CAV.Vector3.setZ(k, G.zOffset);
+                        for (R = I.lights.length - 1; R >= 0; R--) {
+                            T = I.lights[R];
+                            CAV.Vector3.setZ(T.position, G.zOffset);
+                            var N = Math.clamp(CAV.Vector3.distanceSquared(T.position, k), G.minDistance, G.maxDistance);
+                            var W = G.gravity * T.mass / N;
+                            CAV.Vector3.subtractVectors(T.force, k, T.position);
+                            CAV.Vector3.normalise(T.force);
+                            CAV.Vector3.multiplyScalar(T.force, W);
+                            CAV.Vector3.set(T.acceleration);
+                            CAV.Vector3.add(T.acceleration, T.force);
+                            CAV.Vector3.add(T.velocity, T.acceleration);
+                            CAV.Vector3.multiplyScalar(T.velocity, G.dampening);
+                            CAV.Vector3.limit(T.velocity, G.minLimit, G.maxLimit);
+                            CAV.Vector3.add(T.position, T.velocity)
+                        }
+                        for (V = q.vertices.length - 1; V >= 0; V--) {
+                            U = q.vertices[V];
+                            Q = Math.sin(U.time + U.step[0] * i * t.speed);
+                            P = Math.cos(U.time + U.step[1] * i * t.speed);
+                            O = Math.sin(U.time + U.step[2] * i * t.speed);
+                            CAV.Vector3.set(U.position, t.xRange * q.segmentWidth * Q, t.yRange * q.sliceHeight * P, t.zRange * S * O - S);
+                            CAV.Vector3.add(U.position, U.anchor)
+                        }
+                        q.dirty = true
+                    }
+
+                    function M() {
+                        D.render(I)
+                    }
+
+                    function J(O) {
+                        var Q, N, S = O;
+                        var P = function (T) {
+                            for (Q = 0, l = I.lights.length; Q < l; Q++) {
+                                N = I.lights[Q];
+                                N.ambient.set(T);
+                                N.ambientHex = N.ambient.format()
+                            }
+                        };
+                        var R = function (T) {
+                            for (Q = 0, l = I.lights.length; Q < l; Q++) {
+                                N = I.lights[Q];
+                                N.diffuse.set(T);
+                                N.diffuseHex = N.diffuse.format()
+                            }
+                        };
+                        return {
+                            set: function () {
+                                P(S[0]);
+                                R(S[1])
+                            }
+                        }
+                    }
+
+                    function v() {
+                        window.addEventListener("resize", j)
+                    }
+
+                    function A(N) {
+                        CAV.Vector3.set(k, N.x, D.height - N.y);
+                        CAV.Vector3.subtract(k, L)
+                    }
+
+                    function j(N) {
+                        K(z.offsetWidth, z.offsetHeight);
+                        M()
+                    }
+
+                    C();
+                })
+    } else {
+        alert('调用cav.js失败');
+    }
+});
+</script>
+{include="footer.html"}
+<script type="text/javascript">
+	//获取省下级市
+	$("#province").change(function(){
+		$.ajax({
+			type:"post",
+			url:site_dir+'?action=district&o=get_city',
+			async:true,
+			data:"upid="+$("#province").val(),
+			success: function(html){
+				$("#cityinfo").show();
+				$("#distinfo").hide();
+				$("#addinfo").hide();
+				$("#city").empty();
+				$("#dist").empty();
+				$("#city").append(html);
+			}
+		});
+	});
+	//获取市下级区
+	$("#city").change(function(){
+		$.ajax({
+			type:"post",
+			url:site_dir+'?action=district&o=get_dist',
+			async:true,
+			data:"upid="+$("#city").val(),
+			success: function(html){
+				$("#distinfo").show();
+				$("#dist").empty();
+				$("#dist").append(html);
+			}
+		});
+	});
+	//显示详细地址输入框
+	$("#distinfo").change(function(){
+		$("#addinfo").show();
+	});
+</script>
+<script type="text/javascript" src="{$GLOBALS['styles']}js/date-select.js"></script>
+<script type="text/javascript"> 
+	var selYear = document.getElementById("selYear"); 
+	var selMonth = document.getElementById("selMonth"); 
+	var selDay = document.getElementById("selDay"); 
+	// 新建一个DateSelector类的实例，将三个select对象传进去 
+	new DateSelector(selYear, selMonth, selDay, {if($member['birthyear'])}{$member['birthyear']}{else}{fun date("Y")}{/if},{if($member['birthmonth'])}{$member['birthmonth']}{else}{fun date("m")}{/if},{if($member['birthday'])}{$member['birthday']}{else}{fun date("d")}{/if}); 
+</script> 
+</body>
+</html>

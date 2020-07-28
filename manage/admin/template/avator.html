@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>上传头像</title>
+<link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+<link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+<link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+<style type="text/css">
+.container { width:100%;}
+.section { background-color:#fff; padding:0 20px;}
+.row{padding: 20px 20px 0;}
+.imgchoose{
+	float: left;
+}
+.row span.label{float:left;position:relative;line-height:30px;margin-left:-94px;width:84px;text-align:right; color:#5b5b5b;}
+.btn_submit {background:url(system/js/avator/images/submit.gif) no-repeat;width:70px;height:29px;border:0;}
+</style>
+</head>
+<body style="background: none;">
+
+<div class="container">
+	<div class="col-lg-12">
+		<div class="ibox-title">
+	        <h5>上传头像</h5>
+	    </div>
+   	</div> 
+	<div class="section">
+		<div class="row" id="avatar_msg" style="font-weight:700;color:#f00;display:none;">上传成功，系统自动生成以下三个尺寸的头像！</div>
+		<div class="row">
+			<h5>当前我的头像</h5>
+			<p>如果您还没有设置自己的头像，系统会显示为默认头像，您需要自己上传一张新照片来作为自己的个人头像</p>
+			<div class="img-pannel">
+			<img class="img-responsive box-s-10 border-r-30" id="avatar" style="display: inline-block;" src="" />
+			<img class="img-responsive box-s-10 border-r-30" id="portrait" style="display: none;" src="" />
+			<img class="img-responsive box-s-10 border-r-30" id="picture"  style="display: none;" src="" />
+			</div>
+
+		</div>
+		<div class="row">
+			<input type="text" id="avatarUpload" value="" />
+			<input type="hidden" id="img" name="img" />
+			<input type="hidden" id="x" name="x" />
+			<input type="hidden" id="y" name="y" />
+			<input type="hidden" id="w" name="w" />
+			<input type="hidden" id="h" name="h" />
+			<div class="uploadify">
+				<a class="btn btn-primary" id="startupload" href="javascript:$('#avatarUpload').uploadify('upload','*')"><i class="fa fa-upload"></i> 开始上传</a>
+				<a class="btn btn-danger" id="cancleupload" href="javascript:$('#avatarUpload').uploadify('cancel', '*')"><i class="fa fa-times"></i> 取消上传</a>
+			</div>
+		</div>
+		<div class="row imgchoose m-r" style="display: none;">编辑头像：<br /><img src="" id="target" /></div>
+		<div class="row imgchoose" style="display: none;">
+			头像预览：<br />
+			<div style="width:200px;height:200px;margin:10px 0 10px 0;overflow:hidden;box-shadow: 0 0 6px #999;border-radius: 6px;"><img class="preview" id="preview3" src="" /></div>
+			<div style="width:130px;height:130px;margin-bottom:10px;overflow:hidden;box-shadow: 0 0 6px #999;border-radius: 6px;"><img class="preview" id="preview2" src="" /></div>
+			<div style="width:112px;height:112px;overflow:hidden;box-shadow: 0 0 6px #999;border-radius: 6px;"><img class="preview" id="preview" src="" /></div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row">
+			<button type="button" class="btn btn-success" id="avatar_submit" style="display: none;margin-bottom: 20px;"><i class="fa fa-check"></i> 提交裁剪</button>
+		</div>
+	</div>
+</div>
+
+
+<script src="system/js/avator/js/jquery.js"></script>
+<link href="system/js/avator/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="system/js/avator/uploadify/jquery.uploadify-3.1.js"></script>
+<script type="text/javascript" src="system/js/avator/jcrop/jquery.Jcrop.min.js"></script>
+<link rel="stylesheet" href="system/js/avator/jcrop/jquery.Jcrop.css" type="text/css" />
+<script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+document.getElementById("avatar").src=self.parent.document.getElementById("<?php echo $imgid; ?>").src;
+$(function() {
+	//首页轮播图1
+	$("#avatarUpload").uploadify({
+		'auto'				: false,
+		'multi'				: false,
+		'uploadLimit'		: 1,
+		'formData'			: {'uid':'<?php echo $user['uid']; ?>'},
+		'buttonText'		: '<i class="fa fa-paperclip"></i> 选择图片',
+		//'buttonImage'       : 'system/js/avator/images/btn.png',
+		'height'			: 34,
+		'width'				: 99,
+		'removeCompleted'	: false,
+		'swf'				: 'system/js/avator/uploadify/uploadify.swf',
+		'uploader'			: 'admin.php?action=avator&o=filemanager&filesdir=<?php echo $filesdir; ?>',
+		'fileTypeExts'		: '*.gif; *.jpg; *.jpeg; *.png;',
+		'fileSizeLimit'		: '1024KB',
+		'onUploadSuccess' : function(file, data, response) {
+			var msg = $.parseJSON(data);
+			if( msg.result_code == 1 ){
+				$("#img").val(msg.result_des );
+				$("#target").attr("src",msg.result_des);
+				$(".preview").attr("src",msg.result_des);
+				$('#target').Jcrop({
+					minSize: [50,50],
+					setSelect: [0,0,200,200],
+					onChange: updatePreview,
+					onSelect: updatePreview,
+					onSelect: updateCoords,
+					aspectRatio: 1
+				},
+				function(){
+					// Use the API to get the real image size
+					var bounds = this.getBounds();
+					boundx = bounds[0];
+					boundy = bounds[1];
+					// Store the API in the jcrop_api variable
+					jcrop_api = this;
+				});
+				$(".imgchoose").show(1000);
+				$("#avatar_submit").show(1000);
+			} else {
+				layer.alert('上传失败');
+			}
+		},
+		'onClearQueue' : function(queueItemCount) {
+            layer.alert( '取消文件上传' );
+        },
+		'onCancel' : function(file) {
+            layer.alert('图片： ' + file.name + ' 被取消上传');
+        }
+    });
+    
+    //头像裁剪
+	var jcrop_api, boundx, boundy;
+	
+	function updateCoords(c)
+	{
+		$('#x').val(c.x);
+		$('#y').val(c.y);
+		$('#w').val(c.w);
+		$('#h').val(c.h);
+	};
+	function checkCoords()
+	{
+		if (parseInt($('#w').val())) return true;
+		layer.alert('请选择图片上合适的区域');
+		return false;
+	};
+	function updatePreview(c){
+		if (parseInt(c.w) > 0){
+			var rx = 112 / c.w;
+			var ry = 112 / c.h;
+			$('#preview').css({
+				width: Math.round(rx * boundx) + 'px',
+            	height: Math.round(ry * boundy) + 'px',
+            	marginLeft: '-' + Math.round(rx * c.x) + 'px',
+            	marginTop: '-' + Math.round(ry * c.y) + 'px'
+			});
+		}
+		{
+			var rx = 130 / c.w;
+			var ry = 130 / c.h;
+			$('#preview2').css({
+            	width: Math.round(rx * boundx) + 'px',
+            	height: Math.round(ry * boundy) + 'px',
+            	marginLeft: '-' + Math.round(rx * c.x) + 'px',
+            	marginTop: '-' + Math.round(ry * c.y) + 'px'
+			});
+		}
+		{
+			var rx = 200 / c.w;
+			var ry = 200 / c.h;
+			$('#preview3').css({
+				width: Math.round(rx * boundx) + 'px',
+				height: Math.round(ry * boundy) + 'px',
+				marginLeft: '-' + Math.round(rx * c.x) + 'px',
+				marginTop: '-' + Math.round(ry * c.y) + 'px'
+			});
+		}
+	};
+	
+	$("#avatar_submit").click(function(){
+		var img = $("#img").val();
+		var x = $("#x").val();
+		var y = $("#y").val();
+		var w = $("#w").val();
+		var h = $("#h").val();
+		if( checkCoords() ){
+			$.ajax({
+				type: "POST",
+				url: "admin.php?action=avator&o=resizeimg",
+				data: {"img":img,"x":x,"y":y,"w":w,"h":h},
+				dataType: "json",
+				success: function(msg){
+					if( msg.result_code == 1 ){
+						$('html,body').animate({scrollTop:$('#avatar').offset().top-150},1000,'swing',function(){
+							$('#avatar_msg').show();
+							$('#avatar').attr('src',msg.result_des.big);
+							$('#portrait').attr('src',msg.result_des.middle);
+							document.getElementById('portrait').style.display="inline-block";
+							$('#picture').attr('src',msg.result_des.small);
+							document.getElementById('picture').style.display="inline-block";
+							self.parent.document.getElementById("<?php echo $inputid; ?>").value=msg.result_des.big;
+							self.parent.document.getElementById("<?php echo $imgid; ?>").src=msg.result_des.big;
+						});
+					} else {
+						layer.alert(msg.result_code);
+					}
+				}
+			});
+		}
+	});
+});
+</script>
+
+</body>
+</html>

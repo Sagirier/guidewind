@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 会员管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+<body>
+    <div id="wrapper">
+    	<?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+      	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-9">
+                    <h2>会员列表</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li><a>会员管理</a></li>
+                        <li>
+                            <strong><font color="#1AB394">会员列表</font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                	<div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>会员列表 (<span style="font-weight: normal;">带"<i class="fa fa-star" style="color: #1A7BB9;"></i>"的为管理员,带"<i class="fa fa-star" style="color: #FF00C6;"></i>"的为当前登录的管理员</span>)</h5>
+                            </div>
+                            <div class="ibox-content">
+                            	<form action="" method="get" id="membersearch">
+                            	<input type="hidden" value="member" name="action" />
+                            	<div class="sch">
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="gid" name="member-schbygid">
+										<option hassubinfo="true" value=""<?php if(!$conditions['gid']){echo ' selected="selected"';} ?>>会员分组</option>
+								        <?php foreach($group as $n){ ?>
+								        <option hassubinfo="true" value="<?php echo $n['gid']; ?>"<?php if($conditions['gid']==$n['gid']){echo ' selected="selected"';} ?>><?php echo $n['name']; ?></option>
+								        <?php } ?>
+									</select>
+                            		</div>
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="sid" name="member-schbysexuality">
+										<option hassubinfo="true" value=""<?php if(!$conditions['sexuality']){echo ' selected="selected"';} ?>>性别</option>
+								        <option hassubinfo="true" value="1"<?php if($conditions['sexuality']==1){echo ' selected="selected"';} ?>>男</option>
+								        <option hassubinfo="true" value="2"<?php if($conditions['sexuality']==2){echo ' selected="selected"';} ?>>女</option>
+									</select>
+                            		</div>
+                            		<div class="sch-form">
+                            		</div>
+                            		<div class="sch-form width-auto">
+                            			<input type="search" id="schid" name="nickname" class="form-control" placeholder="请输入用户昵称" />
+                            			<button type="submit" id="sbtnid" class="btn btn-info">搜索</button>
+                            		</div>
+                            	</div>
+                            	</form>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="?action=member&o=alledit" id="formall" method="post" onsubmit="return false;">
+                    <input name="formnum" id="formnum" type="hidden" value="" />
+                	<?php foreach($lists as $v){ $user_contactinfo=$ClassC->find(array('uid'=>$v['uid'])); ?>
+                    <div class="col-lg-4">
+                        <div class="contact-box">
+                        	<?php if($v['adminid']==0){ ?>
+                        	<div class="select-pannel">
+                        		<input type="checkbox" name="types[]" value="<?php echo $v['uid']; ?>" class="i-checks" />
+                        	</div>
+                        	<?php }else{ ?>
+                        	<div class="admin-pannel">
+                        		<span class="tooltip-demo">
+                            		<button data-original-title="该用户是管理员" type="button" class="btn btn-white" data-toggle="tooltip" data-placement="right"><font color="<?php if($v['uid']!=$user['uid']){ echo '#1A7BB9';}else{ echo '#FF00C6';} ?>"><i class="fa fa-star"></i></font></button>
+                            	</span>
+                        	</div>
+                        	<?php } ?>
+                            <a href="?action=member&o=info&uid=<?php echo $v['uid']; ?>">
+                                <div class="col-sm-4">
+                                    <div class="text-center">
+                                        <?php if($v['portrait']!=''){ ?>
+                                        <img class="m-t-xs img-responsive box-s-10 border-r-20" width="130" height="130" src="<?php echo $v['portrait']; ?>" />
+                                        <?php }else{ ?>
+                                        <img class="m-t-xs img-responsive box-s-10 border-r-20" width="130" height="130" src="manage/admin/template/img/noportrait.png" />
+                                        <?php } ?>
+                                        <div class="m-t-xs font-bold"><?php if($v['adminid']==0){ foreach ($group as $g){if($g['gid']==$v['gid']){ echo '<font color="gray"><i class="fa fa-group"></i></font> '.$g['name'];}}}else{ $auser_info=syDB('admin')->find(array('uid'=>$v['uid']));$admingroup_info=syDB('admin_group')->find(array('gid'=>$auser_info['gid'])); echo '<font color="gray"><i class="fa fa-user"></i></font> '.$admingroup_info['name'];} ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3><strong>昵称：<?php if($conditions['nickname']!=''){ echo highLight($v['nickname'],$conditions['nickname']);}else{ echo $v['nickname'];} ?></strong> <?php if($v['sexuality']==1){ echo '<img src="manage/admin/template/img/male.png" />';}else{ echo '<img src="manage/admin/template/img/female.png" />';} ?></h3>
+                                    <h5><strong><font color="green"><i class="fa fa-user"></i></font> </strong>用户名：<?php echo $v['username']; ?></h5>
+                                    <address>
+                                    	<span><strong><font color="#F00"><i class="fa fa-map-marker"></i></font> </strong>地理位置：<?php echo $user_contactinfo['resideprovince'].' <b>·</b> '.$user_contactinfo['residecity']; ?></span><br>
+			                         	<span><strong><font color="green"><i class="fa fa-user-md"></i></font> </strong>公司：<?php echo $user_contactinfo['company']; ?></span><br>
+			                            <span><strong><font color="burlywood"><i class="fa fa-envelope-o"></i></font> </strong>E-mail: <?php echo $user_contactinfo['email']; ?></span><br>
+			                            <span><strong><font color="burlywood"><i class="fa fa-phone"></i></font> </strong>Tel: <?php echo $user_contactinfo['telephone']; ?></span><br>
+			                            <span><strong><font color="red"><i class="fa fa-user"></i></font> </strong>注册时间: <?php echo date("Y-m-d H:i:s",$v['regtime']); ?></span><br>
+			                            <span><strong><font color="green"><i class="fa fa-history"></i></font> </strong>最近一次登录: <?php echo date("Y-m-d H:i:s",$v['lastlogtime']); ?></span> 
+			                        </address>
+                                </div>
+                                <div class="clearfix"></div>
+                            </a>
+                            <div class="delete-pannel">
+                            	<?php if($user['auid']==1){ if($v['adminid']!=1){ ?>
+                            	<span class="tooltip-demo m-r-sm">
+                            		<button data-original-title="提升为管理员" type="button"  value="<?php echo $v['uid']; ?>" name="<?php echo $v['nickname']; ?>" class="btn btn-white" data-toggle="tooltip" data-placement="right" onclick="Layerconfirmframe(this);"><font color="#1AB394"><i class="fa fa-user"></i></font></button>
+                            	</span>
+                            	<span class="tooltip-demo">
+                        			<button data-original-title="删除会员" type="button"  value="<?php echo $v['uid']; ?>" name="<?php echo $v['nickname']; ?>" class="btn btn-white" data-toggle="tooltip" data-placement="right" onclick="LayerconfirmDel(this)"><i class="fa fa-times"></i></button>
+                        		</span>
+                        		<?php }} ?>
+                        	</div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <div class="btn-group full-width marl-10">
+						<div class="alledit-form">
+							<input type="button" id="alltype" class="btn btn-primary" onclick="alls('types[]','alltype');" value="全选" />
+							<input type="button" class="btn btn-danger" onclick="LayerconfirmAll(1);" value="批量删除" />
+							<label style="margin-left: 30px; width: 150px;">
+								<select class="chosen-select" style="width: 100%;" name="anid">
+									<option hassubinfo="true" disabled="disabled" selected="selected" style="display: none;">更改会员分组为</option>
+									<?php foreach($group as $n){ ?>
+							        <option value="<?php echo $n['gid']; ?>"><?php echo $n['name']; ?></option>
+							        <?php } ?>
+								</select>
+							</label>
+							<input type="button" class="btn btn-success" onclick="LayerconfirmAll(5);" value="更改" />
+						</div>
+                	</div>
+                	</form>
+                	<div class="btn-group pages marl-10 marb-20"><?php echo $pages; ?></div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<script type="text/javascript">
+		function alls(divc,inputs){
+			if($("#"+inputs).attr('value') == '全选'){
+				$('.i-checks').iCheck('check');
+				$("#"+inputs).attr('value','取消全选');
+				$("input[name='"+divc+"']").attr('checked',true);
+			}else{
+				$('.i-checks').iCheck('uncheck');
+				$("#"+inputs).attr('value','全选');
+				$("input[name='"+divc+"']").removeAttr('checked',true);
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$(function(){
+			$("#gid option[class='hidden']").remove();
+			$("#sid option[class='hidden']").remove();
+			$("#pid option[class='hidden']").remove();
+			$(".searchauto").change(function(){$("#membersearch").submit();});
+		});
+	</script>
+	<script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+     <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+    	//i-checks
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.contact-box').each(function () {
+                animationHover(this, 'pulse');
+            });
+        });
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmAll(num){
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要执行批量操作吗？<br/><font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 所选会员的所有已发布/未审核的信息将被删除，购物和支付记录将被全部清空！<br/>该操作不可逆，建议操作前备份数据库',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	document.getElementById("formnum").value=num;
+                    	document.getElementById("formall").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function LayerconfirmDel(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要删除 [<font color="#337AB7">'+name+'</font>]？<br/><font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 该会员的所有已发布/未审核的信息将被删除，购物和支付记录将被全部清空！<br/>该操作不可逆，建议操作前备份数据库', //[用户名：<font color="#337AB7">'+dataname+'</font>]
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	window.location.href="?action=member&o=del&uid="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+		function Layerconfirmframe(id){
+			var name=id.name;
+			var uid=id.value;
+    		var pageii = $.layer({
+			    type: 1,
+			    title: false,
+			    area: ['auto', 'auto'],
+			    border: [0], //去掉默认边框
+			    shade: [0], //去掉遮罩
+			    closeBtn: [0, false], //去掉默认关闭按钮
+			    shift: 'top', //从上动画弹出
+			    page: {
+			        html: '<div style="width:700px; height:520px; padding:20px; border-radius:6px; box-shadow:0 0 6px #999; background-color:#FFF;"><h1>提升为管理员</h1><form action="?action=adminuser&o=membertoadmin&uid='+uid+'&go=1" id="membertoadminform" onsubmit="return false" method="post"><table class="table table-bordered"><tr><td>用户名：</td><td><font color="#1AB394">'+name+'</font></td></tr><tr><td>选择管理员分组：</td><td><select class="ex-select" name="membertoadmin_group"><?php foreach($admingroup as $ag){ ?><option hassubinfo="true" value="<?php echo $ag['gid']; ?>"><?php echo $ag['name']; ?></option><?php } ?></select></td></tr><tr><td>提升时长：</td><td><select class="ex-select" name="membertoadmin_period"><option hassubinfo="true" value="0">永久</option><option hassubinfo="true" value="1">5天</option><option hassubinfo="true" value="2">10天</option><option hassubinfo="true" value="3">30天</option><option hassubinfo="true" value="4">三个月</option><option hassubinfo="true" value="5">1年</option><option hassubinfo="true" value="6">2年</option></select></td></tr></table><button class="btn btn-primary m-r-sm" name="'+name+'" value="'+uid+'" onclick="Layerconfirmadmin(this);"><i class="fa fa-check"></i> 提交</button><button id="pagebtn" class="btn btn-danger" onclick=""><i class="fa fa-times"></i> 取消</button></form></div>'
+			    }
+			});
+			$('#pagebtn').on('click', function(){
+			    layer.close(pageii);
+			});
+		}
+		function Layerconfirmadmin(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要将会员[<font color="#337AB7">'+name+'</font>]提升为管理员？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	document.getElementById("membertoadminform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+    </script>
+</body>
+</html>

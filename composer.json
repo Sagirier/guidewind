@@ -1,0 +1,22 @@
+{
+    "name": "sagiri/smcms",
+    "description": "纱梦CMS - 通用建站系统",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HonerXu",
+            "email": "405304069@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.0.0",
+        "mysql": ">=5.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sagiri\\smcms": "src/Sagiri/smcms"
+        }
+    }
+}

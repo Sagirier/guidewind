@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 管理员管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style>
+		.chosen-search{display: none;}
+	</style>
+</head>
+<body>
+    <div id="wrapper">
+    	<?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+      	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-9">
+                    <h2>管理员列表</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li><a>管理员管理</a></li>
+                        <li>
+                            <strong><font color="#1AB394">管理员列表</font></strong>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                	<div class="col-lg-6 full-width">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>管理员列表 (<span style="font-weight: normal;">带"<i class="fa fa-star" style="color: #FF00C6;"></i>"的为当前登录管理员)</span></h5>
+                            </div>
+                            <div class="ibox-content">
+                            	<form action="" method="get" id="adminusersearch">
+                            	<input type="hidden" value="adminuser" name="action" />
+                            	<div class="sch">
+                            		<div class="sch-form">
+                            		<select class="searchauto chosen-select" id="gid" name="adminuser-schbygid">
+										<option hassubinfo="true" value=""<?php if(!$conditions['gid']){echo ' selected="selected"';} ?>>管理员分组</option>
+										<?php foreach($group as $n){ ?>
+								        <option hassubinfo="true" value="<?php echo $n['gid']; ?>"<?php if($conditions['gid']==$n['gid']){echo ' selected="selected"';} ?>><?php echo $n['name']; ?></option>
+								        <?php } ?>
+									</select>
+                            		</div>
+                            	</div>
+                            	</form>
+                            </div>
+                        </div>
+                    </div>
+                	<?php foreach($lists as $v){ ?>
+                    <div class="col-lg-4">
+                        <div class="contact-box">
+                        	<?php if($user['auid']==$v['auid']){ ?>
+                        	<div class="myself-pannel">
+                        		<span class="tooltip-demo"><i class="fa fa-star"></i></span>
+                        	</div>
+                        	<?php } ?>
+                            <a href="?action=adminuser&o=info&auid=<?php echo $v['auid']; ?>">
+                                <div class="col-sm-4">
+                                    <div class="text-center">
+                                        <?php if($v['avator']!=''){ ?>
+                                        <img class="m-t-xs img-responsive box-s-10 border-r-20" width="130" height="130" src="<?php echo $v['avator']; ?>" />
+                                        <?php }else{ ?>
+                                        <img class="m-t-xs img-responsive box-s-10 border-r-20" width="130" height="130" src="manage/admin/template/img/adminnopic.png" />
+                                        <?php } ?>
+                                        <div class="m-t-xs font-bold"><?php if($v['auid']==1){ echo '<font color="#F00"><i class="fa fa-group"></i> 超级管理员</font>';}else{ foreach ($group as $g){if($g['gid']==$v['gid']){ echo '<font color="gray"><i class="fa fa-group"></i></font> '.$g['name'];}}} ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3><strong>名称：<?php if($v['auid']==1){ echo '<font color="#d3a809">'.$v['user'].'</font>';}else{ echo $v['user'];} ?></strong></h3>
+                                    <p><font color="#23C6C8"><i class="fa fa-eye"></i></font> 管理权限：<?php $group_auth=syDB('admin_group')->find(array('gid'=>$v['gid'])); if($v['auid']==1){ echo '超级权限';}elseif($v['auid']!=1 && $v['authority']==$group_auth['authority']){ echo '继承分组权限';}else{ echo '自定义权限';} ?></p>
+                                    <address>
+			                            <span><font color="green"><i class="fa fa-clock-o"></i></font> 有效期: <?php if($v['period']==0){echo '永久';}else{ $period=timediff(($v['period']-time()));if($period['day']==0){ echo '<font color="#F00">';} echo $period['day'].'天'.$period['hour'].'小时'.$period['min'].'分钟';if($period['day']==0){ echo '</font>';}} ?></span><br>
+			                            <span><font color="burlywood"><i class="fa fa-envelope-o"></i></font> E-mail: <?php echo $v['aemail']; ?></span><br>
+			                            <span><font color="red"><i class="fa fa-user"></i></font> 成为管理员的时间: <?php echo date("Y-m-d H:i:s",$v['addtime']); ?></span><br>
+			                            <span><font color="green"><i class="fa fa-history"></i></font> 最近一次登录: <?php if($v['lastlogtime']==0){ echo '暂无登录记录';}else{ echo date("Y-m-d H:i:s",$v['lastlogtime']);} ?></span> 
+			                        </address>
+                                </div>
+                                <div class="clearfix"></div>
+                            </a>
+                            <?php if($user['auid']==1){ ?>
+                            <div class="delete-pannel">
+                        		<span class="tooltip-demo">
+                        			<button <?php if($v['auid']==1){ echo ' data-original-title="系统管理员不允许撤销" onclick="return false;"';}else{ echo ' data-original-title="撤销管理员" onclick="LayerconfirmDel(this)"';} ?> type="button" value="<?php echo $v['uid']; ?>" name="<?php echo $v['user']; ?>" class="btn btn-white" data-toggle="tooltip" data-placement="right"><?php if($v['auid']==1 || $v['auid']==$user['auid']){ echo '<font color="#ccc"><i class="fa fa-retweet"></i></font>';}else{echo '<i class="fa fa-retweet"></i>';} ?></button>
+                        		</span>
+                        	</div>
+                        	<?php } ?>
+                        </div>
+                    </div>
+                    <?php } ?>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	<script type="text/javascript">
+		$(function(){
+			$("#gid option[class='hidden']").remove();
+			$(".searchauto").change(function(){$("#adminusersearch").submit();});
+		});
+	</script>
+	<script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function LayerconfirmDel(id){
+    		var name=id.name; 
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要撤销管理员 [<font color="#337AB7">'+name+'</font>]？<br/><font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 撤销管理员后，该管理员无法再通过会员账号登录本后台！', 
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	window.location.href="?action=adminuser&o=del&uid="+id.value;
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+    	}
+
+    </script>
+</body>
+</html>

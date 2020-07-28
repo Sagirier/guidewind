@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 会员管理</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
+	<link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
+	<style type="text/css">
+	#maillabel{width: 100%; position: relative;}
+	#mailBox{background:#fff;border:1px solid #ddd;padding:3px 5px 5px;position:absolute;z-index:9999;display:none;-webkit-box-shadow:0px 2px 7px rgba(0, 0, 0, 0.35);-moz-box-shadow:0px 2px 7px rgba(0, 0, 0, 0.35);  width: 100%;}
+	#mailBox p{width:100%;margin:0;padding:0;height:20px;line-height:20px;clear:both;font-size:12px;color:#ccc;cursor:default;}
+	#mailBox ul{padding:0;margin:0; float: left; width: 100%;}
+	#mailBox li{font-size:12px;height:22px;line-height:22px;color:#939393;font-family:'Tahoma';list-style:none;cursor:pointer;overflow:hidden; width: 100%;}
+	#mailBox .cmail{color:#000;background:#e8f4fc;}
+	.chosen-search{display: none;}
+	</style>
+</head>
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+      	<?php include "manage/admin/template/header.html"; ?>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>会员个人资料</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="?">主页</a>
+                        </li>
+                        <li><a href="?action=member">会员管理</a></li>
+                        </li>
+                        <li>
+                            <strong><font color="#1AB394">会员个人资料</font></strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>
+            <div class="wrapper wrapper-content">
+                <div class="row animated fadeInRight">
+                    <div class="col-md-4">
+                    	<form action="?action=member&o=info&uid=<?php echo $member['uid']; ?>&go=1" method="post" onsubmit="return false" id="memberform">
+                        <div class="ibox float-e-margins" style="margin-bottom: 0;">
+                            <div class="ibox-title">
+                                <h5>会员：<font color="#1AB394"><?php echo $member['nickname']; ?></font> 个人资料</h5>
+                                <div class="ibox-tools">
+                                	<a href="?action=member" class="btn btn-primary btn-xs"><i class="fa fa-mail-reply"></i> 返回会员列表</a>
+                            	</div>
+                            </div>
+                        	<div class="panel-heading">
+		                        <div class="panel-options">
+		                            <ul class="nav nav-tabs">
+		                                <li class="active"><a data-toggle="tab" href="#base">基本信息</a>
+		                                </li>
+		                                <li class=""><a data-toggle="tab" href="#expand">联系信息</a>
+		                                </li>
+		                                <li class=""><a data-toggle="tab" href="#account">账户信息</a>
+		                                </li>
+		                            </ul>
+		                        </div>
+		                    </div>
+                        	<div class="panel-body">
+		                		<div class="tab-content">
+		                    		<div id="base" class="tab-pane active">
+		                        		<table class="table table-bordered">
+		                        		<tbody>
+		                        		<tr>
+		                            		<td width="140">会员头像：</td>
+		                            		<td>
+		                            			<input type="hidden" value="<?php echo $member['portrait']; ?>" id="memberid" name="member_portrait" />
+		                            			<img id="imageid" style="height: 200px; width: 200px;" alt="<?php echo $member['nickname']; ?>" class="img-responsive box-s-10 border-r-30" src="<?php echo $member['portrait']; ?>">
+	                            				<?php if($member['sexuality']==1){ ?>
+												<img class="sexuality" src="<?php echo $GLOBALS['WP']['member']['male_icon']; ?>" />
+												<?php }else{ ?>
+												<img class="sexuality" src="<?php echo $GLOBALS['WP']['member']['female_icon']; ?>" />
+												<?php } ?>
+												<button type="button" class="btn btn-primary btn-xs m-l-md" style="vertical-align: bottom;" name="<?php echo $member_typename; ?>" id="inputid" value="<?php echo $member_type; ?>" onclick="Layerupload(this)"><?php if($member['portrait']!=$GLOBALS['WP']['member']['default_portrait']){ echo '更换头像';}else{ echo '上传头像';} ?></button>
+												<?php if($member['portrait']!=$GLOBALS['WP']['member']['default_portrait']){ ?>
+												<div class="row m-l-none">
+													<input type="checkbox" name="member_portrait_del" class="i-checks" /><span style="line-height: 40px; display: inline-block; margin-left:5px;">删除头像</span>
+												</div>
+												<?php } ?>
+		                            			<div class="row m-t-sm">
+			                                        <div class="col-md-4">
+			                                            <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
+			                                            <h5><strong><?php echo $member['total_article']; ?></strong> 文章</h5>
+			                                        </div>
+			                                        <div class="col-md-4">
+			                                            <span class="line">5,3,9,6,5,9,7,3,5,2</span>
+			                                            <h5><strong>28</strong> 关注</h5>
+			                                        </div>
+			                                        <div class="col-md-4">
+			                                            <span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>
+			                                            <h5><strong>240</strong> 关注者</h5>
+			                                        </div>
+			                                    </div>
+			                                    <div class="user-button">
+			                                        <div class="row">
+			                                            <div class="col-md-6">
+			                                                <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 发送消息</button>
+			                                            </div>
+			                                            <div class="col-md-6">
+			                                                <button type="button" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> 赞助</button>
+			                                            </div>
+			                                        </div>
+			                                    </div>
+		                            		</td>
+		                            	</tr>
+		                            	<tr>
+		                                	<td><font color="#F00"><i class="fa fa-asterisk"></i></font> 修改用户名：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input class="form-control" name="member_username" id="member_username" value="<?php echo $member['username']; ?>" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                            	<tr>
+		                                	<td>修改密码：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input class="form-control" id="member_password" name="member_password" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                            	<tr>
+		                                	<td>用户昵称：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input value="<?php echo $member['nickname']; ?>" class="form-control" name="member_nickname" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <tr>
+		                            		<td>会员分组：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<?php if($member['adminid']!=1){ ?>
+		                            				<select class="chosen-select" name="member_group">
+		                            					<?php foreach($group as $n){ ?>
+												        <option hassubinfo="true" value="<?php echo $n['gid']; ?>"<?php if($member['gid']==$n['gid']){echo ' selected="selected"';} ?>><?php echo $n['name']; ?></option>
+												        <?php } ?>
+		                            				</select>	
+		                            				<?php }else{ ?>
+		                            					<input type="text" value="该会员是管理员，拥有管理员权限" disabled="disabled" class="form-control" />
+		                            				<?php } ?>
+		                            			</label>
+		                            		</td>
+		                            	</tr>
+		                            	<tr>
+		                                	<td>真实姓名：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<input value="<?php echo $contactinfo['realname']; ?>" class="form-control" name="member_realname" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <tr>
+		                                	<td>性别：</td>
+		                                	<td>
+		                                		<label style="width: 100%;">
+		                                			<select class="chosen-select" name="member_sexuality">
+								        				<option hassubinfo="true" value="1"<?php if($member['sexuality']==1){echo ' selected="selected"';} ?>>男</option>
+								        				<option hassubinfo="true" value="2"<?php if($member['sexuality']==2){echo ' selected="selected"';} ?>>女</option>
+													</select>
+												</label>
+		                                	</td>
+		                                </tr>
+		                               	<tr>
+		                            		<td>出生日期：</td>
+		                                	<td>
+		                                	<label style="width: 33%;padding-right: 1%;">
+												<select name="member_birthyear" class="chosen-select" id="selYear"></select> 
+		                                	</label>
+		                                	<label style="width: 33%;padding-right: 1%;">
+		                                		<select name="member_birthmonth" class="chosen-select" id="selMonth"></select>
+		                                	</label>
+		                            		<label style="width: 33%;">
+		                                		<select name="member_birthday" class="chosen-select" id="selDay"></select>
+		                            		</label>
+		                            		</td>
+		                                </tr>
+		                                <tr>
+		                            		<td>公司：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<input type="text" class="form-control" value="<?php echo $contactinfo['company']; ?>" name="member_company" />
+		                            			</label>
+		                            		</td>
+		                                </tr>
+		                                <?php foreach($field_input as $name=>$fields_info){ if($fields_info['group']==1){ ?>
+		                                <tr>
+		                            		<td><font color="#18A689"><i class="fa fa-star-o"></i></font> <?php echo $name; ?>：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<?php echo $fields_info['input']; ?>
+		                            			</label>
+		                            		</td>
+		                                </tr>
+		                                <?php }} ?>
+		                                <tr>
+		                            		<td>个人介绍：</td>
+		                            		<td>
+		                            			<label style="position: relative;width: 100%;">
+		                            				<textarea class="form-control" name="member_introduction"><?php echo $field['introduction']; ?></textarea>
+		                            			</label>
+		                            		</td>
+		                                </tr>
+		                                </tbody>
+		                                </table>
+                        			</div>
+                        			<div id="expand" class="tab-pane">
+                        				<table class="table table-bordered">
+		                        		<tbody>
+		                        		<tr>
+		                                	<td width="140">个人邮箱：</td>
+		                                	<td>
+		                                		<label id="maillabel">
+		                                			<input id="email" value="<?php echo $contactinfo['email']; ?>" name="member_email" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <tr>
+		                                	<td>手机号：</td>
+		                                	<td>
+		                                		<label style="position: relative;width: 100%;">
+		                                			<input id="phone" value="<?php echo $contactinfo['mobile']; ?>" name="member_mobile" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <tr>
+		                                	<td>联系电话：</td>
+		                                	<td>
+		                                		<label style="position: relative;width: 100%;">
+		                                			<input id="telephone" value="<?php echo $contactinfo['telephone']; ?>" name="member_telephone" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <tr>
+		                            		<td>联系地址：</td>
+		                                	<td>
+		                                	<label style="width: 33%;padding-right: 1%;">
+		                                		<select name="member_resideprovince" class="ex-select" id="province">
+		                                			<?php foreach($province as $p){ ?>
+		                                			<option hassubinfo="true" value="<?php echo $p['id']; ?>"<?php if($p['name']==$contactinfo['resideprovince']){ echo ' selected="selected"';} ?> onclick="changeprovince(this);"><?php echo $p['name']; ?></option>
+		                                			<?php } ?>
+		                                		</select>
+		                                	</label>
+		                                	<label style="width: 33%;padding-right: 1%;" id="cityinfo">
+		                                		<select name="member_residecity" class="ex-select">
+		                                			<?php foreach($city_lists as $c){ ?>
+		                                			<option hassubinfo="true" value="<?php echo $c['id']; ?>"<?php if($c['name']==$contactinfo['residecity']){ echo ' selected="selected"';} ?> onclick="changecity(this);"><?php echo $c['name']; ?></option>
+		                                			<?php } ?>
+		                                		</select>
+		                                	</label>
+		                            		<label style="width: 33%;" id="distinfo">
+		                                		<select name="member_residedist" class="ex-select">
+		                                			<?php foreach($dist_lists as $d){ ?>
+		                                			<option hassubinfo="true" value="<?php echo $d['id']; ?>"<?php if($d['name']==$contactinfo['residedist']){ echo ' selected="selected"';} ?>><?php echo $d['name']; ?></option>
+		                                			<?php } ?>
+		                                		</select>
+		                            		</label>
+		                            		<br/>
+		                            		<label style="width:100%; margin-top: 5px;">
+		                            			<textarea style="width:100%;height: 30px; line-height: 30px;padding:0 12px;" class="form-control" name="member_address"><?php echo $contactinfo['address']; ?></textarea>
+		                            		</label>
+		                                	</td>
+		                               	</tr>
+		                               	<tr>
+		                                	<td>邮政编码：</td>
+		                                	<td>
+		                                		<label style="position: relative;width: 100%;">
+		                                			<input id="zipcode" value="<?php echo $contactinfo['zipcode']; ?>" name="member_zipcode" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <?php foreach($field_input as $name=>$fields_info){ if($fields_info['group']==2){ ?>
+		                                <tr>
+		                            		<td><font color="#18A689"><i class="fa fa-star-o"></i></font> <?php echo $name; ?>：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<?php echo $fields_info['input']; ?>
+		                            			</label>
+		                            		</td>
+		                                </tr>
+		                                <?php }} ?>
+		                                </tbody>
+		                                </table>
+                        			</div>
+                        			<div id="account" class="tab-pane">
+                        				<table class="table table-bordered">
+		                        		<tbody>
+		                        		<tr>
+		                                	<td width="140">账户余额：</td>
+		                                	<td>
+		                                		<label style="position: relative;width: 100%;">
+		                                			<input id="money" value="<?php echo $member['money']; ?>" name="member_money" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <tr>
+		                                	<td>累计积分：</td>
+		                                	<td>
+		                                		<label style="position: relative;width: 100%;">
+		                                			<input id="credit" value="<?php echo $member['credit']; ?>" name="member_credit" class="form-control" type="text" />
+		                                		</label>
+		                                	</td>
+		                                </tr>
+		                                <?php foreach($field_input as $name=>$fields_info){ if($fields_info['group']==3){ ?>
+		                                <tr>
+		                            		<td><font color="#18A689"><i class="fa fa-star-o"></i></font> <?php echo $name; ?>：</td>
+		                            		<td>
+		                            			<label style="width: 100%;">
+		                            				<?php echo $fields_info['input']; ?>
+		                            			</label>
+		                            		</td>
+		                                </tr>
+		                                <?php }} ?>
+		                                </tbody>
+		                                </table>
+                        			</div>
+                        		</div>
+                        		<div class="hints">
+	                    		带"<font color="#F00"><i class="fa fa-asterisk"></i></font>"的为必填项；带"<font color="#18A689"><i class="fa fa-star-o"></i></font>"的为自定义字段。
+	                    		</div>
+                        	</div>
+                        	
+                        </div>
+                        <div class="clear">
+                            <button type="button" class="btn btn-primary" style="width: 100%;" name="<?php echo $member['nickname']; ?>" onclick="Layerconfirm(this)">修改</button>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>最新动态</h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-up"></i>
+                                    </a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="profile.html#">
+                                        <i class="fa fa-wrench"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user">
+                                        <li><a href="profile.html#">选项1</a>
+                                        </li>
+                                        <li><a href="profile.html#">选项2</a>
+                                        </li>
+                                    </ul>
+                                    <a class="close-link">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+
+                                <div>
+                                    <div class="feed-activity-list">
+
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a1.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">1天前</small>
+                                                <strong>奔波儿灞</strong> 关注了 <strong>灞波儿奔</strong>.
+                                                <br>
+                                                <small class="text-muted">54分钟前 来自 皮皮时光机</small>
+                                                <div class="actions">
+                                                    <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                                    <a class="btn btn-xs btn-danger"><i class="fa fa-heart"></i> 收藏</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/profile.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right">5分钟前</small>
+                                                <strong>作家崔成浩</strong> 发布了一篇文章
+                                                <br>
+                                                <small class="text-muted">今天 10:20 来自 iPhone 6 Plus</small>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a2.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right">2小时前</small>
+                                                <strong>作家崔成浩</strong> 抽奖中了20万
+                                                <br>
+                                                <small class="text-muted">今天 09:27 来自 Koryolink iPhone</small>
+                                                <div class="well">
+                                                    抽奖，人民币2000元，从转发这个微博的粉丝中抽取一人。11月16日平台开奖。随手一转，万一中了呢？
+                                                </div>
+                                                <div class="pull-right">
+                                                    <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                                    <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
+                                                    <a class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i> 评论</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a3.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right">2天前</small>
+                                                <strong>天猫</strong> 上传了2张图片
+                                                <br>
+                                                <small class="text-muted">11月7日 11:56 来自 微博 weibo.com</small>
+                                                <div class="photos">
+                                                    <a target="_blank" href="http://24.media.tumblr.com/20a9c501846f50c1271210639987000f/tumblr_n4vje69pJm1st5lhmo1_1280.jpg">
+                                                        <img alt="image" class="feed-photo" src="img/p1.jpg">
+                                                    </a>
+                                                    <a target="_blank" href="http://37.media.tumblr.com/9afe602b3e624aff6681b0b51f5a062b/tumblr_n4ef69szs71st5lhmo1_1280.jpg">
+                                                        <img alt="image" class="feed-photo" src="img/p3.jpg">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="feed-element">
+                                            <a href="profile.html#" class="pull-left">
+                                                <img alt="image" class="img-circle" src="img/a4.jpg">
+                                            </a>
+                                            <div class="media-body ">
+                                                <small class="pull-right text-navy">5小时前</small>
+                                                <strong>在水一方Y</strong> 关注了 <strong>那二十年的单身</strong>.
+                                                <br>
+                                                <small class="text-muted">今天 10:39 来自 iPhone客户端</small>
+                                                <div class="actions">
+                                                    <a class="btn btn-xs btn-white"><i class="fa fa-thumbs-up"></i> 赞 </a>
+                                                    <a class="btn btn-xs btn-white"><i class="fa fa-heart"></i> 收藏</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <button class="btn btn-primary btn-block m"><i class="fa fa-arrow-down"></i> 显示更多</button>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!--.wrapper-->
+          <?php include "manage/admin/template/footer.html"; ?>
+    </div><!--#page-wrapper-->
+</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+	    <!-- Peity -->
+    <script src="manage/admin/template/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="manage/admin/template/js/demo/peity-demo.js"></script>
+	<script type="text/javascript" src="manage/admin/template/js/autoMail.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#email').autoMail({
+				emails:['qq.com','163.com','126.com','sina.com','sohu.com','yahoo.cn','gmail.com','hotmail.com','live.cn']
+			});
+		});
+	</script>
+	<script type="text/javascript" src="manage/admin/template/js/date-select.js"></script>
+	<script type="text/javascript"> 
+		var selYear = window.document.getElementById("selYear"); 
+		var selMonth = window.document.getElementById("selMonth"); 
+		var selDay = window.document.getElementById("selDay"); 
+		// 新建一个DateSelector类的实例，将三个select对象传进去 
+		new DateSelector(selYear, selMonth, selDay, <?php if($contactinfo['birthyear']){ echo $contactinfo['birthyear'];}else{ echo date("Y");} ?>, <?php if($contactinfo['birthmonth']){ echo $contactinfo['birthmonth'];}else{ echo date("m");} ?>, <?php if($contactinfo['birthday']){ echo $contactinfo['birthday'];}else{ echo date("d");} ?>); 
+	</script> 
+	<script type="text/javascript">
+		function changeprovince(id){
+			var cid=id.value;
+			$.ajax({
+				type:"post",
+				url:"?action=district&o=get_city",
+				async:true,
+				data:"upid="+cid,
+				success: function(html){
+					$("#cityinfo").empty();
+					$("#cityinfo").append(html);
+				}
+			});
+		}
+		function changecity(id){
+			var did=id.value;
+			$.ajax({
+				type:"post",
+				url:"?action=district&o=get_dist",
+				async:true,
+				data:"upid="+did,
+				success: function(html){
+					$("#distinfo").empty();
+					$("#distinfo").append(html);
+				}
+			});
+		}
+	</script>
+	 <!-- i-checks -->
+    <script src="manage/admin/template/js/plugins/iCheck/icheck.min.js"></script>
+    <script type="text/javascript">
+    	//i-checks
+    	$('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    </script>
+	<script src="manage/admin/template/js/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, {
+                color: '#1AB394'
+            });
+
+            var elem_2 = document.querySelector('.js-switch_2');
+            var switchery_2 = new Switchery(elem_2, {
+                color: '#ED5565'
+            });
+
+            var elem_3 = document.querySelector('.js-switch_3');
+            var switchery_3 = new Switchery(elem_3, {
+                color: '#1AB394'
+            });
+
+        });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "100%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+    <script src="manage/admin/template/js/plugins/layer/layer.min.js" type="text/javascript"></script>
+    <script src="system/js/wpfrom.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    	function Layerconfirm(id){
+    		var name=id.name;
+    		$.layer({
+                area: ['auto','auto'],
+                title: '系统提示',
+                closeBtn: false,
+                dialog: {
+                    msg: '确定要修改会员[<font color="#1AB394">'+name+'</font>]的信息？',
+                    btns: 2,                    
+                    type: 4,
+                    btn: ['确定','取消'],
+                    yes: function(){
+                    	var username=document.getElementById("member_username").value;
+                    	var pass=document.getElementById("member_password").value;
+                    	if(!from_null(username)){
+                    		layer.msg('用户名不能为空'); return false;
+                    	}
+                    	if(!from_max(username,20)){
+                    		layer.msg('用户名不能超过20个字符'); return false;
+                    	}
+                    	if(!from_string(username) || !from_chinese(username)){
+                    		layer.msg('用户名只能包含英文与数字'); return false;
+                    	}
+                    	if(pass!='' && !from_max(pass,30)){
+                    		layer.msg('密码不能超过30个字符'); return false;
+                    	}
+                    	if((pass!='' && !from_string(pass)) || (pass!='' && !from_chinese(pass))){
+                    		layer.msg('密码只能包含英文与数字'); return false;
+                    	}
+                    	document.getElementById("memberform").submit();
+                    }, no: function(){
+                        return false;
+                    }
+                }
+            });
+		}
+    	function Layerupload(id){
+    		var filetype=id.value;
+    		var fileName=id.name;
+    		$.layer({
+			    type: 2,
+			    shadeClose: true,
+			    title: false,
+			    closeBtn: [1, true],
+			    offset: ['',''],
+			    area: ['940px','620px'],
+			    iframe: {src: '?action=avator&o=loadup&inputid=memberid&imgid=imageid&filesdir=member'}
+			});
+    	}
+    </script>
+</body>
+
+</html>

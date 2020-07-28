@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>导风系统网站后台 - 主页</title>
+    <meta name="keywords" content="导风系统,网站后台">
+    <meta name="description" content="导风系统网站后台">
+    <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
+    <!-- Morris -->
+    <link href="manage/admin/template/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
+    <!-- Gritter -->
+    <link href="manage/admin/template/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="manage/admin/template/css/animate.css" rel="stylesheet">
+    <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    <link href="manage/admin/template/js/plugins/layer/skin/layer.css" rel="stylesheet" />
+	<style>
+		.chosen-search{display: none;}
+		#legend{position: absolute; top: 40px;left: 0;}
+		#legend ul{margin: 0; padding: 0;}
+		#legend ul li{list-style: none; line-height: 14px; margin-left: 20px; padding: 0; height: 14px; padding-left: 20px; float: left;position: relative;}
+		#legend ul li span{width: 14px; height: 14px; display:block; position: absolute;top:0; left: 0;}
+		
+		.article-total,.product-total{float: left; width: 38%; margin-right: 5%;}
+	</style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <?php include "manage/admin/template/left.html"; ?>
+       	<div id="page-wrapper" class="gray-bg dashbard-1">
+       	<?php include "manage/admin/template/header.html"; ?>
+			<div class="row border-bottom white-bg dashboard-header">
+                <div class="col-sm-3">
+                    <h2>欢迎登录，<b style="color:#1AB394"><?php echo $user['user']; ?></b></h2>
+                    <h5 style="color: #999;">
+                    	<?php if($user['lastlogtime']==0){ ?>
+                    		这是您首次登录本后台。
+                    	<?php }else{ ?>
+                    		您上一次登录时间为：<span><?php echo date("Y-m-d H:i:s",$user['lastlogtime']); ?></span><br/>登录时长：<span><?php $duration=timediff($user['duration']); echo $duration['day'].'天'.$duration['hour'].'小时'.$duration['min'].'分钟'.$duration['sec'].'秒'; ?></span>
+                    	<?php } ?>
+                    </h5>
+                    <small>您共有2条消息</small>
+                    <ul class="list-group clear-list m-t">
+                        <li class="list-group-item fist-item">
+                            <span class="pull-right">
+                                    
+                                </span>
+                            <span class="label label-success">1</span> 网站定制开发：0574-86306690
+                        </li>
+                        <li class="list-group-item">
+                            <span class="pull-right">
+                                    
+                                </span>
+                            <span class="label label-info">2</span> 软件定制开发：0574-86306690
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-4" style="display: none;">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content no-padding">
+                            <div class="flot-chart m-t-lg">
+                                <div class="flot-chart-content" id="flot-chart1"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                	<h3 class="font-bold m-t-sm">网站数据统计报表</h3>
+                	<div class="row m-t">
+                    	<div id="legend"></div>
+                	</div>
+                    <div class="row m-t-sm">
+                    	<canvas id="lineChart" height="100%"></canvas>
+                	</div>
+                    <div class="row">
+                    	<div class="col-xs-4">
+                            <span class="font-bold m-t block product-circle"><i class="fa fa-database"></i> <?php echo $total_product; ?></span>
+                            <small class="text-muted m-b block">商品总数</small>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="font-bold m-t block article-circle"><i class="fa fa-database"></i> <?php echo $total_article; ?></span>
+                            <small class="text-muted m-b block">文章总数</small>
+                        </div>
+                	</div>
+                	 <div>
+	                    <small class="pull-right">
+	                        <i class="fa fa-clock-o"> </i>
+	                        <?php echo date("Y.m.d"); ?>更新
+	                	</small>
+	                </div>
+                </div>
+				<div class="col-sm-3">
+					<div class="col-sm-6">
+                    <h3 class="font-bold m-t-sm">网站基础内容审核进度</h3>
+               		</div>
+                    <div class="statistic-box">
+                        <div class="row text-center">
+                        	 <div class="col-lg-6 half-width">
+                                <div class="chart easypiechart inline" data-percent="<?php echo ($audit_product/$total_product)*100; ?>"><span class="easypie-text"><?php echo floor(($audit_product/$total_product)*100); ?>%</span>
+                                </div>
+                                <h5><a href="?action=backlog&backlog-cmark=product"><?php echo channelsinfo('product','cname'); ?>审核</a></h5>
+                            </div>
+                            <div class="col-lg-6 half-width">
+                                <div class="chart2 easypiechart inline" data-percent="<?php echo ($audit_article/$total_article)*100; ?>"><span class="easypie-text"><?php echo floor(($audit_article/$total_article)*100); ?>%</span>
+                                </div>
+                                <h5><a href="?action=backlog&backlog-cmark=article"><?php echo channelsinfo('article','cname'); ?>审核</a></h5>
+                            </div>
+                            <div class="col-lg-6 half-width">
+                                <div class="chart3 easypiechart inline" data-percent="<?php echo ($audit_message/$total_message)*100; ?>"><span class="easypie-text"><?php echo floor(($audit_message/$total_message)*100); ?>%</span>
+                                </div>
+                                <h5><a href="?action=backlog&backlog-cmark=message"><?php echo channelsinfo('message','cname'); ?>审核</a></h5>
+                            </div>
+                            <div class="col-lg-6 half-width">
+                                <div class="chart4 easypiechart inline" data-percent="<?php echo ($audit_recruitment/$total_recruitment)*100; ?>"><span class="easypie-text"><?php echo floor(($audit_recruitment/$total_recruitment)*100); ?>%</span>
+                                </div>
+                                <h5><a href="?action=backlog&backlog-cmark=recruitment"><?php echo channelsinfo('recruitment','cname'); ?>审核</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            
+			<div class="row">
+                <div class="col-lg-12">
+                    <div class="wrapper wrapper-content">
+                        <div class="row">
+                        	<div class="col-lg-12">
+			                    <div class="authority-title">
+			                        <h5>您拥有以下管理权限：(打 <i class="fa fa-check-square-o"></i> 的为拥有该权限)</h5>
+			                    </div>
+			                    <div class="auth-content">
+			                    	<ul class="auth-pannel">
+			                        <?php foreach($authority0 as $a){ ?>
+			                        <li class="auth-list">
+			                        	<h5 class="li-title"><?php if($a['cmark']==''){ echo $a['name']; }else{ $cname=syDB('channels')->find(array('cmark'=>$a['cmark'])); echo $cname['cname'].'管理'; } ?></h5>
+			                        	<ul class="auth-inner-pannel">
+			                        		<?php $alist=syDB('admin_authority')->findAll(array('up'=>$a['authid'],'no'=>0),' `order` desc,`authid`'); foreach($alist as $al){ ?><li title="<?php echo $al['name']; ?>" class="auth-inner-list"><?php if($user['level']==9 || strpos($user['authority'],$al['action'])){ echo '<i class="fa fa-check-square-o"></i> ';}else{echo '<i class="fa fa-times-circle-o"></i> ';} ?><?php echo $al['name']; ?></li>
+			                        		<?php } ?>
+			                        	</ul>
+			                        </li>
+			                        <?php } foreach($authority1 as $b){ ?>
+			                        <li class="auth-list">
+			                        	<h5 class="li-title"><?php echo $b['name']; ?></h5>
+			                        	<ul class="auth-inner-pannel">
+			                        		<?php $blist=syDB('admin_authority')->findAll(array('up'=>$b['authid'],'no'=>0),' `order` desc,`authid`'); foreach($blist as $bl){ ?><li title="<?php echo $bl['name']; ?>" class="auth-inner-list"><?php if($user['level']==9 || strpos($user['authority'],$bl['action'])){ echo '<i class="fa fa-check-square-o"></i> ';}else{echo '<i class="fa fa-times-circle-o"></i> ';} ?><?php echo $bl['name']; ?></li>
+			                        		<?php } ?>
+			                        	</ul>
+			                        </li>
+			                        <?php } ?>
+			                    	</ul>
+			                    </div>
+			                </div>
+                        </div>
+                    </div>
+            <?php include "manage/admin/template/footer.html"; ?>
+        </div>
+    </div>
+		</div><!--#page-wrapper-->
+	</div><!--#wrapper-->
+<?php include "manage/admin/template/js.html"; ?>
+    <script src="manage/admin/template/js/plugins/flot/jquery.flot.js"></script>
+    <script src="manage/admin/template/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="manage/admin/template/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="manage/admin/template/js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="manage/admin/template/js/plugins/flot/jquery.flot.pie.js"></script>
+
+	<!-- ChartJS-->
+    <script src="manage/admin/template/js/plugins/chartJs/Chart.min.js"></script>
+    <!-- Peity -->
+    <script src="manage/admin/template/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="manage/admin/template/js/demo/peity-demo.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="manage/admin/template/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+	<!-- EayPIE -->
+    <script src="manage/admin/template/js/plugins/easypiechart/jquery.easypiechart.js"></script>
+    <!-- Sparkline -->
+    <script src="manage/admin/template/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+
+    <!-- Sparkline demo data  -->
+    <script src="manage/admin/template/js/demo/sparkline-demo.js"></script>
+    
+    <!-- GITTER -->
+    <script src="manage/admin/template/js/plugins/gritter/jquery.gritter.min.js"></script>
+    <script>
+    $(document).ready(function () {
+    	<?php if($audit){ ?>
+		WinMove();
+        setTimeout(function () {
+            $.gritter.add({
+                title: '您尚有内容待审核',
+                text: '请在下方<a class="text-warning">网站内容审核进度</a>中点击栏目查看未审核内容',
+                time: 10000
+            });
+        }, 2000);
+        <?php } ?>
+		$('.chart').easyPieChart({
+            barColor: '#DCDCDC',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+
+        $('.chart2').easyPieChart({
+            barColor: '#1AB394',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+        $('.chart3').easyPieChart({
+            barColor: '#2ccfcd',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+        $('.chart4').easyPieChart({
+            barColor: '#e5c041',
+            //                scaleColor: false,
+            scaleLength: 5,
+            lineWidth: 4,
+            size: 80
+        });
+        var d1 = [[1262304000000, 6], [1264982400000, 3057], [1267401600000, 20434], [1270080000000, 31982], [1272672000000, 26602], [1275350400000, 27826], [1277942400000, 24302], [1280620800000, 24237], [1283299200000, 21004], [1285891200000, 12144], [1288569600000, 10577], [1291161600000, 10295]];
+        var d2 = [[1262304000000, 5], [1264982400000, 200], [1267401600000, 1605], [1270080000000, 6129], [1272672000000, 11643], [1275350400000, 19055], [1277942400000, 30062], [1280620800000, 39197], [1283299200000, 37000], [1285891200000, 27000], [1288569600000, 21000], [1291161600000, 17000]];
+
+        var data1 = [
+            {
+                label: "商品数",
+                    data: d1,
+                    color: "#1ab394",
+                    bars: {
+                        show: true,
+                        align: "center",
+                        barWidth: 24 * 60 * 60 * 600,
+                        lineWidth: 0
+                    }
+            },
+            {
+                label: "文章数",
+                    data: d2,
+                    yaxis: 2,
+                    color: "#464f88",
+                    lines: {
+                        lineWidth: 1,
+                        show: true,
+                        fill: true,
+                        fillColor: {
+                            colors: [{
+                                opacity: 0.2
+                            }, {
+                                opacity: 0.2
+                            }]
+                        }
+                    },
+                    splines: {
+                        show: false,
+                        tension: 0.6,
+                        lineWidth: 1,
+                        fill: 0.1
+                    },
+            }
+        ];
+        $.plot($("#flot-chart1"), data1, {
+            xaxis: {
+                tickDecimals: 0
+            },
+            series: {
+                lines: {
+                    show: true,
+                    fill: true,
+                    fillColor: {
+                        colors: [{
+                            opacity: 1
+                        }, {
+                            opacity: 1
+                        }]
+                    },
+                },
+                points: {
+                    width: 0.1,
+                    show: false
+                },
+            },
+            grid: {
+                hoverable: false,
+                borderWidth: 0,
+                color: '#838383'
+            },
+            legend: {
+                noColumns: 1,
+                labelBoxBorderColor: "#000000",
+                position: "nw"
+            }
+        });
+
+        var lineData = {
+            labels: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            datasets: [
+                {
+                    label: "商品数",
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [<?php echo $emonth_product[1]; ?>, <?php echo $emonth_product[2]; ?>, <?php echo $emonth_product[3]; ?>, <?php echo $emonth_product[4]; ?>, <?php echo $emonth_product[5]; ?>, <?php echo $emonth_product[6]; ?>, <?php echo $emonth_product[7]; ?>, <?php echo $emonth_product[8]; ?>, <?php echo $emonth_product[9]; ?>, <?php echo $emonth_product[10]; ?>, <?php echo $emonth_product[11]; ?>, <?php echo $emonth_product[12]; ?>]
+                },
+                {
+                    label: "文章数",
+                    fillColor: "rgba(26,179,148,0.5)",
+                    strokeColor: "rgba(26,179,148,0.7)",
+                    pointColor: "rgba(26,179,148,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(26,179,148,1)",
+                    data: [<?php echo $emonth_article[1]; ?>, <?php echo $emonth_article[2]; ?>, <?php echo $emonth_article[3]; ?>, <?php echo $emonth_article[4]; ?>, <?php echo $emonth_article[5]; ?>, <?php echo $emonth_article[6]; ?>, <?php echo $emonth_article[7]; ?>, <?php echo $emonth_article[8]; ?>, <?php echo $emonth_article[9]; ?>, <?php echo $emonth_article[10]; ?>, <?php echo $emonth_article[11]; ?>, <?php echo $emonth_article[12]; ?>]
+                }
+            ]
+        };
+
+        var lineOptions = {
+            scaleShowGridLines: true,
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            scaleGridLineWidth: 1,
+            bezierCurve: true,
+            bezierCurveTension: 0.4,
+            pointDot: true,
+            pointDotRadius: 4,
+            pointDotStrokeWidth: 1,
+            pointHitDetectionRadius: 20,
+            datasetStroke: true,
+            datasetStrokeWidth: 2,
+            datasetFill: true,
+            responsive: true,
+        };
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        var myNewChart = new Chart(ctx).Line(lineData, lineOptions);
+        var legend = myNewChart.generateLegend();
+        $('#legend').append(legend);
+        });
+    </script>
+</body>
+
+</html>

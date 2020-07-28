@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="{$type['seo_keywords']}" />
+	<meta name="description" content="{$type['description']}" />
+	<title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
+	{include="public/css.html"}
+</head>
+<body>
+<!--[if lt IE 8]>
+<p class="browserupgrade">您的浏览器 <strong>版本太低</strong> ，请 <a href="http://browsehappy.com/" rel="nofollow">升级</a> 后再访问本站！</p>
+<![endif]-->
+{include="public/header.html"}
+<div class="wrapper body-wrapper blue-bg">
+	<div class="wrapper-content">
+		<div class="slider-area slider-2">
+			<div id="single-slider" class="nivoSlider">
+				{getdata data_table="ads" data_taid="9" data_type="2" data_limit="5"}
+				<img style ="display:none" src="{$v['adfile']}"  data-thumb="{$v['adfile']}"  alt="{$v['name']}" title="#htmlcaption{$v['n']}">
+				{/getdata}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="wrapper gray-bg">
+	<div class="wrapper-content">
+		<section class="product-area pb-60">
+			<div class="container">
+				<div class="row">
+					<div class="section-title text-center">
+						{getdata data_table="navigators" data_nid="$type['nid']" data_limit="1"}
+						<h1>01<span>{$v['nname']}</span></h1>
+						<div class="clearfix"></div>
+						<p>{$v['description']}</p>
+						{/getdata}
+					</div>
+					<div class="patent_content pt-40">
+						{getdata data_table="navigators" data_ngid="$type['nid']" data_limit="2"}
+						<div class="col-md-6 col-sm-6">
+							<div class="news-list">
+								<div class="news-category news-category-{$v['n']} ptb-10">
+									<h2>{fun htmlspecialchars_decode($v['lipic'])} {$v['nname']}</h2>
+									<em><a href="{$v['url']}" target="_blank">更多 >></a></em>
+								</div>
+								<div class="news-content ptb-40">
+									<ul>
+										{getdata data_table="article" data_nid="$v['nid']" data_limit="10" mark="v1"}
+										<li><a href="{$v1['url']}" target="_blank">{$v1['title']}<span class="f-right">详情>></span></a></li>
+										{/getdata}
+									</ul>
+								</div>
+							</div>
+						</div>
+						{/getdata}
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+{include="public/footer.html"}
+{include="public/js.html"}
+<script type="text/javascript">
+    $(function () {
+        $(".pages li .pagination-btn").on('click',function () {
+            var $this = $(this)
+                ,type = $('#type_id').val()
+                ,liDom = $this.parent()
+                ,allLidom = $(".pages li")
+                ,_page = parseInt($(this).text())
+                ,_tpage = parseInt($("#total_page").val());
+            if( liDom.hasClass('active') ) return;
+            $.ajax({
+                type: "POST",
+                cache: false,
+                async: false,
+                url: "/?action=article&o=getlists",
+                data: { Page: _page,Type : type },
+                success: function (data) {
+                    var html = parseHtmlData(data);
+                    $(".news_content").html(html);
+                    allLidom.removeClass('active');
+                    liDom.addClass('active');
+                    _page === 1 ? $(".pages .prev").addClass('hidden') : $(".pages .prev").removeClass('hidden');
+                    _page === _tpage ? $(".pages .next").addClass('hidden') : $(".pages .next").removeClass('hidden');
+                }
+            })
+        });
+        $(".pages li.prev").on('click',function () {
+            var _abt = $('.pages li.active')
+                ,type = $('#type_id').val()
+                ,_apage = parseInt($('.pages li.active button').text())
+                ,_tpage = parseInt($("#total_page").val());
+            if( _apage===1 ) return;
+            $.ajax({
+                type: "POST",
+                cache: false,
+                async: false,
+                url: "/?action=article&o=getlists",
+                data: { Page: _apage - 1,Type : type },
+                success: function (data) {
+                    var html = parseHtmlData(data);
+                    $(".news_content").html(html);
+                    _abt.removeClass('active');
+                    _abt.prev().addClass('active');
+                    $(".pages .next").removeClass('hidden');
+                    _apage - 1 === 1 ? $(".pages .prev").addClass('hidden') : $(".pages .prev").removeClass('hidden');
+                }
+            })
+        });
+        $(".pages li.next").on('click',function () {
+            var _abt = $('.pages li.active')
+                ,type = $('#type_id').val()
+                ,_apage = parseInt($('.pages li.active button').text())
+                ,_tpage = parseInt($("#total_page").val());
+            if( _apage===_tpage ) return;
+            $.ajax({
+                type: "POST",
+                cache: false,
+                async: false,
+                url: "/?action=article&o=getlists",
+                data: { Page: _apage + 1 ,Type : type },
+                success: function (data) {
+                    var html = parseHtmlData(data);
+                    $(".news_content").html(html);
+                    _abt.removeClass('active');
+                    _abt.next().addClass('active');
+                    $(".pages .prev").removeClass('hidden');
+                    _apage + 1 === _tpage ? $(".pages .next").addClass('hidden') : $(".pages .next").removeClass('hidden');
+                }
+            })
+        });
+
+        function parseHtmlData(data) {
+            data = JSON.parse(data);
+            var html="";
+            if( data.length === 0 ) return '暂无更多内容！';
+            for (var i=0;i<data.length;i++){
+                var at = data[i];
+                html += '<li class="col-md-6 col-sm-6 pl-40 pr-40"><a href="'+at.url+'" target="_blank">'+at.title+'<span class="f-right">详情>></span></a></li>';
+			}
+			return html;
+        }
+    })
+</script>
+</body>
+</html>
