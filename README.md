@@ -3,6 +3,7 @@
 # 下载SMEMS
 1、通过composer下载（推荐）
    composer create-project sagiri/smcms smcms
+   
 2、直接git下载
    git clone https://github.com/Sagirier/smcms.git
 # 安装
