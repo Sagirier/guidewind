@@ -1,5 +1,5 @@
 <?php
-if (substr(PHP_VERSION, 0, 1) != '5')exit("本系统运行环境要求PHP版本5及以上！");
+if (substr(PHP_VERSION, 0, 1) < 5)exit("本系统运行环境要求PHP版本5及以上！");
 if(!defined('APP_PATH')||!defined('WIND_PATH')){exit('Access Denied');}
 require(WIND_PATH."/Functions.php");
 $GLOBALS['WP'] = spConfigReady(require(WIND_PATH."/include.php"),$wpConfig);

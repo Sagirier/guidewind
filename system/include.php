@@ -11,7 +11,6 @@ return array(
 
 		'sp_error_show_source' => 5,
 		'sp_error_throw_exception' => FALSE,
-		'allow_trace_onrelease' => FALSE,
 		'notice_php' => WIND_PATH."/notice.php",
 
 		'inst_class' => array(),
