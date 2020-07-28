@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 	<head>
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-	    <title>导风建站系统 - 系统安装</title>
+	    <title>纱梦CMS - 系统安装</title>
         <meta name="description" content="">
         <meta name="author" content="wind power">
-    	<link href="../manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
-    	<link href="../manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
-    	<link href="../manage/admin/template/css/animate.css" rel="stylesheet">
-    	<link href="../manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
+    	<link href="./css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
+    	<link href="./css/font-awesome.css?v=4.3.0" rel="stylesheet">
 	    <link href="install.css" rel="stylesheet">
-	    
-	    <?php include "../manage/admin/template/js.html"; ?>
-		
-	    
+		<script type="text/javascript" src="./js/bootstrap.min.js?v=3.4.0"></script>
+		<script type="text/javascript" src="./js/dialog.js"></script>
+		<script type="text/javascript">
 			function formCheck(){
 				if(document.f.host.value==""){Dialog.alert("请填写Mysql地址");return false;}
 				if(document.f.port.value==""){Dialog.alert("请填写Mysql端口");return false;}
@@ -28,12 +25,6 @@
 				$("#install_go").html('<strong style="color:#F00; font-size:14px;">正在执行安装，请稍后，安装完成前请勿关闭本页面...</strong>');
 			}
 		</script>
-	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	    <!--[if lt IE 9]>
-	      
-	      
-	    <![endif]-->
 	</head>
 	<body class="light-gray-bg">
 		<div class="templatemo-content-widget templatemo-login-widget white-bg install">
@@ -77,7 +68,7 @@
 					fclose($fp);
 					return TRUE;
 				}
-				if (substr(PHP_VERSION, 0, 1) != '5'){
+				if (substr(PHP_VERSION, 0, 1) < 5){
 					$php="<em>检测未通过</em>运行环境要求PHP版本5！";
 				}
 				if (!extension_loaded('gd')){
@@ -114,56 +105,56 @@
 			<form action="index.php?go=2" method="post" name="f" onsubmit="return formCheck()">
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-link fa-fw"></i></div>	       
+		        		<div class="input-group-addon"><i class="fa fa-link fa-fw"></i></div>
 		              	<input name="host" type="text" class="form-control" value="127.0.0.1" />
-		              	<div class="input-group-hint">Mysql地址，一般无需修改</div>       
-		          	</div>	
+		              	<div class="input-group-hint">Mysql地址，一般无需修改</div>
+		          	</div>
 	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-qrcode fa-fw"></i></div>	        						
+		        		<div class="input-group-addon"><i class="fa fa-qrcode fa-fw"></i></div>
 		        		<input name="port" type="text" class="form-control" value="3306" />
-		              	<div class="input-group-hint">Mysql端口，一般无需修改</div>           
-		          	</div>	
-	        	</div>	
+		              	<div class="input-group-hint">Mysql端口，一般无需修改</div>
+		          	</div>
+	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-table fa-fw"></i></div>	       
+		        		<div class="input-group-addon"><i class="fa fa-table fa-fw"></i></div>
 		              	<input name="dbname" type="text" class="form-control" />
-		              	<div class="input-group-hint">数据库名，请输入</div>       
-		          	</div>	
+		              	<div class="input-group-hint">数据库名，请输入</div>
+		          	</div>
 	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-user-md fa-fw"></i></div>	       
+		        		<div class="input-group-addon"><i class="fa fa-user-md fa-fw"></i></div>
 		              	<input name="username" type="text" class="form-control" />
-		              	<div class="input-group-hint">数据库帐号，请输入</div>       
-		          	</div>	
+		              	<div class="input-group-hint">数据库帐号，请输入</div>
+		          	</div>
 	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>	       
-		              	<input name="password" type="text" class="form-control" /><div class="input-group-hint">数据库密码，请输入</div>       
-		          	</div>	
+		        		<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>
+		              	<input name="password" type="text" class="form-control" /><div class="input-group-hint">数据库密码，请输入</div>
+		          	</div>
 	        	</div>
 	        	<?php if(empty($backup_db)){?>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>	       
-		              	<input name="auser" type="text" class="form-control" /><div class="input-group-hint">管理员账号，请输入</div>       
-		          	</div>	
+		        		<div class="input-group-addon"><i class="fa fa-user fa-fw"></i></div>
+		              	<input name="auser" type="text" class="form-control" /><div class="input-group-hint">管理员账号，请输入</div>
+		          	</div>
 	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>	       
-		              	<input name="apass" type="text" class="form-control" /><div class="input-group-hint">管理员密码，请输入</div>       
-		          	</div>	
-	        	</div> 
+		        		<div class="input-group-addon"><i class="fa fa-key fa-fw"></i></div>
+		              	<input name="apass" type="text" class="form-control" /><div class="input-group-hint">管理员密码，请输入</div>
+		          	</div>
+	        	</div>
 	        	<div class="form-group">
 	        		<div class="input-group">
-		        		<div class="input-group-addon"><i class="fa fa-th-list fa-fw"></i></div>	       
-		              	<input name="prefix" type="text" class="form-control" value="wp_"/><div class="input-group-hint">数据表前缀，一般无需修改</div>       
-		          	</div>	
+		        		<div class="input-group-addon"><i class="fa fa-th-list fa-fw"></i></div>
+		              	<input name="prefix" type="text" class="form-control" value="wp_"/><div class="input-group-hint">数据表前缀，一般无需修改</div>
+		          	</div>
 	        	</div>
 	        	<?php }?>
 	        	<?php if(count($backup_db)>0){?>
@@ -181,30 +172,37 @@
 		    			</div>
 		    		</div>
 				<?php }?>
-	        	<div class="form-group">
+	        	<div class="form-group check-group">
 		        	<div class="input-group"><h2>环境检测</h2></div>
-		        	<div class="input-group"><p>PHP版本：<?php if ($php){echo '<span class="t">'.$php.'</span>';}else{echo '<span>检测通过</span>';}?></p></div>	
-	    			<div class="input-group"><p>GD库：<?php if ($gd){echo '<span class="t">'.$gd.'</span>';}else{echo '<span>检测通过</span>';}?></p></div>
-	                <div class="input-group"><p>目录权限：<br/>uploads <?php if ($uploads){echo '<span class="t">'.$uploads.'</span>';}else{echo ' <span>检测通过</span>';}?><br />system/backup <?php if ($backup){echo '<span class="t">'.$backup.'</span>';}else{echo ' <span>检测通过</span>';}?><br />system/cache <?php if ($cache){echo '<span class="t">'.$cache.'</span>';}else{echo ' <span>检测通过</span>';}?><br />config.php <?php if ($config){echo '<span class="t">'.$config.'</span>';}else{echo ' <span>检测通过</span>';}?><br />styles/ <?php if ($styles){echo '<span class="t">'.$styles.'</span>';}else{echo ' <span>检测通过</span>';}?><br />template/ <?php if ($template){echo '<span class="t">'.$template.'</span>';}else{echo ' <span>检测通过</span>';}?><br />system/include.php <?php if ($inc){echo $inc;}else{echo ' <span>检测通过</span>';}?></p></div>  
-                </div>      	
+		        	<div class="input-group"><p>PHP版本：<?php if ($php){echo '<span class="t">'.$php.'</span>';}else{echo '<span class="tt">检测通过</span>';}?></p></div>
+	    			<div class="input-group"><p>GD库：<?php if ($gd){echo '<span class="t">'.$gd.'</span>';}else{echo '<span class="tt">检测通过</span>';}?></p></div>
+	                <div class="input-group"><p>目录权限：<br/>uploads <?php if ($uploads){echo '<span class="t">'.$uploads.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?><br />system/backup <?php if ($backup){echo '<span class="t">'.$backup.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?><br />system/cache <?php if ($cache){echo '<span class="t">'.$cache.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?><br />config.php <?php if ($config){echo '<span class="t">'.$config.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?><br />styles/ <?php if ($styles){echo '<span class="t">'.$styles.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?><br />template/ <?php if ($template){echo '<span class="t">'.$template.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?><br />system/include.php <?php if ($inc){echo '<span class="t">'.$inc.'</span>';}else{echo ' <span class="tt">检测通过</span>';}?></p></div>
+                </div>
 				<div class="form-group" id="install_go">
 					<input type="submit" id="submit" value="开始安装" class="templatemo-blue-button width-100" />
 				</div>
 	        </form>
-	        <?php } 
+	        <?php }
 	if($go==2){
-		$conn = mysqli_connect($_POST['host'], $_POST['username'], $_POST['password'], $_POST['dbname'], $_POST['port']);
+		$conn = mysqli_connect($_POST['host'], $_POST['username'], $_POST['password']);
 		if(!$conn){
-			echo ' layer.msg("数据库连接失败，请检查数据库帐号输入是否正确：'.mysqli_connect_error().'",3,0);javascript:history.go(-1);</script>';exit();
+			echo '<script type="text/javascript">
+					Dialog.alert("数据库连接失败，请检查数据库帐号输入是否正确：'.mysqli_connect_error().'",function(){window.location.href="javascript:history.go(-1)";});
+					</script>';
+			exit();
 		}
 		mysqli_query($conn, 'CREATE DATABASE IF NOT EXISTS '.$_POST['dbname'].' default charset utf8');
 		$mysqlv=mysqli_get_server_info($conn);
 		if(substr($mysqlv,0,1)<5){
-			echo ' layer.msg("您的数据库版本过低，Mysql版本要求大于等于5",3,0);javascript:history.go(-1);</script>';exit();
+            echo '<script type="text/javascript">
+					Dialog.alert("您的数据库版本过低，Mysql版本要求大于等于5",function(){window.location.href="javascript:history.go(-1)";});
+					</script>';
+            exit();
 		};
 		mysqli_query($conn,'SET NAMES UTF8');
 		mysqli_query($conn,'set sql_mode=""');
-		
+		mysqli_query($conn,'use '.$_POST['dbname']);
+
 		$configfile='../config.php';
 		$fp_tp=@fopen($configfile,"r");
 		$fp_txt=@fread($fp_tp,filesize($configfile));
@@ -256,50 +254,60 @@ function dbbak_file($fname,$p,$rf){
 	}
 }
 $i=0;$s=1;
-echo '<div class="progress progress-striped active"><div style="width:0;" aria-valuemax="'.$total_sql.'" aria-valuemin="0" aria-valuenow="'.$s.'" role="progressbar" class="progress-bar progress-bar-danger" id="role"><span class="sr-only">安装全部完成!</span></div></div>';
+echo '<div class="progress progress-striped active"><div style="width:0;" aria-valuemax="0" aria-valuemin="0" aria-valuenow="'.$s.'" role="progressbar" class="progress-bar progress-bar-danger" id="role"><span class="sr-only">安装全部完成!</span></div></div>';
 if((int)$_POST['go_backup']==1){
-	set_time_limit(99999999);
-	$volnum=explode(".ph",$_POST['backup_db']);
-	$backups=array('../system/backup/'.$_POST['backup_db']);
-	dbbak_file('../system/backup/'.$volnum[0].'_v',2,$backups);
-	foreach($GLOBALS["rfiles"] as $v){
-		foreach(file($v) as $rsql){
-			$sql=str_replace('<?php die();?>','',$rsql);
-			$rgo=mysqli_query($conn,$sql);
-			if(!$rgo){$i++;}
-		}
-	}
-	set_time_limit(30);
+    set_time_limit(99999999);
+    $volnum=explode(".ph",$_POST['backup_db']);
+    $backups=array('../system/backup/'.$_POST['backup_db']);
+    dbbak_file('../system/backup/'.$volnum[0].'_v',2,$backups);
+    foreach($GLOBALS["rfiles"] as $v){
+        foreach(file($v) as $rsql){
+            $sql=str_replace('<?php die();?>','',$rsql);
+            $rgo=mysqli_query($conn,$sql);
+            if(!$rgo){$i++;}
+        }
+    }
+    set_time_limit(30);
 }else{
-	$db = file('wind.sql');
-	$total_sql=count($db);
-	$db[1]=str_ireplace('|-auser-|',$_POST['auser'],$db[1]);
-	$db[1]=str_ireplace('|-apass-|',md5(md5($_POST['apass']).$_POST['auser']),$db[1]);
-	$db[1]=str_ireplace(1448001311,time(),$db[1]);
-	foreach ($db as $num =>$v) {
-		$v=trim($v);
-		if((int)$_POST['go_backup']!=1){$v=str_ireplace('`wp_','`'.$_POST['prefix'],$v);}
-		if (!mysqli_query($conn,$v)){$i++;}else{
-			$rule=($s/$total_sql)*100;
-			$s++;
-			echo ' document.getElementById("role").style.width = "'.$rule.'%"; </script>';
-			ob_flush();
-			flush();
-		}
-	}
+    $db = file('smcms.sql');
+    $total_sql=count($db);
+    $db[1]=str_ireplace('|-auser-|',$_POST['auser'],$db[1]);
+    $db[1]=str_ireplace('|-apass-|',md5(md5($_POST['apass']).$_POST['auser']),$db[1]);
+    $db[1]=str_ireplace(1448001311,time(),$db[1]);
+    foreach ($db as $num =>$v) {
+        $v=trim($v);
+        if((int)$_POST['go_backup']!=1){$v=str_ireplace('`wp_','`'.$_POST['prefix'],$v);}
+        if (!mysqli_query($conn,$v)){
+        	$i++;
+        }else{
+            $rule=($s/$total_sql)*100;
+            $s++;
+            echo '<script type="text/javascript">document.getElementById("role").style.width = "'.$rule.'%"; </script>';
+            ob_flush();
+            flush();
+        }
+    }
 }
-if($i>0){echo ' layer.msg("数据库安装有'.$i.'条失败！检查数据库中是否存在同名表，或之前是否已安装过本系统，请删除表或更改表前缀重新执行安装",3,0);javascript:history.go(-1);</script>';exit;}else{echo '<p style="line-height:35px;">数据库安装成功</p>';}
+
+if($i>0){
+    echo '<script type="text/javascript">
+			Dialog.alert("数据库安装有'.$i.'条失败！检查数据库中是否存在同名表，或之前是否已安装过本系统，请删除表或更改表前缀重新执行安装",function(){window.location.href="javascript:history.go(-1)";});
+		  </script>';
+    exit();
+}else{
+	echo '<p style="line-height:35px;">数据库安装成功</p>';
+}
 ?>
-<?php 
+<?php
 	$filename="install.txt";
 	$fp=@fopen("$filename", "w");
 	@fclose($fp);
-	echo '<p style="line-height:35px;">安装全部完成！[<font color="#F00">请删除install文件夹</font>]</p><p style="line-height:35px;"><a class="btn btn-primary" style="margin-right:20px" href="../">浏览网站</a><a class="btn btn-info" href="../admin.php?action=login">进入后台</a></p>'; 
+	echo '<p style="line-height:35px;">安装全部完成！[<font color="#F00">请删除install文件夹</font>]</p><p style="line-height:35px;"><a class="btn btn-primary" style="margin-right:20px" href="../">浏览网站</a><a class="btn btn-info" href="../admin.php?action=login">进入后台</a></p>';
 ?>
 </div>
 <?php }?>
 <div class="white-bg">
-	<p align="center">Powered by <strong><a href="http://www.nwpit.com" class="blue-text">wind power</a></strong> All Rights Reserved.</p>
+	<p align="center">Powered by <strong><a target="_blank" href="http://www.dmqmx.com" class="blue-text">Sagiri</a></strong> All Rights Reserved.</p>
 </div>
 </body>
 </html>
