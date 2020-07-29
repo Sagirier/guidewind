@@ -57,7 +57,7 @@ KindEditor.plugin('map', function(K) {
 			addressBox = K('[name="address"]', div),
 			searchBtn = K('[name="searchBtn"]', div),
 			win, doc;
-		var iframeHtml = ['<!doctype html><html><head>',
+		var iframeHtml = ['<!doctype html><html lang=zh><head>',
 			'<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />',
 			'<style>',
 			'	html { height: 100% }',

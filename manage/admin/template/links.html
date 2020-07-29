@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 友情链接设置</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 友情链接设置</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <!-- Morris -->
@@ -16,7 +16,7 @@
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
     <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
     <link href="manage/admin/template/css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet"> 
+    <link href="manage/admin/template/css/plugins/chosen/chosen.css" rel="stylesheet">
 	<style>
 		.chosen-search{display: none;}
 	</style>
@@ -287,7 +287,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要执行批量操作吗？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -300,14 +300,14 @@
             });
 		}
     	function Layerconfirm(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '确定要修改 [<font color="#337AB7">'+name+'</font>]？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -329,7 +329,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要添加该分类？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -345,14 +345,14 @@
             });
 		}
     	function LayerconfirmDel(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '确定要删除 [<font color="#337AB7">'+name+'</font>]？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -364,14 +364,14 @@
             });
     	}
     	function LayerconfirmDellinkstype(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '<font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 该分类下所有友链将被删除!<br/>确定要删除 [<font color="#337AB7">'+name+'</font>]？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

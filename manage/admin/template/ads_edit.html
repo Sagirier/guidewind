@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 广告设置</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 广告设置</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -187,7 +187,7 @@
 		function typeinfo(){
 			if($("#type").prop("value")==1){
 				document.getElementById("inputid").disabled="disabled";
-			} 
+			}
 			if($("#type").prop("value")==2){
 				$("#inputid").removeAttr("disabled");
 				document.getElementById("inputid").value = "*.jpg;*.jpeg;*.gif;*.png";
@@ -266,7 +266,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要提交修改？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

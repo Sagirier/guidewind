@@ -1,13 +1,13 @@
 <?php if(!defined('APP_PATH')||!defined('WIND_PATH')){exit('Access Denied');}  ?>
 <!DOCTYPE>
-<html>
+<html lang=zh>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
 <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
 <link href="manage/admin/template/css/style.css?v=2.2.0" rel="stylesheet">
-	
+
 <style>
 	.swfupload{display: inline-block;float: left;margin-right: 5px; }
 	.progressImg i{font-size: 40px; vertical-align: middle;}
@@ -47,7 +47,7 @@
 			//button_text_style: ".theFont { font-size: 16; }",
 			//button_text_left_padding: 12,
 			//button_text_top_padding: 3,
-			
+
 			// The event handler functions are defined in handlers.js
 			file_queued_handler : fileQueued,
 			file_queue_error_handler : fileQueueError,
@@ -143,7 +143,7 @@
 		var del=document.createElement("div");
 			del.className="delimg";
 			del.innerHTML="<a class='btn btn-danger' onclick='imgpannelDel("+delpannel+");'><i class='fa fa-times'></i> 删除</a>"; //删除按钮
-		
+
 			imgcontailer.appendChild(imgpannel);
 			imgpannel.appendChild(imgr);
 			imgpannel.appendChild(inps);

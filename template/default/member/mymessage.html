@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
-<html>
+<html lang=zh>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="{$GLOBALS['SITE']['keywords']}" />
 <meta name="description" content="{$GLOBALS['SITE']['description']}" />
 <title>{$channels_message['cname']}管理-{$GLOBALS['SITE']['title']}</title>
-<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
 <link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
 <link href="{$GLOBALS['styles']}css/bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
@@ -67,13 +67,13 @@
 	{include="header.html"}
 </div>
 <div class="clearfix"> </div>
-<!-- Header Ends Here -->	
+<!-- Header Ends Here -->
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="content border-gray m-xs">
 			{include="member/header.html"}
-			<div class="account-main clearfix">	
+			<div class="account-main clearfix">
 				<div class="col-xs-2">
 				    {include="member/menu.html"}
 				</div>
@@ -157,12 +157,12 @@
 	});
 </script>
 <script type="text/javascript" src="{$GLOBALS['styles']}js/date-select.js"></script>
-<script type="text/javascript"> 
-	var selYear = document.getElementById("selYear"); 
-	var selMonth = document.getElementById("selMonth"); 
-	var selDay = document.getElementById("selDay"); 
-	// 新建一个DateSelector类的实例，将三个select对象传进去 
-	new DateSelector(selYear, selMonth, selDay, {if($member['birthyear'])}{$member['birthyear']}{else}{fun date("Y")}{/if},{if($member['birthmonth'])}{$member['birthmonth']}{else}{fun date("m")}{/if},{if($member['birthday'])}{$member['birthday']}{else}{fun date("d")}{/if}); 
-</script> 
+<script type="text/javascript">
+	var selYear = document.getElementById("selYear");
+	var selMonth = document.getElementById("selMonth");
+	var selDay = document.getElementById("selDay");
+	// 新建一个DateSelector类的实例，将三个select对象传进去
+	new DateSelector(selYear, selMonth, selDay, {if($member['birthyear'])}{$member['birthyear']}{else}{fun date("Y")}{/if},{if($member['birthmonth'])}{$member['birthmonth']}{else}{fun date("m")}{/if},{if($member['birthday'])}{$member['birthday']}{else}{fun date("d")}{/if});
+</script>
 </body>
 </html>

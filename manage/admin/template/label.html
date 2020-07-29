@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - <?php echo $title; ?></title>
-    <meta name="keywords" content="导风系统网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - <?php echo $title; ?></title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -66,7 +66,7 @@
 				                		<div class="tab-content">
 				                    		<div id="base" class="tab-pane active">
 				                        		<table class="table table-bordered article-table">
-				                            		<tbody>	
+				                            		<tbody>
 				                            			<?php if(channelsinfo('article','statu')==1){ ?>
 				                            			<form action="?action=label&o=output&cmark=article" method="post">
 				                                		<tr>
@@ -136,7 +136,7 @@
 					                                        		<div class="chearfix" style="margin: 3px 0;"></div>
 					                                        		<label style="margin-right: 10px;">
 					                                        		分页标识：<input type="text" name="page" class="form-control no-clip W-20" /></label>
-					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量 
+					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量
 					                                        		</label>
 				                                        		</div>
 				                                        		<div class="label-pannel">
@@ -217,7 +217,7 @@
 					                                        		<div class="chearfix" style="margin: 3px 0;"></div>
 					                                        		<label style="margin-right: 10px;">
 					                                        		分页标识：<input type="text" name="page" class="form-control no-clip W-20" /></label>
-					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量 
+					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量
 					                                        		</label>
 				                                        		</div>
 				                                        		<div class="label-pannel">
@@ -289,7 +289,7 @@
 					                                        		<div class="chearfix" style="margin: 3px 0;"></div>
 					                                        		<label style="margin-right: 10px;">
 					                                        		分页标识：<input type="text" name="page" class="form-control no-clip W-20" /></label>
-					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量 
+					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量
 					                                        		</label>
 				                                        		</div>
 				                                        		<div class="label-pannel">
@@ -362,7 +362,7 @@
 					                                        		<div class="chearfix" style="margin: 3px 0;"></div>
 					                                        		<label style="margin-right: 10px;">
 					                                        		分页标识：<input type="text" name="page" class="form-control no-clip W-20" /></label>
-					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量 
+					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量
 					                                        		</label>
 				                                        		</div>
 				                                        		<div class="label-pannel">
@@ -418,7 +418,7 @@
 					                                        		<div class="chearfix" style="margin: 3px 0;"></div>
 					                                        		<label style="margin-right: 10px;">
 					                                        		分页标识：<input type="text" name="page" class="form-control no-clip W-20" /></label>
-					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量 
+					                                        		<label class="normal-text">英文字符，不分页请留空，分页后条数代表每页数量
 					                                        		</label>
 				                                        		</div>
 				                                        		<div class="label-pannel">
@@ -435,7 +435,7 @@
 				                    		</div>
 				                    		<div id="other" class="tab-pane">
 				                        		<table class="table table-bordered article-table">
-				                            		<tbody>	
+				                            		<tbody>
 				                            			<form action="?action=label&o=output&cmark=navigators" method="post">
 				                                		<tr>
 				                                        	<td>
@@ -774,19 +774,19 @@
 			    }
 			});
 		}
-		$(function() { 
-		    $('form').ajaxForm({ 
-		        target: '#a_label', 
-				beforeSubmit: function() { 
+		$(function() {
+		    $('form').ajaxForm({
+		        target: '#a_label',
+				beforeSubmit: function() {
 					$('#output').css('display','none');
 					$('#loading').append("<img src='manage/admin/template/img/loading.gif' />");
 		        },
 		        success: function() {
 					$('#loading').empty();
 					$('#output').css('display','block');
-		            $('#a_label').fadeIn('slow'); 
-		    		
-		        } 
+		            $('#a_label').fadeIn('slow');
+
+		        }
 		    });
 			$("#nid option[class='hidden']").remove();
 			channels();

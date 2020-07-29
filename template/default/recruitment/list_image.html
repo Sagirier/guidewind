@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
-<html>
+<html lang=zh>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="{$type['keywords']}" />
 <meta name="description" content="{$type['description']}" />
 <title>{$type['seo_title']}-{$GLOBALS['SITE']['title']}</title>
-<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
 <link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
 <link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
 <link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
@@ -27,11 +27,11 @@
 		<img src="{$v['adfile']}" alt="">
 		{/getdata}
 		<figcaption style="height: 360px; margin-top: -360px;">
-			<div class="tit">诚聘英才，虚位以待</div>           
+			<div class="tit">诚聘英才，虚位以待</div>
 			<p style="">我们竭尽全力吸引和培育认同我们核心价值观<br/>
 (开拓进取、无私奉献和诚实公正)的人才。<br/>
 在相互信任、彼此忠诚的环境下，我们全力支持各位人才的发展，<br/>
-努力将其培育成世界一流的领导者，共创更加美好的未来。</p>            
+努力将其培育成世界一流的领导者，共创更加美好的未来。</p>
 		</figcaption>
 	</figure>
 </div>
@@ -46,38 +46,38 @@
         </div>
     </div>
 </div>
-        
+
 <div id="news-1">
     <div id="main" class="clearfix g-wrap">
         <div id="left">
         	{getdata data_table="article" data_nid="$type['nid']" data_traits="2" data_lipic="1" data_limit="1"}
             {if($v['id'])}
-            <div class="headline">   
-            	
-            	<a href="{$v['url']}">        
-            		<img src="{$v['lipic']}" alt="">        
-        			<span class="date">{fun date("M d, Y",$v['addtime'])}</span>       
-        			<h1>{fun newstr($v['title'],32)}</h1>     
-        			<p>{fun detailinfo('article',$v['id'],'detail',true,150)}</p>  
-            	</a>    
+            <div class="headline">
+
+            	<a href="{$v['url']}">
+            		<img src="{$v['lipic']}" alt="">
+        			<span class="date">{fun date("M d, Y",$v['addtime'])}</span>
+        			<h1>{fun newstr($v['title'],32)}</h1>
+        			<p>{fun detailinfo('article',$v['id'],'detail',true,150)}</p>
+            	</a>
             	<a href="{$v['url']}">
             		<input style="margin-top: 3px;" class="more" value="" type="button">
             	</a>
             </div>
         	{/if}
         	{/getdata}
-            <div class="link-block">    
+            <div class="link-block">
             	{foreach $lists as $v}
-            	<a href="{$v['url']}">       
-            		<div class="date-block">          
-            			<span class="day">{fun date("d",$v['addtime'])}</span>{fun date("M",$v['addtime'])}<br>  {fun date("Y",$v['addtime'])}        
-            		</div>        
-            		<div class="summary">           
-            			<h1>{fun newstr($v['title'],60)}</h1>  
-            			<h3>发布者: 路石建筑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览次数: {$v['hints']}</h3>       
-            			<p>{fun detailinfo('article',$v['id'],'detail',true,300)}</p>  
-            		</div>  
-            	</a>   
+            	<a href="{$v['url']}">
+            		<div class="date-block">
+            			<span class="day">{fun date("d",$v['addtime'])}</span>{fun date("M",$v['addtime'])}<br>  {fun date("Y",$v['addtime'])}
+            		</div>
+            		<div class="summary">
+            			<h1>{fun newstr($v['title'],60)}</h1>
+            			<h3>发布者: 路石建筑&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览次数: {$v['hints']}</h3>
+            			<p>{fun detailinfo('article',$v['id'],'detail',true,300)}</p>
+            		</div>
+            	</a>
             	{/foreach}
             </div>
             {if($pages)}

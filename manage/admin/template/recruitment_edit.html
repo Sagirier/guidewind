@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 网站内容管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 网站内容管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -95,7 +95,7 @@
 				                                    	</tr>
 				                            		</thead>
 				                            		<tbody>
-				                            			
+
 				                                		<tr>
 				                                        	<td><label>标题/顺序</label></td>
 				                                        	<td style="position: relative;">
@@ -254,7 +254,7 @@
 				                <div class="mar-20 clear">
 				                	<button class="btn btn-primary" type="submit" onclick="Layerconfirm();"><i class="fa fa-check"></i> 提交</button>
 				                </div>
-				        	</form> 
+				        	</form>
 				        </div>
 				    </div>
 				</div>
@@ -368,8 +368,8 @@
     <script>
         //外部js调用
         laydate({
-            elem: '#hello', 
-            event: 'focus' 
+            elem: '#hello',
+            event: 'focus'
         });
 
          //日期范围限制
@@ -408,7 +408,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '<?php if($recruitment['id']){echo "确定要提交修改？";}else{ echo "确定要发布该招聘信息？";} ?>',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

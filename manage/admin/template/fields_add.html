@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 字段管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 字段管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -175,7 +175,7 @@
 	                                <div class="all-submit clear mar-20">
 	                                	<button class="btn btn-primary" type="submit" onclick="LayerconfirmAdd(this);"><i class="fa fa-check"></i> 提交</button>
 	                                </div>
-	                        	</form> 
+	                        	</form>
 	                        </div>
 	                    </div>
                     </div>
@@ -255,11 +255,11 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要提交该操作？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
-                    	
+
                         document.getElementById("fieldaddform").submit();
                     }, no: function(){
                         return false;
@@ -274,7 +274,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要提交修改？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -299,7 +299,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要删除该字段？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 导航栏设置</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 导航栏设置</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="wrapper wrapper-content  animated">
-                <div class="row">                    
+                <div class="row">
                     <div class="col-md-4">
                         <div id="nestable-menu">
                             <button type="button" data-action="expand-all" class="btn btn-white btn-sm">展开所有</button>
@@ -113,7 +113,7 @@
 		                                            <li class="dd-item" id="ItemToAddsec">
 		                                                <div class="dd-handle">
 		                                                	<div style="float: left;">
-		                                                	
+
 		                                                    <span style="width: 40px;"><label class="label"><?php echo $t['nid']; ?></label></span>
 		                                                    <span style="width: 50px;"><label><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $t['nid']; ?>" /></label></span>
 				                                        	<span style="width: 50px;"><label class="label laber-order"><input type="text" value="<?php echo $t['order']; ?>" name="orders[<?php echo $t['nid']; ?>]" class="form-control no-clip W-20" /></label></span>
@@ -140,7 +140,7 @@
 				                                            <li class="dd-item" id="ItemToAddtrd">
 				                                                <div class="dd-handle">
 				                                                	<div style="float: left;">
-				                                                	
+
 				                                                    <span style="width: 40px;"><label class="label label-none"><?php echo $s['nid']; ?></label></span>
 				                                                    <span style="width: 50px;"><label><input type="checkbox" class="i-checks" name="types[]" value="<?php echo $s['nid']; ?>" /></label></span>
 				                                        			<span style="width: 50px;"><label class="label laber-order"><input type="text" value="<?php echo $s['order']; ?>" name="orders[<?php echo $s['nid']; ?>]" class="form-control no-clip W-20" /></label></span>
@@ -164,15 +164,15 @@
 				                                            </li>
 				                                            <?php } ?>
 				                                        </ol>
-	                                        			<?php } ?> 
+	                                        			<?php } ?>
 		                                            </li>
 		                                            <?php } ?>
 	                                       		</ol>
-	                                        <?php } ?> 
+	                                        <?php } ?>
 	                                    </li>
-	                                    <?php }} ?>   
+	                                    <?php }} ?>
 	                                </ol>
-	                                
+
                                 </div>
                                 </div>
                                 <div class="btn-group full-width">
@@ -212,7 +212,7 @@
     </div><!--#page-wrapper-->
 </div><!--#wrapper-->
 <?php include "manage/admin/template/js.html"; ?>
-	
+
     <!-- nestable -->
     <script src="manage/admin/template/js/plugins/nestable/jquery.nestable.js"></script>
     <script type="text/javascript">
@@ -230,7 +230,7 @@
             $('#nestable2').nestable({
                 group: 0
             }).on('change', updateOutput);
-            
+
             //updateOutput($('#nestable2').data('output', $('#nestable2-output')));
 
             $('#nestable-menu').on('click', function (e) {
@@ -315,7 +315,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要执行批量操作吗？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -335,7 +335,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要删除栏目[<font color="#337AB7">'+name+'</font>]？<br/><font color="#F00"><i class="fa fa-exclamation channel-hint"></i></font> 警告：本操作将删除该栏目及其所有下级子栏目，同时删除栏目下已经发布的所有内容！<br/><i class="fa fa-exclamation channel-hint"></i> 本操作不可逆，建议操作前备份数据库。',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

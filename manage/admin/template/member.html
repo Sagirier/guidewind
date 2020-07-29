@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 会员管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 会员管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -109,7 +109,7 @@
 			                            <span><strong><font color="burlywood"><i class="fa fa-envelope-o"></i></font> </strong>E-mail: <?php echo $user_contactinfo['email']; ?></span><br>
 			                            <span><strong><font color="burlywood"><i class="fa fa-phone"></i></font> </strong>Tel: <?php echo $user_contactinfo['telephone']; ?></span><br>
 			                            <span><strong><font color="red"><i class="fa fa-user"></i></font> </strong>注册时间: <?php echo date("Y-m-d H:i:s",$v['regtime']); ?></span><br>
-			                            <span><strong><font color="green"><i class="fa fa-history"></i></font> </strong>最近一次登录: <?php echo date("Y-m-d H:i:s",$v['lastlogtime']); ?></span> 
+			                            <span><strong><font color="green"><i class="fa fa-history"></i></font> </strong>最近一次登录: <?php echo date("Y-m-d H:i:s",$v['lastlogtime']); ?></span>
 			                        </address>
                                 </div>
                                 <div class="clearfix"></div>
@@ -234,7 +234,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要执行批量操作吗？<br/><font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 所选会员的所有已发布/未审核的信息将被删除，购物和支付记录将被全部清空！<br/>该操作不可逆，建议操作前备份数据库',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -247,14 +247,14 @@
             });
 		}
     	function LayerconfirmDel(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '确定要删除 [<font color="#337AB7">'+name+'</font>]？<br/><font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 该会员的所有已发布/未审核的信息将被删除，购物和支付记录将被全部清空！<br/>该操作不可逆，建议操作前备份数据库', //[用户名：<font color="#337AB7">'+dataname+'</font>]
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -285,14 +285,14 @@
 			});
 		}
 		function Layerconfirmadmin(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '确定要将会员[<font color="#337AB7">'+name+'</font>]提升为管理员？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

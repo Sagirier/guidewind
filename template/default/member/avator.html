@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>上传头像</title>
@@ -24,7 +24,7 @@
 		<div class="ibox-title">
 	        <h5>上传头像</h5>
 	    </div>
-   	</div> 
+   	</div>
 	<div class="section">
 		<div class="row" id="avatar_msg" style="font-weight:700;color:#f00;display:none;">上传成功，系统自动生成以下三个尺寸的头像！</div>
 		<div class="row">
@@ -123,10 +123,10 @@ $(function() {
             layer.alert('图片： ' + file.name + ' 被取消上传');
         }
     });
-    
+
     //头像裁剪
 	var jcrop_api, boundx, boundy;
-	
+
 	function updateCoords(c)
 	{
 		$('#x').val(c.x);
@@ -172,7 +172,7 @@ $(function() {
 			});
 		}
 	};
-	
+
 	$("#avatar_submit").click(function(){
 		var img = $("#img").val();
 		var x = $("#x").val();

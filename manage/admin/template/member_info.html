@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 会员管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 会员管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -149,7 +149,7 @@
 		                            					<?php foreach($group as $n){ ?>
 												        <option hassubinfo="true" value="<?php echo $n['gid']; ?>"<?php if($member['gid']==$n['gid']){echo ' selected="selected"';} ?>><?php echo $n['name']; ?></option>
 												        <?php } ?>
-		                            				</select>	
+		                            				</select>
 		                            				<?php }else{ ?>
 		                            					<input type="text" value="该会员是管理员，拥有管理员权限" disabled="disabled" class="form-control" />
 		                            				<?php } ?>
@@ -179,7 +179,7 @@
 		                            		<td>出生日期：</td>
 		                                	<td>
 		                                	<label style="width: 33%;padding-right: 1%;">
-												<select name="member_birthyear" class="chosen-select" id="selYear"></select> 
+												<select name="member_birthyear" class="chosen-select" id="selYear"></select>
 		                                	</label>
 		                                	<label style="width: 33%;padding-right: 1%;">
 		                                		<select name="member_birthmonth" class="chosen-select" id="selMonth"></select>
@@ -333,7 +333,7 @@
 	                    		带"<font color="#F00"><i class="fa fa-asterisk"></i></font>"的为必填项；带"<font color="#18A689"><i class="fa fa-star-o"></i></font>"的为自定义字段。
 	                    		</div>
                         	</div>
-                        	
+
                         </div>
                         <div class="clear">
                             <button type="button" class="btn btn-primary" style="width: 100%;" name="<?php echo $member['nickname']; ?>" onclick="Layerconfirm(this)">修改</button>
@@ -478,13 +478,13 @@
 		});
 	</script>
 	<script type="text/javascript" src="manage/admin/template/js/date-select.js"></script>
-	<script type="text/javascript"> 
-		var selYear = window.document.getElementById("selYear"); 
-		var selMonth = window.document.getElementById("selMonth"); 
-		var selDay = window.document.getElementById("selDay"); 
-		// 新建一个DateSelector类的实例，将三个select对象传进去 
-		new DateSelector(selYear, selMonth, selDay, <?php if($contactinfo['birthyear']){ echo $contactinfo['birthyear'];}else{ echo date("Y");} ?>, <?php if($contactinfo['birthmonth']){ echo $contactinfo['birthmonth'];}else{ echo date("m");} ?>, <?php if($contactinfo['birthday']){ echo $contactinfo['birthday'];}else{ echo date("d");} ?>); 
-	</script> 
+	<script type="text/javascript">
+		var selYear = window.document.getElementById("selYear");
+		var selMonth = window.document.getElementById("selMonth");
+		var selDay = window.document.getElementById("selDay");
+		// 新建一个DateSelector类的实例，将三个select对象传进去
+		new DateSelector(selYear, selMonth, selDay, <?php if($contactinfo['birthyear']){ echo $contactinfo['birthyear'];}else{ echo date("Y");} ?>, <?php if($contactinfo['birthmonth']){ echo $contactinfo['birthmonth'];}else{ echo date("m");} ?>, <?php if($contactinfo['birthday']){ echo $contactinfo['birthday'];}else{ echo date("d");} ?>);
+	</script>
 	<script type="text/javascript">
 		function changeprovince(id){
 			var cid=id.value;
@@ -571,7 +571,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要修改会员[<font color="#1AB394">'+name+'</font>]的信息？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

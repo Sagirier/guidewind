@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 字段管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 字段管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -47,7 +47,7 @@
                         <div class="ibox ">
                             <div class="ibox-title">
                                 <h5><font color="#f00"><?php echo $top_txt; ?></font>字段列表</h5>
-                            </div>                            
+                            </div>
 	                    	<div class="ibox-content">
 	                    		<div class="tab-content">
 	                    			<div class="btn-group full-width">
@@ -94,16 +94,16 @@
 	                                        	</td>
 	                                        	<?php }else{ ?>
 	                                        	<td>
-	                                        	<?php if(trim($groups[$v['fid']],"|")==1){ 
+	                                        	<?php if(trim($groups[$v['fid']],"|")==1){
 	                                        		echo '基本信息';
-	                                        	}elseif(trim($groups[$v['fid']],"|")==2){ 
+	                                        	}elseif(trim($groups[$v['fid']],"|")==2){
 	                                        		echo '联系信息';
 	                                        	}else{
 	                                        		echo '账户信息';
 	                                        	} ?></td>
 	                                        	<?php } ?>
 	                                        	<td><?php if($v['statu']==1){ echo '开启';}else{ echo '<font color="red">关闭</font>';} ?></td>
-	                                        	<td>             
+	                                        	<td>
 	                                        		<a class="btn btn-primary" href="?action=fields&c=<?php echo $c; ?>&o=edit&fid=<?php echo $v['fid']; ?>"><i class="fa fa-pencil"></i> 编辑</a>
 	                                        		<?php if($c!='member'){ ?>
 	                                        		<button type="button" value="<?php echo $v['fid']; ?>" name="<?php echo $v['fname']; ?>" class="btn btn-danger" onclick="LayerconfirmDel(this);"><i class="fa fa-remove"></i> 删除</button>
@@ -188,7 +188,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要删除字段[<font color="#337AB7">'+name+'</font>]？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

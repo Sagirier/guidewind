@@ -3,7 +3,7 @@
     <ul class="nav" id="side-menu">
         <li class="nav-header">
 
-            <div class="dropdown profile-element"> 
+            <div class="dropdown profile-element">
             	<span>
 	            	<?php if($user['avator']!=''){ ?>
 			        <img class="img-circle" alt="<?php echo $user['user']; ?>" src="<?php echo $user['avator']; ?>">
@@ -12,9 +12,9 @@
 			        <?php } ?>
                 </span>
                 <a data-toggle="dropdown" class="dropdown-toggle" href="?">
-                    <span class="clear"> 
-                    	<span class="block m-t-xs"> <strong class="font-bold"><?php echo $user['user']; ?></strong></span> 
-                    	<span class="text-muted text-xs block"><?php if($user['level']==9){ echo "超级管理员";}else{ $admingroup=syDB('admin_group')->findALL();foreach($admingroup as $g){ if($user['gid']==$g['gid']){ echo $g['name'];}}} ?> <b class="caret"></b></span> 
+                    <span class="clear">
+                    	<span class="block m-t-xs"> <strong class="font-bold"><?php echo $user['user']; ?></strong></span>
+                    	<span class="text-muted text-xs block"><?php if($user['level']==9){ echo "超级管理员";}else{ $admingroup=syDB('admin_group')->findALL();foreach($admingroup as $g){ if($user['gid']==$g['gid']){ echo $g['name'];}}} ?> <b class="caret"></b></span>
                     </span>
                 </a>
                 <ul class="dropdown-menu animated fadeInRight m-t-xs">
@@ -36,7 +36,6 @@
             <a class="cont" href="?a=website"><i class="fa fa fa-globe"></i> <span class="nav-label">网站相关设置</span><span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
                 <li><a href="?action=website&o=basic">网站基本设置</a></li>
-                <li><a href="?action=website&o=template">模板设置</a></li>
                 <li><a href="?action=ads">广告设置</a></li>
                 <li><a href="?action=links">友情链接设置</a></li>
             </ul>
@@ -91,7 +90,6 @@
                 <li><a href="?action=functions&o=ads_sys">广告投放</a></li>
                 <li><a href="?action=functions&o=links_sys">友情链接</a></li>
                 <li><a href="?action=functions&o=comment_sys">评论系统</a></li>
-                <li><a href="?action=functions&o=add">安装新插件   <i class="fa fa-plus"></i></a></li>
             </ul>
         </li>
         <li<?php if($a == 'member'){echo ' class="active"';} ?>>

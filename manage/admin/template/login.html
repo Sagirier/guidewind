@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="renderer" content="webkit">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 登录</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 登录</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -21,7 +21,7 @@
     <div class="middle-box text-center loginscreen  animated fadeInDown">
         <div class="login-pannel">
             <div>
-                <h1 class="logo-name">导风系统</h1>
+                <h1 class="logo-name"><?php echo $GLOBALS['WP']['ext']['site_title']; ?></h1>
             </div>
             <h3>网站后台登录</h3>
             <form class="m-t" id="loginform" action="?action=login&o=go" method="post" onsubmit="return false;">
@@ -29,13 +29,13 @@
 					<input type="text" id="userid" class="form-control" placeholder="管理员账号" name="adminuser" value="<?php echo $_COOKIE['auser']; ?>">
                 </div>
                 <div class="form-group">
-                    <input type="password" id="passid" class="form-control" placeholder="******" name="adminpass"> 
+                    <input type="password" id="passid" class="form-control" placeholder="******" name="adminpass">
                 </div>
                 <div class="form-group">
 				    <div class="checkbox squaredTwo">
 				        <input type="checkbox" class="i-checks" id="c1" name="admincookie">
 						<label for="c1"><span></span>记住账号</label>
-				    </div>				    
+				    </div>
 				</div>
 				<input type="submit" class="btn btn-primary block full-width m-b" value="立即登录"  onclick="Layerconfirm()">
             </form>

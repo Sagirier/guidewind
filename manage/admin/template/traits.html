@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 标签属性管理</title>
-    <meta name="keywords" content="导风系统网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 标签属性管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -58,7 +58,7 @@
                         <?php }} ?>
                         <li id="addtraitli">
                             <div style="background: #bcfff8;">
-                                <h5><i class="fa fa-plus"></i> 添加标签&属性</h5> 
+                                <h5><i class="fa fa-plus"></i> 添加标签&属性</h5>
                                 名称：<input id="newtraitname" type="text" class="form-control no-clip" style="text-align: left; text-indent: 5px; height: 22px;line-height: 22px; padding: 0; width: 122px; margin-bottom: 5px;" /><br/>
                                 图标：<input id="newtraitpath" type="text" class="form-control no-clip" style="text-align: left; text-indent: 5px; height: 22px;line-height: 22px; padding: 0;width: 122px;" value="" />
                                 <a id="addsub" onclick="addTraitsSub()"><i class="fa fa-check "></i></a>
@@ -113,11 +113,11 @@
     					llabel.innerHTML='<i id="'+linid+'" onclick="editTraits(this)" class="fa fa-pencil"></i>';
     					ltraitname.style.display="inline-block";
     					ltraitname.innerHTML=linputs.firstElementChild.value;
-    					linputs.style.display="none";	
+    					linputs.style.display="none";
     				}
     			}
     		});
-    		
+
     	}
     	function addTraitsSub(){
     		var traitcontainer=document.getElementById("notes");
@@ -152,7 +152,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '您确定要删除[<font color="#337AB7">'+name+'</font>]？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

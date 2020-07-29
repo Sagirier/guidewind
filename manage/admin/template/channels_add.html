@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 频道管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 频道管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -33,7 +33,7 @@
                             <a>频道管理</a>
                         </li>
                         <li>
-                            <font color="#1AB394">添加频道</font> 
+                            <font color="#1AB394">添加频道</font>
                         </li>
                     </ol>
                 </div>
@@ -47,7 +47,7 @@
                         <div class="ibox float-e-margins">
                         	<table class="table table-hover">
                         		<tbody>
-                        			
+
                         			<tr>
                         				<th>id</th>
                         				<th>频道名称</th>
@@ -155,7 +155,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要添加该频道？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -179,7 +179,7 @@
                     	if(!from_begin(mark,'[a-z]') || !from_string(mark) || !from_chinese(mark)){
                     		layer.alert("频道标识只能为英文与数字，且只能以小写英文字母开头");return false;
                     	}
-                    	
+
                         document.getElementById("channelform").submit();
                     }, no: function(){
                         return false;

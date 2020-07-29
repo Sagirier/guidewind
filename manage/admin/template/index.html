@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 主页</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 主页</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <!-- Morris -->
@@ -22,7 +22,7 @@
 		#legend ul{margin: 0; padding: 0;}
 		#legend ul li{list-style: none; line-height: 14px; margin-left: 20px; padding: 0; height: 14px; padding-left: 20px; float: left;position: relative;}
 		#legend ul li span{width: 14px; height: 14px; display:block; position: absolute;top:0; left: 0;}
-		
+
 		.article-total,.product-total{float: left; width: 38%; margin-right: 5%;}
 	</style>
 </head>
@@ -46,13 +46,13 @@
                     <ul class="list-group clear-list m-t">
                         <li class="list-group-item fist-item">
                             <span class="pull-right">
-                                    
+
                                 </span>
                             <span class="label label-success">1</span> 网站定制开发：0574-86306690
                         </li>
                         <li class="list-group-item">
                             <span class="pull-right">
-                                    
+
                                 </span>
                             <span class="label label-info">2</span> 软件定制开发：0574-86306690
                         </li>
@@ -122,9 +122,9 @@
                         </div>
                     </div>
                 </div>
-               
+
             </div>
-            
+
 			<div class="row">
                 <div class="col-lg-12">
                     <div class="wrapper wrapper-content">
@@ -185,7 +185,7 @@
 
     <!-- Sparkline demo data  -->
     <script src="manage/admin/template/js/demo/sparkline-demo.js"></script>
-    
+
     <!-- GITTER -->
     <script src="manage/admin/template/js/plugins/gritter/jquery.gritter.min.js"></script>
     <script>

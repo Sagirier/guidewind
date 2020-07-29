@@ -36,7 +36,7 @@ KindEditor.plugin('wordpaste', function(K) {
 			doc.designMode = 'on';
 		}
 		doc.open();
-		doc.write('<!doctype html><html><head><title>WordPaste</title></head>');
+		doc.write('<!doctype html><html lang=zh><head><title>WordPaste</title></head>');
 		doc.write('<body style="background-color:#FFF;font-size:12px;margin:2px;">');
 		if (!K.IE) {
 			doc.write('<br />');

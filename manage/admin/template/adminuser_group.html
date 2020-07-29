@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - 管理员分组管理</title>
-    <meta name="keywords" content="导风系统,网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - 管理员分组管理</title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>,网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -220,7 +220,7 @@
                                 <div class="mar-20 clear">
                                 	<button class="btn btn-primary" type="submit"<?php if($op=='edit'){ echo ' onclick="Layerconfirm(this);" name="'.$adminusergroup['name'].'"';}else{echo ' onclick="Layerconfirmadd();"';} ?>><i class="fa fa-check"></i> 提交</button>
                                 </div>
-                        	</form> 
+                        	</form>
                         </div>
                     </div>
                 </div>
@@ -294,14 +294,14 @@
     <script src="system/js/wpfrom.js" type="text/javascript"></script>
     <script type="text/javascript">
     	function Layerconfirm(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '确定要修改 [<font color="#337AB7">'+name+'</font>]？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -326,7 +326,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要添加该管理员分组？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){
@@ -345,14 +345,14 @@
             });
 		}
     	function LayerconfirmDel(id){
-    		var name=id.name; 
+    		var name=id.name;
     		$.layer({
                 area: ['auto','auto'],
                 title: '系统提示',
                 closeBtn: false,
                 dialog: {
                     msg: '<font color="#F00"><i class="fa fa-exclamation-circle"></i></font> 删除分组时，必须确保该分组下<font color="#F00">无任何管理员</font>!<br/>确定要删除 [<font color="#337AB7">'+name+'</font>]？<br/>该操作不可逆，建议删除前备份数据库！',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

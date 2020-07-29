@@ -16,7 +16,7 @@ function systemRun(){
 	$handle_controller->$__action();
 	if(FALSE != $GLOBALS['WP']['view']['auto_display']){
 		$__tplname = $__controller.$GLOBALS['WP']['view']['auto_display_sep'].
-				$__action.$GLOBALS['WP']['view']['auto_display_suffix']; 
+				$__action.$GLOBALS['WP']['view']['auto_display_suffix'];
 		$handle_controller->auto_display($__tplname);
 	}
 	spLaunch("router_postfilter");
@@ -24,21 +24,21 @@ function systemRun(){
 
 function dump($vars, $output = TRUE, $show_trace = FALSE){
 	if(TRUE != SP_DEBUG && TRUE != $GLOBALS['WP']['allow_trace_onrelease'])return;
-	if( TRUE == $show_trace ){ 
+	if( TRUE == $show_trace ){
 		$content = syError(htmlspecialchars(print_r($vars, true)), TRUE, FALSE);
 	}else{
 		$content = "<div align=left><pre>\n" . htmlspecialchars(print_r($vars, true)) . "\n</pre></div>\n";
 	}
-    if(TRUE != $output) { return $content; } 
-       echo "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body>{$content}</body></html>"; 
+    if(TRUE != $output) { return $content; }
+       echo "<html lang=zh><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head><body>{$content}</body></html>";
 	   return;
 }
 
 function import($sfilename, $auto_search = TRUE, $auto_error = FALSE){
 	if(isset($GLOBALS['WP']["import_file"][md5($sfilename)]))return TRUE;
 	if( TRUE == @is_readable($sfilename) ){
-		require($sfilename); 
-		$GLOBALS['WP']['import_file'][md5($sfilename)] = TRUE; 
+		require($sfilename);
+		$GLOBALS['WP']['import_file'][md5($sfilename)] = TRUE;
 		return TRUE;
 	}else{
 		if(TRUE == $auto_search){
@@ -59,7 +59,7 @@ function syAccess($method, $name, $value = NULL, $life_time = -1){
 	if( $launch = spLaunch("function_access", array('method'=>$method, 'name'=>$name, 'value'=>$value, 'life_time'=>$life_time), TRUE) )return $launch;
 	if(!is_dir($GLOBALS['WP']['sp_cache']))__mkdirs($GLOBALS['WP']['sp_cache']);
 	$sfile = $GLOBALS['WP']['sp_cache'].'/'.$GLOBALS['WP']['sp_app_id'].md5($name).".php";
-	if('w' == $method){ 
+	if('w' == $method){
 		$life_time = ( -1 == $life_time ) ? '300000000' : $life_time;
 		$value = '<?php die();?>'.( time() + $life_time ).serialize($value);
 		return file_put_contents($sfile, $value);
@@ -69,10 +69,10 @@ function syAccess($method, $name, $value = NULL, $life_time = -1){
 		if( !is_readable($sfile) )return FALSE;
 		$arg_data = file_get_contents($sfile);
 		if( substr($arg_data, 14, 10) < time() ){
-			@unlink($sfile); 
+			@unlink($sfile);
 			return FALSE;
 		}
-		return unserialize(substr($arg_data, 24)); 
+		return unserialize(substr($arg_data, 24));
 	}
 }
 
@@ -89,9 +89,9 @@ function syClass($class_name, $args = null, $sdir = null, $force_inst = FALSE){
 		}
 	}
 	if(FALSE != $has_define){
-		$argString = '';$comma = ''; 
+		$argString = '';$comma = '';
 		if(null != $args)for ($i = 0; $i < count($args); $i ++) { $argString .= $comma . "\$args[$i]"; $comma = ', ';}
-		eval("\$GLOBALS['WP']['inst_class'][\$class_name]= new \$class_name($argString);"); 
+		eval("\$GLOBALS['WP']['inst_class'][\$class_name]= new \$class_name($argString);");
 		return $GLOBALS['WP']["inst_class"][$class_name];
 	}
 	syError($class_name."类定义不存在，请检查。");
@@ -215,7 +215,7 @@ function xml_array($content,$url='') {
 				$k = $node->getName();
 				$v = (string)$node;
 			}
-			$x[$k]=$v;		
+			$x[$k]=$v;
 		}
 	}
 	return $x;
@@ -224,7 +224,7 @@ function syError($msg, $output = TRUE, $stop = TRUE){
 	if($GLOBALS['WP']['sp_error_throw_exception'])throw new Exception($msg);
 	if(TRUE != SP_DEBUG){
 		//error_log($msg);
-		echo '<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>';
+		echo '<html lang=zh><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>';
 		echo "<body>程序出错！</body></html>";
 		if(TRUE == $stop)exit;
 	}
@@ -303,10 +303,10 @@ function syDB($tbl_name, $pk = null){
 function syPass($string, $operation = 'DECODE', $key = '') {
 	// 动态密匙长度，相同的明文会生成不同密文就是依靠动态密匙
 	$ckey_length = 4;
-	 
+
 	// 密匙
 	$key = md5($key ? $key : $GLOBALS['WP']['ext']['secret_key']);
-	 
+
 	// 密匙a会参与加解密
 	$keya = md5(substr($key, 0, 16));
 	// 密匙b会用来做数据完整性验证
@@ -374,7 +374,7 @@ function spConfigReady( $preconfig, $useconfig = null){
 	return $nowconfig;
 }
 function jump($url, $delay = 0){
-	echo '<html><head><meta http-equiv="refresh" content="'.$delay.';url='.$url.'"></head><body><script type=text/javascript>window.location.href='.$url.'"</script></body></html>';
+	echo '<html lang=zh><head><meta http-equiv="refresh" content="'.$delay.';url='.$url.'"></head><body><script type=text/javascript>window.location.href='.$url.'"</script></body></html>';
 	exit;
 }
 function filemanager_list($a, $b){
@@ -402,7 +402,7 @@ function filemanager_list($a, $b){
 }
 //提示信息
 function message($info,$gurl=null,$time=3,$type=1){
-	echo '<html>
+	echo '<html lang=zh>
 			<head>
 			<title>系统提示-'.$GLOBALS['WP']['ext']['site_title'].'</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -418,7 +418,7 @@ function message($info,$gurl=null,$time=3,$type=1){
 
 				if (!$gurl){
 				  echo 'javascript:history.go(-1);';
-						
+
 				}else{
 				  echo 'window.location.href="'.$gurl.'"';
 				}
@@ -434,7 +434,7 @@ function message($info,$gurl=null,$time=3,$type=1){
 					var mes="mes";';
 		      if (!$gurl){
 		      	echo 'layer.msg("'.$info.'<br/>将在<span id="+mes+">'.$time.'</span>s后跳转，<a href=javascript:history.go(-1);>如未跳转，请点此跳转</a>", 0,'.$type.');';
-		      
+
 		      }else{
 		      	echo 'layer.msg("'.$info.'<br/>将在<span id="+mes+">'.$time.'</span>s后跳转，<a href='.$gurl.'>如未跳转，请点此跳转</a>", 0, '.$type.');';
 		      }
@@ -453,7 +453,7 @@ function message_err($newerrors){
 	message($error_txt);
 }
 function message_c($info,$lurl,$curl,$time=8,$type=1){
-	?><html>
+	?><html lang=zh>
 			<head>
 			<title>系统提示-<?php echo $GLOBALS['WP']['ext']['site_title']; ?></title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -485,11 +485,11 @@ function message_c($info,$lurl,$curl,$time=8,$type=1){
 			</script>
 			</body>
 		</html>
-	<?php 
+	<?php
 	exit();
 }
 function message_member($requestno,$lurl,$curl,$time=8,$type=1){
-    echo '<html>
+    echo '<html lang=zh>
 			<head>
 			<title>系统提示-'.$GLOBALS['WP']['ext']['site_title'].'</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -529,7 +529,7 @@ function message_member($requestno,$lurl,$curl,$time=8,$type=1){
         $msg2="<br/><a class='btn btn-info' href='".$lurl."'><i class='fa fa-mail-reply-all'></i> 返回上级页面</a><a style='margin-left: 20px' class='btn btn-success' href='".$curl."'><i class='fa fa-rebel'></i> 进入个人中心</a>";
         $msg3="<br/>将在<span id='";$msg3.='"+mes+"';$msg3.="'>";$msg3.=$time."</span>s后进入<a href='".$curl."'>个人中心</a>。";
     }
-    
+
     $msg=$msg1.$msg2.$msg3;
     echo 'layer.msg("'.$msg.'", 0,'.$type.');';
     echo '</script></body></html>';
@@ -537,7 +537,7 @@ function message_member($requestno,$lurl,$curl,$time=8,$type=1){
 }
 function message_pass($id,$url,$cmark,$type=false){
 	?>
-	<html>
+	<html lang=zh>
 	<head>
 	<title>系统提示-<?php echo $GLOBALS['WP']['ext']['site_title']; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -588,7 +588,7 @@ function message_pass($id,$url,$cmark,$type=false){
 		</script>
 	</body>
 	</html>
-	<?php 
+	<?php
 	exit();
 }
 /**
@@ -929,20 +929,20 @@ function getCity( $userip, $dat_path = '' ) {
         }
     }
 //获取IP
-function GetIP(){ 
-	if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")) 
-	$ip = getenv("HTTP_CLIENT_IP"); 
-	else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown")) 
-	$ip = getenv("HTTP_X_FORWARDED_FOR"); 
-	else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown")) 
-	$ip = getenv("REMOTE_ADDR"); 
-	else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown")) 
-	$ip = $_SERVER['REMOTE_ADDR']; 
-	else 
-	$ip = "unknown"; 
+function GetIP(){
+	if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown"))
+	$ip = getenv("HTTP_CLIENT_IP");
+	else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown"))
+	$ip = getenv("HTTP_X_FORWARDED_FOR");
+	else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown"))
+	$ip = getenv("REMOTE_ADDR");
+	else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown"))
+	$ip = $_SERVER['REMOTE_ADDR'];
+	else
+	$ip = "unknown";
 	$ip=htmlspecialchars($ip, ENT_QUOTES);
 	if(!get_magic_quotes_gpc())$ip = addslashes($ip);
-	return($ip); 
+	return($ip);
 }
 //获取域名
 function get_domain(){
@@ -1028,10 +1028,10 @@ function is_escape($value) {
 	return $value;
 }
 //替换url参数
-function url_set_value($url,$key,$value) { 
-	parse_str($url,$arr); 
+function url_set_value($url,$key,$value) {
+	parse_str($url,$arr);
 	$arr[$key]=$value;
-	return '?'.http_build_query($arr); 
+	return '?'.http_build_query($arr);
 }
 //价格计算 1+,2-
 function calculate($v1,$v2,$type=1) {
@@ -1145,7 +1145,7 @@ function replydetail($table,$upid,$q){
 	$table_r=$table.'_reply';
 	$r=syDB($table_r)->find(array('id'=>$upid));
 	if($q){
-		
+
 	}
 	return is_string($r[$q]) ? newstr($r[$q], 40) : $r[$q];
 }
@@ -1482,7 +1482,7 @@ function order_goods($d,$logistics){
 			$ov['price']=$ov['price']+$p['price'];
 			$a=syDB('attribute')->find(array('sid' => $v['attribute'][$s['tid']]),null,'name');
 			$ov['txt'].=$s['name'].'('.$a['name'].') ';
-		}			
+		}
 		$goods[$k]['attribute_txt']=$ov['txt'];
 		$goods[$k]['price']=$ov['price'];
 		$goods[$k]['total']=$ov['price']*$v['quantity'];
@@ -1576,7 +1576,7 @@ function html_url($type,$c,$pages=0,$ispage,$molds){
 						$go_url=pagetxt_html($go_url,$pages['total_page'],$ispage);
 					}else{$go_url=str_replace('{page}',1,$go_url);}
 				}else{
-					
+
 				}
 			}else if($sh==1&&$c['mrank']==0&&$c['htmlurl']!=''){
 				$go_url=$sg.$c['htmlurl'];
@@ -1661,7 +1661,7 @@ function html_url($type,$c,$pages=0,$ispage,$molds){
 				}
 				if($c["htmldir"]==''){
 					$go_url=$sg.syExt("site_html_dir")."/navgator/".$c["nid"]."/".$html_file;
-				}else{ 
+				}else{
 					$go_url=$sg.$c["htmldir"]."/".$html_file;
 				}
 				$go_url=str_replace(array("///","//"),"/",$go_url);
@@ -1669,7 +1669,7 @@ function html_url($type,$c,$pages=0,$ispage,$molds){
 					$go_url=str_replace('.','[p].',$go_url);
 					$go_url=pagetxt_html($go_url,$pages['total_page'],$ispage);
 				}
-			}else{ 
+			}else{
 				if($c["cmark"]!='article'&&$c["cmark"]!='product'&&$c["cmark"]!='message'&&$c["cmark"]!='recruitment'){
 					$go_url=$sr."?action=channel&o=type&nid=".$c["nid"];
 				}else{
@@ -1686,9 +1686,9 @@ function html_url($type,$c,$pages=0,$ispage,$molds){
 					$go_url=str_replace('{page}','[p]',$go_url);
 					$go_url=pagetxt_html($go_url,$pages['total_page'],$ispage);
 				}else{$go_url=str_replace('{page}',1,$go_url);}
-			}else if($c["html"]==1){ 
+			}else if($c["html"]==1){
 				$html_file=$c["file"];
-				if($c["dir"]==''){ 
+				if($c["dir"]==''){
 					$go_url=$sg.syExt("site_html_dir")."/".$html_file;
 				}else{
 					$go_url=$sg.$c["dir"]."/".$html_file;

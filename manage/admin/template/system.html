@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>导风系统网站后台 - <?php echo $title; ?></title>
-    <meta name="keywords" content="导风系统网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <title><?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台 - <?php echo $title; ?></title>
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -173,7 +173,7 @@
 		                                		<td>
 		                                			<label style="width: 100%;">
 		                                				<input class="form-control" name="site_statichtml_rules" value="<?php echo $statichtml['site_statichtml_rules']; ?>" type="text" />
-		                                				
+
 		                                			</label>
 		                                		</td>
 		                                		<td><font color="#1AB394">静态生成规则设置：</font><br/>
@@ -208,7 +208,7 @@
 			                                        </label>
 		                                		</td>
 		                                		<td>伪静态开启后，系统将启用伪静态规则，同时请修改主机伪静态规则才能生效；</td>
-		                                    </tr>	
+		                                    </tr>
 		                                    <tr>
 		                                		<td>系统根目录</td>
 		                                		<td>
@@ -295,7 +295,7 @@
 		                                		<td>
 		                                			<label style="width: 100%;">
 		                                				<input class="form-control" name="cache_time" value="<?php echo $other['cache_time']; ?>" type="text" />
-		                                				
+
 		                                			</label>
 		                                		</td>
 		                                    </tr>
@@ -419,9 +419,9 @@
                             </div>
                             <div class="ibox-content">
                             	<?php if($o=='uploads'){ ?>
-                                
+
                                 <?php }if($o=='statichtml'){ ?>
-                                
+
                                 <?php }if($o=='other'){ ?>
                                 <p>1.缓存时间代表数据缓存时间，单位秒，输入0表示关闭缓存</p>
                                 <p>2.GZip打开后，压缩级别1—9,越大压缩率越高，相应兼容越差</p>
@@ -504,7 +504,7 @@
                 closeBtn: false,
                 dialog: {
                     msg: '确定要提交修改？',
-                    btns: 2,                    
+                    btns: 2,
                     type: 4,
                     btn: ['确定','取消'],
                     yes: function(){

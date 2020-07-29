@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang=zh>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
     <title>静态html生成 - <?php echo $title; ?></title>
-    <meta name="keywords" content="导风系统网站后台">
-    <meta name="description" content="导风系统网站后台">
+    <meta name="keywords" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
+    <meta name="description" content="<?php echo $GLOBALS['WP']['ext']['site_title']; ?>网站后台">
     <link href="manage/admin/template/css/bootstrap.min.css?v=3.4.0" rel="stylesheet">
     <link href="manage/admin/template/font-awesome/css/font-awesome.css?v=4.3.0" rel="stylesheet">
     <link href="manage/admin/template/css/animate.css" rel="stylesheet">
@@ -24,7 +24,7 @@
             	<form action="?action=statichtml&o=clear&t=1" method="post">
             	<input name="cmark" type="hidden" value="article" />
         		<table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -54,12 +54,12 @@
                         	</td>
                 		</tr>
                 	</tbody>
-                </table>	
+                </table>
                 </form>
             	<form action="?action=statichtml&o=clear&t=1" method="post">
             	<input name="cmark" type="hidden" value="product" />
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -95,7 +95,7 @@
                 <form action="?action=statichtml&o=clear&t=1" method="post">
                 <input name="cmark" type="hidden" value="message" />
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -132,7 +132,7 @@
     			<form action="?action=statichtml&o=clear&t=1" method="post">
                 <input name="cmark" type="hidden" value="recruitment" />
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -167,7 +167,7 @@
                 <?php } ?>
                 <form action="?action=statichtml&o=clear&t=2" method="post">
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -195,7 +195,7 @@
                 </form>
                 <!--<form action="?action=statichtml&o=clear&t=4" method="post">
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -213,7 +213,7 @@
                 </form>-->
                 <form action="?action=statichtml&o=clear&t=99" method="post">
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -231,7 +231,7 @@
                 </form>
                 <!--<form action="?action=statichtml&o=clear&t=0" method="post">
                 <table class="table table-bordered article-table">
-            		<tbody>	
+            		<tbody>
                 		<tr>
                         	<td>
                         		<div class="label-pannel">
@@ -298,4 +298,3 @@
     </script>
 </body>
 </html>
-                        

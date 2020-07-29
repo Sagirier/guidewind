@@ -12,12 +12,12 @@ if (SP_DEBUG) {
 	if( substr(PHP_VERSION, 0, 3) == "5.3" ){
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 	}else{
-		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+        error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 	}
 } else {
 	error_reporting(0);
 }
-@set_magic_quotes_runtime(0);
+if( substr(PHP_VERSION, 0, 3) < 5.3 ) @set_magic_quotes_runtime(0);
 
 import($GLOBALS['WP']["sp_core_path"]."/syController.php", FALSE, TRUE);
 import($GLOBALS['WP']["sp_core_path"]."/syModel.php", FALSE, TRUE);

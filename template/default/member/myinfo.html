@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
-<html>
+<html lang=zh>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="{$GLOBALS['SITE']['keywords']}" />
 <meta name="description" content="{$GLOBALS['SITE']['description']}" />
 <title>更改个人资料-{$GLOBALS['SITE']['title']}</title>
-<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon"> 
+<link rel="icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
 <link rel="shortcut icon" href="{$GLOBALS['styles']}images/guide.ico" mce_href="{$GLOBALS['styles']}images/guide.ico" type="image/x-icon">
 <link href="{$GLOBALS['styles']}css/style.css" rel="stylesheet" type="text/css" />
 <link href="{$GLOBALS['styles']}css/public.css" rel="stylesheet" type="text/css" />
@@ -61,10 +61,10 @@
 						</a>
 					</div>
 				</div>
-				<div class="login_box">	
-					
+				<div class="login_box">
+
 					<div class="login_form">
-						
+
 			            <form action="./?action=member&o=myinfo&go=1" onsubmit="return Layerformpost();" method="post">
 			            <div class="login_title">
 							基本资料
@@ -85,11 +85,11 @@
 			            		<th scope="row">性别：</th>
 			                	<td>
 				                	<label class="addlabel" style="width: auto;margin-right: 5px;">
-				                		<input name="sexuality" type="radio" class="i-checks" value="1" {if($member['sexuality']==1)} checked="checked" {/if} /> 
+				                		<input name="sexuality" type="radio" class="i-checks" value="1" {if($member['sexuality']==1)} checked="checked" {/if} />
 				                		<img class="sexuality" src="{$GLOBALS['member']['male_icon']}" />
 				                	</label>
 				                	<label class="addlabel" style="width: auto;">
-				                		<input name="sexuality" type="radio" class="i-checks" value="2" {if($member['sexuality']==2)} checked="checked" {/if} /> 
+				                		<input name="sexuality" type="radio" class="i-checks" value="2" {if($member['sexuality']==2)} checked="checked" {/if} />
 				                		<img class="sexuality" src="{$GLOBALS['member']['female_icon']}" />
 				                	</label>
 			            		</td>
@@ -99,7 +99,7 @@
 			            		<th scope="row">出生日期：</th>
 			                	<td>
 				                	<label class="addlabel">
-										<select name="birthyear" class="ex-select" id="selYear"></select> 
+										<select name="birthyear" class="ex-select" id="selYear"></select>
 				                	</label>
 				                	<label class="addlabel">
 				                		<select name="birthmonth" class="ex-select" id="selMonth"></select>
@@ -459,12 +459,12 @@ $(function () {
 	});
 </script>
 <script type="text/javascript" src="{$GLOBALS['styles']}js/date-select.js"></script>
-<script type="text/javascript"> 
-	var selYear = document.getElementById("selYear"); 
-	var selMonth = document.getElementById("selMonth"); 
-	var selDay = document.getElementById("selDay"); 
-	// 新建一个DateSelector类的实例，将三个select对象传进去 
-	new DateSelector(selYear, selMonth, selDay, {if($member['birthyear'])}{$member['birthyear']}{else}{fun date("Y")}{/if},{if($member['birthmonth'])}{$member['birthmonth']}{else}{fun date("m")}{/if},{if($member['birthday'])}{$member['birthday']}{else}{fun date("d")}{/if}); 
-</script> 
+<script type="text/javascript">
+	var selYear = document.getElementById("selYear");
+	var selMonth = document.getElementById("selMonth");
+	var selDay = document.getElementById("selDay");
+	// 新建一个DateSelector类的实例，将三个select对象传进去
+	new DateSelector(selYear, selMonth, selDay, {if($member['birthyear'])}{$member['birthyear']}{else}{fun date("Y")}{/if},{if($member['birthmonth'])}{$member['birthmonth']}{else}{fun date("m")}{/if},{if($member['birthday'])}{$member['birthday']}{else}{fun date("d")}{/if});
+</script>
 </body>
 </html>

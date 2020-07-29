@@ -295,7 +295,7 @@ K.options = {
 			'.font-style', '.text-decoration', '.vertical-align', '.background', '.border'
 		],
 		a : ['id', 'class', 'href', 'target', 'name'],
-		embed : ['id', 'class', 'src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', 
+		embed : ['id', 'class', 'src', 'width', 'height', 'type', 'loop', 'autostart', 'quality',
 '.width', '.height', 'align', 'allowscriptaccess', 'flashvars'],
 		img : ['id', 'class', 'src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
 		'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : [
@@ -3528,7 +3528,7 @@ if ((html = document.getElementsByTagName('html'))) {
 }
 function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
 	var arr = [
-		(_direction === '' ? '<html>' : '<html dir="' + _direction + '">'),
+		(_direction === '' ? '<html lang=zh>' : '<html dir="' + _direction + '">'),
 		'<head><meta charset="utf-8" /><title></title>',
 		'<style>',
 		'html {margin:0;padding:0;}',
@@ -3757,7 +3757,7 @@ _extend(KEdit, KWidget, {
 			var body = doc.body;
 			if (val === undefined) {
 				if (isFull) {
-					val = '<!doctype html><html>' + body.parentNode.innerHTML + '</html>';
+					val = '<!doctype html><html lang=zh>' + body.parentNode.innerHTML + '</html>';
 				} else {
 					val = body.innerHTML;
 				}
@@ -4200,7 +4200,7 @@ _extend(KUploadButton, {
 			try {
 				data = K.json(str);
 			} catch (e) {
-				self.options.afterError.call(self, '<!doctype html><html>' + doc.body.parentNode.innerHTML + '</html>');
+				self.options.afterError.call(self, '<!doctype html><html lang=zh>' + doc.body.parentNode.innerHTML + '</html>');
 			}
 			if (data) {
 				self.options.afterUpload.call(self, data);
